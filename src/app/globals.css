@@ -4,30 +4,50 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --background-rgb: 255, 255, 255;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(var(--background-rgb));
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+h1 {
+  font-size: 72px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+p {
+  font-size: 14px;
+}
+
+.small {
+  font-size: var(
+    --input-description-size,
+    calc(var(--mantine-font-size-sm) - calc(0.125rem * var(--mantine-scale)))
+  );
+  line-height: 1.2;
+}
+
+.outline {
+  color: white;
+  background-color: white;
+  text-shadow: -1px -1px 0 rgb(var(--foreground-rgb)),
+    1px -1px 0 rgb(var(--foreground-rgb)), -1px 1px 0 rgb(var(--foreground-rgb)),
+    1px 1px 0 rgb(var(--foreground-rgb));
+}
+
+.muted {
+  color: var(--mantine-color-dimmed);
 }
