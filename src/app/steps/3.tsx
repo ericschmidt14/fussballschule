@@ -18,13 +18,13 @@ export default function Step3() {
     },
 
     validate: {
-      lastName: isNotEmpty("Bitte geben Sie einen Nachnamen an"),
-      firstName: isNotEmpty("Bitte geben Sie einen Vornamen an"),
+      lastName: isNotEmpty("Bitte Nachnamen angeben"),
+      firstName: isNotEmpty("Bitte Vornamen angeben"),
       postalCode: matches(
         /^[0-9][0-9][0-9][0-9][0-9]$/,
-        "Bitte geben Sie eine 5-stellige PLZ an"
+        "Bitte 5-stellige PLZ angeben"
       ),
-      email: isEmail("Bitte geben Sie eine gültige Mailadresse an"),
+      email: isEmail("Bitte gültige Mailadresse angeben"),
     },
   });
 
@@ -54,7 +54,7 @@ export default function Step3() {
           />
           <TextInput
             withAsterisk
-            label="Nummer"
+            label="Hausnummer"
             key={form.key("number")}
             {...form.getInputProps("number")}
           />
@@ -77,12 +77,14 @@ export default function Step3() {
         <TextInput
           withAsterisk
           label="E-Mail"
+          description="Für Ihre Anmeldebestätigung"
           key={form.key("email")}
           {...form.getInputProps("email")}
         />
         <TextInput
           withAsterisk
-          label="Handy / Telefon (tagsüber)"
+          label="Handy / Telefon"
+          description="Tagsüber erreichbar"
           key={form.key("phone")}
           {...form.getInputProps("phone")}
         />

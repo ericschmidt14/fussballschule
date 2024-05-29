@@ -17,7 +17,7 @@ export default function Step2() {
     initialValues: {
       lastName: "",
       firstName: "",
-      dob: "",
+      dob: new Date(2010, 1),
       gender: "male",
       club: "",
       position: "",

@@ -52,7 +52,13 @@ export default function Step5() {
         <Divider label="Allgemeine Hinweise" labelPosition="center" />
         <Checkbox
           className="col-span-2"
-          label="Ich habe die Teilnahmebedingungen / AGB gelesen und akzeptiert."
+          label={
+            <>
+              Ich habe die{" "}
+              <span className="muted">Teilnahmebedingungen / AGB</span> gelesen
+              und akzeptiert.
+            </>
+          }
           key={form.key("agree")}
           {...form.getInputProps("agree", { type: "checkbox" })}
         />

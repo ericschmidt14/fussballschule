@@ -1,17 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Title from "../components/title";
 import { SegmentedControl, Select } from "@mantine/core";
 import Label from "../components/label";
+import { useForm } from "@mantine/form";
 
 export default function Step1() {
-  const [period, setPeriod] = useState("3");
-  const [youth, setYouth] = useState("f");
-  const [time, setTime] = useState<string | null>("1");
+  const form = useForm({
+    mode: "uncontrolled",
+    validateInputOnChange: true,
+    initialValues: {
+      period: "3",
+      youth: "f",
+      time: "1",
+    },
 
-  useEffect(() => {
-    setTime(times[youth][0].value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [youth]);
+    validate: {},
+  });
+  const [youth, setYouth] = useState(form.getValues().youth);
+
+  form.watch("youth", ({ value }) => {
+    setYouth(value);
+    form.setFieldValue("time", times[value][0].value);
+  });
 
   const youths: { [key: string]: string } = {
     f: "7 – 8",
@@ -41,8 +51,8 @@ export default function Step1() {
     <div className="flex flex-col gap-8">
       <Title text="Zeitraum & Termin" />
       <SegmentedControl
-        value={period}
-        onChange={setPeriod}
+        key={form.key("period")}
+        {...form.getInputProps("period")}
         fullWidth
         data={[
           {
@@ -71,8 +81,8 @@ export default function Step1() {
         <div>
           <Label text="Jugend" />
           <SegmentedControl
-            value={youth}
-            onChange={setYouth}
+            key={form.key("youth")}
+            {...form.getInputProps("youth")}
             fullWidth
             data={[
               { label: "F", value: "f" },
@@ -87,8 +97,8 @@ export default function Step1() {
         </div>
         <Select
           label="Zeit"
-          value={time}
-          onChange={setTime}
+          key={form.key("time")}
+          {...form.getInputProps("time")}
           data={times[youth]}
         />
       </div>

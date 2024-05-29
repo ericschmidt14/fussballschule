@@ -25,9 +25,12 @@ export default function Home() {
         </h1>
       </header>
 
-      <div className="w-[1320px] my-8">
+      <div className="w-[1200px] my-8">
         <Stepper
           active={active}
+          allowNextStepsSelect={false}
+          iconSize={32}
+          size="sm"
           styles={{
             content: {
               position: "relative",
@@ -54,7 +57,10 @@ export default function Home() {
           <Stepper.Step label="Bestätigung">
             <Step5 />
           </Stepper.Step>
-          <Stepper.Completed>Completed</Stepper.Completed>
+          <Stepper.Completed>
+            <b>Anmeldung erfolgreich abgeschlossen!</b> Bitte überprüfen Sie das
+            Postfach der angegebenen Mail für weitere Informationen.
+          </Stepper.Completed>
         </Stepper>
 
         <div className="max-w-[880px] m-auto flex justify-between">
