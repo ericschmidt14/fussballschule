@@ -5,7 +5,7 @@ export interface FormValues {
   child: {
     lastName: string;
     firstName: string;
-    dob: Date;
+    dob: Date | undefined;
     gender: string;
     club: string;
     position: string;

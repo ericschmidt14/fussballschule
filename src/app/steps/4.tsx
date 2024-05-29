@@ -1,6 +1,6 @@
 import { UseFormReturnType } from "@mantine/form";
 import Title from "../components/title";
-import { Checkbox, TextInput } from "@mantine/core";
+import { Checkbox, Divider, TextInput } from "@mantine/core";
 import { FormValues } from "../form";
 
 export default function Step4({
@@ -14,9 +14,15 @@ export default function Step4({
       <div className="grid grid-cols-2 gap-4">
         <Checkbox
           className="col-span-2"
+          size="md"
           label="Hiermit ermächtige ich den 1. FC Nürnberg e.V. widerruflich, den zu entrichtenden Beitrag bei Fälligkeit zu Lasten meines Kontos mittels SEPA-Lastschrift einzuziehen."
           key={form.key("agree")}
           {...form.getInputProps("agree", { type: "checkbox" })}
+        />
+        <Divider
+          label="Kontodaten"
+          labelPosition="center"
+          className="col-span-2"
         />
         <TextInput
           className="col-span-2"

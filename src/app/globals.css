@@ -5,11 +5,16 @@
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 255, 255, 255;
+  --transition: 300ms all ease-in-out;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
+  background: linear-gradient(
+    160deg,
+    rgba(var(--background-rgb), 1) 33%,
+    var(--mantine-color-gray-5) 100%
+  );
 }
 
 h1 {
@@ -19,7 +24,7 @@ h1 {
 }
 
 h2 {
-  font-size: 16px;
+  font-size: 14px;
   text-transform: uppercase;
 }
 
@@ -30,6 +35,19 @@ h3 {
 
 p {
   font-size: 14px;
+}
+
+a,
+.link {
+  font-size: 14px;
+  color: var(--mantine-color-dimmed);
+  transition: var(--transition);
+}
+
+a:hover,
+.link:hover {
+  color: var(--mantine-color-anchor);
+  cursor: pointer;
 }
 
 .small {

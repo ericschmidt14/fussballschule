@@ -2,13 +2,13 @@
 import { useState } from "react";
 import { Stepper, Button } from "@mantine/core";
 import { useForm, isEmail, isNotEmpty, matches } from "@mantine/form";
-import Image from "next/image";
+import { FormValues } from "./form";
+import Header from "./components/header";
 import Step1 from "./steps/1";
 import Step2 from "./steps/2";
 import Step3 from "./steps/3";
 import Step4 from "./steps/4";
 import Step5 from "./steps/5";
-import { FormValues } from "./form";
 
 export default function Home() {
   const [active, setActive] = useState(0);
@@ -23,7 +23,7 @@ export default function Home() {
       child: {
         lastName: "",
         firstName: "",
-        dob: new Date(2010, 1),
+        dob: undefined,
         gender: "male",
         club: "",
         position: "",
@@ -86,15 +86,9 @@ export default function Home() {
     setActive((current) => (current > 0 ? current - 1 : current));
 
   return (
-    <main className="flex flex-col justify-center items-center">
-      <header className="flex gap-2 pt-8">
-        <Image src="/logo.svg" alt="1. FCN Logo" width={96} height={96} />
-        <h1>
-          <span className="outline">Fussball</span>schule
-        </h1>
-      </header>
-
-      <div className="w-[1100px] my-8">
+    <section className="flex flex-col justify-center items-center">
+      <Header />
+      <div className="w-[1080px] my-8">
         <form onSubmit={form.onSubmit((values) => console.log(values))}>
           <Stepper
             active={active}
@@ -104,11 +98,15 @@ export default function Home() {
             styles={{
               content: {
                 position: "relative",
-                margin: "32px auto",
+                margin: "32px auto 16px",
                 padding: "48px 32px",
                 maxWidth: "880px",
-                background: "#F9F9F9",
-                boxShadow: "0 4px 16px 0 rgba(0,0,0, 0.25)",
+                borderRadius: "var(--mantine-radius-md)",
+                background: "var(--mantine-color-gray-0)",
+                boxShadow: "var(--mantine-shadow-xl)",
+              },
+              separator: {
+                marginInline: "var(--mantine-spacing-xs)",
               },
             }}
           >
@@ -133,16 +131,20 @@ export default function Home() {
             </Stepper.Completed>
           </Stepper>
 
-          <div className="max-w-[880px] m-auto flex justify-between">
+          <div className="max-w-[880px] m-auto flex justify-between px-4">
             {active > 0 ? (
-              <Button variant="default" onClick={prevStep}>
+              <Button variant="transparent" onClick={prevStep}>
                 Zurück
               </Button>
             ) : (
               <div />
             )}
             {active < 4 ? (
-              <Button onClick={nextStep} disabled={!form.isValid()}>
+              <Button
+                variant="light"
+                onClick={nextStep}
+                disabled={!form.isValid()}
+              >
                 Weiter
               </Button>
             ) : (
@@ -151,6 +153,6 @@ export default function Home() {
           </div>
         </form>
       </div>
-    </main>
+    </section>
   );
 }

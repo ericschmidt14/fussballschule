@@ -57,6 +57,7 @@ export default function Step2({
           <TextInput
             label="Verein"
             description="(optional)"
+            placeholder="1. FC Nürnberg"
             key={form.key("club")}
             {...form.getInputProps("child.club")}
           />

@@ -1,13 +1,18 @@
+"use client";
 import { UseFormReturnType } from "@mantine/form";
 import Title from "../components/title";
-import { Checkbox, Divider, Spoiler, TextInput } from "@mantine/core";
+import { Checkbox, Collapse, Divider, Spoiler } from "@mantine/core";
 import { FormValues } from "../form";
+import { useState } from "react";
 
 export default function Step5({
   form,
 }: {
   form: UseFormReturnType<FormValues>;
 }) {
+  const [conditions, setConditions] = useState(false);
+  const [privacy, setPrivacy] = useState(false);
+
   return (
     <div className="flex flex-col gap-8">
       <Title text="Zusammenfassung & Bestätigung" />
@@ -50,24 +55,63 @@ export default function Step5({
           label={
             <>
               Ich habe die{" "}
-              <span className="muted">Teilnahmebedingungen / AGB</span> gelesen
-              und akzeptiert.
+              <span
+                className="link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setConditions(!conditions);
+                }}
+              >
+                Teilnahmebedingungen / AGB
+              </span>{" "}
+              gelesen und akzeptiert.
             </>
           }
           key={form.key("conditions")}
           {...form.getInputProps("conditions", { type: "checkbox" })}
         />
+        <Collapse in={conditions}>
+          <p className="muted">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </Collapse>
         <Checkbox
           className="col-span-2"
           label={
             <>
-              Ich habe die <span className="muted">Datenschutzhinweise</span>{" "}
+              Ich habe die{" "}
+              <span
+                className="link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPrivacy(!privacy);
+                }}
+              >
+                Datenschutzhinweise
+              </span>{" "}
               zur Kenntnis genommen.
             </>
           }
           key={form.key("privacy")}
           {...form.getInputProps("privacy", { type: "checkbox" })}
         />
+        <Collapse in={privacy}>
+          <p className="muted">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </Collapse>
         <Divider
           label="Einwilligungen im Rahmen der Fußballschule"
           labelPosition="center"
