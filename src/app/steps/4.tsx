@@ -1,8 +1,13 @@
 import { UseFormReturnType } from "@mantine/form";
 import Title from "../components/title";
 import { Checkbox, TextInput } from "@mantine/core";
+import { FormValues } from "../form";
 
-export default function Step4({ form }: { form: UseFormReturnType<any> }) {
+export default function Step4({
+  form,
+}: {
+  form: UseFormReturnType<FormValues>;
+}) {
   return (
     <div className="flex flex-col gap-8">
       <Title text="Ermächtigung zum SEPA-Bankeinzug" />

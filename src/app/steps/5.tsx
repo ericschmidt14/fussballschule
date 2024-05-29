@@ -1,8 +1,13 @@
 import { UseFormReturnType } from "@mantine/form";
 import Title from "../components/title";
 import { Checkbox, Divider, Spoiler, TextInput } from "@mantine/core";
+import { FormValues } from "../form";
 
-export default function Step5({ form }: { form: UseFormReturnType<any> }) {
+export default function Step5({
+  form,
+}: {
+  form: UseFormReturnType<FormValues>;
+}) {
   return (
     <div className="flex flex-col gap-8">
       <Title text="Zusammenfassung & Bestätigung" />
@@ -49,8 +54,8 @@ export default function Step5({ form }: { form: UseFormReturnType<any> }) {
               und akzeptiert.
             </>
           }
-          key={form.key("agree")}
-          {...form.getInputProps("agree", { type: "checkbox" })}
+          key={form.key("conditions")}
+          {...form.getInputProps("conditions", { type: "checkbox" })}
         />
         <Checkbox
           className="col-span-2"
@@ -60,8 +65,8 @@ export default function Step5({ form }: { form: UseFormReturnType<any> }) {
               zur Kenntnis genommen.
             </>
           }
-          key={form.key("agree")}
-          {...form.getInputProps("agree", { type: "checkbox" })}
+          key={form.key("privacy")}
+          {...form.getInputProps("privacy", { type: "checkbox" })}
         />
         <Divider
           label="Einwilligungen im Rahmen der Fußballschule"
@@ -71,16 +76,16 @@ export default function Step5({ form }: { form: UseFormReturnType<any> }) {
           className="col-span-2"
           label="Ton-, Foto- und Videoaufnahmen"
           description="Ich stimme zu, dass der 1. FCN berechtigt ist, Ton-, Video- und Fotoaufnahmen sowie Vornamen, Bild, Stimme, Erscheinungsbild und Darbietung meines Kindes, die während des Besuchs der Fußballschule sowie bei Events in dessen Rahmen gefertigt werden, für die Zwecke der Öffentlichkeitsarbeit des Vereins verwendet werden dürfen."
-          key={form.key("agree")}
-          {...form.getInputProps("agree", { type: "checkbox" })}
+          key={form.key("recordings")}
+          {...form.getInputProps("recordings", { type: "checkbox" })}
         />
 
         <Checkbox
           className="col-span-2"
           label="Verarbeitung besonderer Kategorien personenbezogener Daten"
           description="Ich stimme zu, dass der 1. FCN berechtigt ist, Gesundheitsdaten meines Kindes wie bspw. Erkrankungen, Verletzungen, Allergien zu verarbeiten, um das Training in der Fußballschule entsprechend gestalten und ggfs. notwendige Maßnahmen ergreifen zu können."
-          key={form.key("agree")}
-          {...form.getInputProps("agree", { type: "checkbox" })}
+          key={form.key("processing")}
+          {...form.getInputProps("processing", { type: "checkbox" })}
         />
         <p className="muted small">
           Mir ist bewusst, dass diese Einwilligungen freiwillig sind und ich sie

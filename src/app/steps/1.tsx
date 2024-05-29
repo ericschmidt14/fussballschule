@@ -3,8 +3,13 @@ import Title from "../components/title";
 import { SegmentedControl, Select } from "@mantine/core";
 import Label from "../components/label";
 import { UseFormReturnType } from "@mantine/form";
+import { FormValues } from "../form";
 
-export default function Step1({ form }: { form: UseFormReturnType<any> }) {
+export default function Step1({
+  form,
+}: {
+  form: UseFormReturnType<FormValues>;
+}) {
   const [youth, setYouth] = useState(form.getValues().youth);
 
   form.watch("youth", ({ value }) => {

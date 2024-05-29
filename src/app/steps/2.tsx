@@ -7,8 +7,13 @@ import Title from "../components/title";
 import { SegmentedControl, TextInput, Textarea } from "@mantine/core";
 import Label from "../components/label";
 import { DatePickerInput, DatesProvider } from "@mantine/dates";
+import { FormValues } from "../form";
 
-export default function Step2({ form }: { form: UseFormReturnType<any> }) {
+export default function Step2({
+  form,
+}: {
+  form: UseFormReturnType<FormValues>;
+}) {
   dayjs.extend(customParseFormat);
 
   return (

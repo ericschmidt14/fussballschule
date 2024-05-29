@@ -1,8 +1,13 @@
 import { UseFormReturnType } from "@mantine/form";
 import Title from "../components/title";
 import { TextInput } from "@mantine/core";
+import { FormValues } from "../form";
 
-export default function Step3({ form }: { form: UseFormReturnType<any> }) {
+export default function Step3({
+  form,
+}: {
+  form: UseFormReturnType<FormValues>;
+}) {
   return (
     <div className="flex flex-col gap-8">
       <Title text="Angaben zum Erziehungsberechtigten" />
