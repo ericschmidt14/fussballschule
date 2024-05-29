@@ -1,94 +1,61 @@
-import { isEmail, isNotEmpty, matches, useForm } from "@mantine/form";
+import { UseFormReturnType } from "@mantine/form";
 import Title from "../components/title";
 import { TextInput } from "@mantine/core";
 
-export default function Step3() {
-  const form = useForm({
-    mode: "uncontrolled",
-    validateInputOnChange: true,
-    initialValues: {
-      lastName: "",
-      firstName: "",
-      street: "",
-      number: "",
-      postalCode: "",
-      city: "",
-      email: "",
-      phone: "",
-    },
-
-    validate: {
-      lastName: isNotEmpty("Bitte Nachnamen angeben"),
-      firstName: isNotEmpty("Bitte Vornamen angeben"),
-      postalCode: matches(
-        /^[0-9][0-9][0-9][0-9][0-9]$/,
-        "Bitte 5-stellige PLZ angeben"
-      ),
-      email: isEmail("Bitte gültige Mailadresse angeben"),
-    },
-  });
-
+export default function Step3({ form }: { form: UseFormReturnType<any> }) {
   return (
     <div className="flex flex-col gap-8">
       <Title text="Angaben zum Erziehungsberechtigten" />
-      <form className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <TextInput
-          withAsterisk
           label="Nachname"
-          key={form.key("lastName")}
-          {...form.getInputProps("lastName")}
+          key={form.key("parent.lastName")}
+          {...form.getInputProps("parent.lastName")}
         />
         <TextInput
-          withAsterisk
           label="Vorname"
-          key={form.key("firstName")}
-          {...form.getInputProps("firstName")}
+          key={form.key("parent.firstName")}
+          {...form.getInputProps("parent.firstName")}
         />
         <div className="col-span-2 grid grid-cols-4 gap-4">
           <TextInput
-            withAsterisk
             className="col-span-3"
             label="Straße"
-            key={form.key("street")}
-            {...form.getInputProps("street")}
+            key={form.key("parent.street")}
+            {...form.getInputProps("parent.street")}
           />
           <TextInput
-            withAsterisk
             label="Hausnummer"
-            key={form.key("number")}
-            {...form.getInputProps("number")}
+            key={form.key("parent.number")}
+            {...form.getInputProps("parent.number")}
           />
         </div>
         <div className="col-span-2 grid grid-cols-4 gap-4">
           <TextInput
-            withAsterisk
             label="Postleitzahl"
-            key={form.key("postalCode")}
-            {...form.getInputProps("postalCode")}
+            key={form.key("parent.postalCode")}
+            {...form.getInputProps("parent.postalCode")}
           />
           <TextInput
-            withAsterisk
             className="col-span-3"
             label="Ort"
-            key={form.key("city")}
-            {...form.getInputProps("city")}
+            key={form.key("parent.city")}
+            {...form.getInputProps("parent.city")}
           />
         </div>
         <TextInput
-          withAsterisk
           label="E-Mail"
           description="Für Ihre Anmeldebestätigung"
-          key={form.key("email")}
-          {...form.getInputProps("email")}
+          key={form.key("parent.email")}
+          {...form.getInputProps("parent.email")}
         />
         <TextInput
-          withAsterisk
           label="Handy / Telefon"
           description="Tagsüber erreichbar"
-          key={form.key("phone")}
-          {...form.getInputProps("phone")}
+          key={form.key("parent.phone")}
+          {...form.getInputProps("parent.phone")}
         />
-      </form>
+      </div>
     </div>
   );
 }

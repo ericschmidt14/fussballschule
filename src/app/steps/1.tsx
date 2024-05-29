@@ -2,20 +2,9 @@ import { useState } from "react";
 import Title from "../components/title";
 import { SegmentedControl, Select } from "@mantine/core";
 import Label from "../components/label";
-import { useForm } from "@mantine/form";
+import { UseFormReturnType } from "@mantine/form";
 
-export default function Step1() {
-  const form = useForm({
-    mode: "uncontrolled",
-    validateInputOnChange: true,
-    initialValues: {
-      period: "3",
-      youth: "f",
-      time: "1",
-    },
-
-    validate: {},
-  });
+export default function Step1({ form }: { form: UseFormReturnType<any> }) {
   const [youth, setYouth] = useState(form.getValues().youth);
 
   form.watch("youth", ({ value }) => {
@@ -59,7 +48,7 @@ export default function Step1() {
             label: (
               <>
                 <h3>3 Monate à 55€</h3>
-                <p>12 Trainingseinheiten</p>
+                <p className="muted">12 Trainingseinheiten</p>
               </>
             ),
             value: "3",
@@ -68,7 +57,7 @@ export default function Step1() {
             label: (
               <>
                 <h3>6 Monate à 50€</h3>
-                <p>24 Trainingseinheiten</p>
+                <p className="muted">24 Trainingseinheiten</p>
               </>
             ),
             value: "6",

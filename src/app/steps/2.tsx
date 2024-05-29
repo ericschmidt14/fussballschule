@@ -2,67 +2,44 @@
 import "dayjs/locale/de";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { isNotEmpty, useForm } from "@mantine/form";
+import { UseFormReturnType } from "@mantine/form";
 import Title from "../components/title";
 import { SegmentedControl, TextInput, Textarea } from "@mantine/core";
 import Label from "../components/label";
 import { DatePickerInput, DatesProvider } from "@mantine/dates";
 
-export default function Step2() {
+export default function Step2({ form }: { form: UseFormReturnType<any> }) {
   dayjs.extend(customParseFormat);
-
-  const form = useForm({
-    mode: "uncontrolled",
-    validateInputOnChange: true,
-    initialValues: {
-      lastName: "",
-      firstName: "",
-      dob: new Date(2010, 1),
-      gender: "male",
-      club: "",
-      position: "",
-      misc: "",
-      size: "128",
-    },
-
-    validate: {
-      lastName: isNotEmpty("Bitte geben Sie einen Nachnamen an"),
-      firstName: isNotEmpty("Bitte geben Sie einen Vornamen an"),
-    },
-  });
 
   return (
     <DatesProvider settings={{ locale: "de" }}>
       <div className="flex flex-col gap-8">
         <Title text="Angaben zum teilnehmenden Kind" />
-        <form className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <TextInput
-            withAsterisk
             label="Nachname"
-            key={form.key("lastName")}
-            {...form.getInputProps("lastName")}
+            key={form.key("child.lastName")}
+            {...form.getInputProps("child.lastName")}
           />
           <TextInput
-            withAsterisk
             label="Vorname"
-            key={form.key("firstName")}
-            {...form.getInputProps("firstName")}
+            key={form.key("child.firstName")}
+            {...form.getInputProps("child.firstName")}
           />
           <DatePickerInput
-            withAsterisk
             defaultDate={new Date(2010, 1)}
             defaultLevel="decade"
             valueFormat="DD.MM.YYYY"
             label="Geburtstag"
             placeholder="04.05.1900"
-            key={form.key("dob")}
-            {...form.getInputProps("dob")}
+            key={form.key("child.dob")}
+            {...form.getInputProps("child.dob")}
           />
           <div>
             <Label text="Geschlecht" />
             <SegmentedControl
-              key={form.key("gender")}
-              {...form.getInputProps("gender")}
+              key={form.key("child.gender")}
+              {...form.getInputProps("child.gender")}
               fullWidth
               data={[
                 { label: "Junge", value: "male" },
@@ -74,26 +51,29 @@ export default function Step2() {
           </div>
           <TextInput
             label="Verein"
+            description="(optional)"
             key={form.key("club")}
-            {...form.getInputProps("club")}
+            {...form.getInputProps("child.club")}
           />
           <TextInput
             label="Ich spiele gerne als"
+            description="(optional)"
             placeholder="Stürmer"
             key={form.key("position")}
-            {...form.getInputProps("position")}
+            {...form.getInputProps("child.position")}
           />
           <Textarea
             className="col-span-2"
             label="Besonderheiten (Allergien, Krankheiten, Medikamente etc.)"
-            key={form.key("misc")}
-            {...form.getInputProps("misc")}
+            description="(optional)"
+            key={form.key("child.misc")}
+            {...form.getInputProps("child.misc")}
           />
           <div className="col-span-2">
             <Label text="Konfektionsgröße" />
             <SegmentedControl
-              key={form.key("size")}
-              {...form.getInputProps("size")}
+              key={form.key("child.size")}
+              {...form.getInputProps("child.size")}
               fullWidth
               data={["128", "140", "152", "164", "176", "S", "M"]}
               transitionTimingFunction="linear"
@@ -107,7 +87,7 @@ export default function Step2() {
               angemessenen Zustand möglich.
             </p>
           </div>
-        </form>
+        </div>
       </div>
     </DatesProvider>
   );

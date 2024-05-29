@@ -1,18 +1,8 @@
-import { isNotEmpty, useForm } from "@mantine/form";
+import { UseFormReturnType } from "@mantine/form";
 import Title from "../components/title";
 import { Checkbox, Divider, Spoiler, TextInput } from "@mantine/core";
 
-export default function Step5() {
-  const form = useForm({
-    mode: "uncontrolled",
-    validateInputOnChange: true,
-    initialValues: {
-      agree: false,
-    },
-
-    validate: {},
-  });
-
+export default function Step5({ form }: { form: UseFormReturnType<any> }) {
   return (
     <div className="flex flex-col gap-8">
       <Title text="Zusammenfassung & Bestätigung" />
@@ -48,7 +38,7 @@ export default function Step5() {
         occaecat cupidatat non proident, sunt in culpa qui officia deserunt
         mollit anim id est laborum.
       </Spoiler>
-      <form className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
         <Divider label="Allgemeine Hinweise" labelPosition="center" />
         <Checkbox
           className="col-span-2"
@@ -64,7 +54,12 @@ export default function Step5() {
         />
         <Checkbox
           className="col-span-2"
-          label="Ich habe die Datenschutzhinweise zur Kenntnis genommen."
+          label={
+            <>
+              Ich habe die <span className="muted">Datenschutzhinweise</span>{" "}
+              zur Kenntnis genommen.
+            </>
+          }
           key={form.key("agree")}
           {...form.getInputProps("agree", { type: "checkbox" })}
         />
@@ -75,7 +70,7 @@ export default function Step5() {
         <Checkbox
           className="col-span-2"
           label="Ton-, Foto- und Videoaufnahmen"
-          description="Ich stimme zu, dass der 1. FCN berechtigt ist, Ton-, Video- und Foto- aufnahmen sowie Vornamen, Bild, Stimme, Erscheinungsbild und Darbietung meines Kindes, die während des Besuchs der Fußballschule sowie bei Events in dessen Rahmen gefertigt werden, für die Zwecke der Öffentlichkeitsarbeit des Vereins verwendet werden dürfen."
+          description="Ich stimme zu, dass der 1. FCN berechtigt ist, Ton-, Video- und Fotoaufnahmen sowie Vornamen, Bild, Stimme, Erscheinungsbild und Darbietung meines Kindes, die während des Besuchs der Fußballschule sowie bei Events in dessen Rahmen gefertigt werden, für die Zwecke der Öffentlichkeitsarbeit des Vereins verwendet werden dürfen."
           key={form.key("agree")}
           {...form.getInputProps("agree", { type: "checkbox" })}
         />
@@ -96,7 +91,7 @@ export default function Step5() {
           Einwilligung bis zum Widerruf erfolgten Verarbeitung nicht berührt
           wird.
         </p>
-      </form>
+      </div>
     </div>
   );
 }
