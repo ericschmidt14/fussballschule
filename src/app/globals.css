@@ -64,6 +64,7 @@ a:hover,
   text-shadow: -1px -1px 0 rgb(var(--foreground-rgb)),
     1px -1px 0 rgb(var(--foreground-rgb)), -1px 1px 0 rgb(var(--foreground-rgb)),
     1px 1px 0 rgb(var(--foreground-rgb));
+  /* -webkit-text-stroke: 1px black; */
 }
 
 .muted {
