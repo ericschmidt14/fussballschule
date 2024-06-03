@@ -87,7 +87,12 @@ export default function Step1({
             transitionDuration={500}
             transitionTimingFunction="linear"
           />
-          <p className="small muted">{youths[youth]} Jahre</p>
+          <p
+            className="small muted"
+            style={{ marginTop: "calc(var(--mantine-spacing-xs) / 2)" }}
+          >
+            {youths[youth]} Jahre
+          </p>
         </div>
         <Select
           label="Zeit"

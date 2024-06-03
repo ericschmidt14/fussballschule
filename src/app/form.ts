@@ -6,9 +6,9 @@ export interface FormValues {
   childFirstName: string;
   dob: Date | undefined;
   gender: string;
-  club: string;
-  position: string;
-  misc: string;
+  club?: string;
+  position?: string;
+  misc?: string;
   size: string;
   parentLastName: string;
   parentFirstName: string;
@@ -27,3 +27,35 @@ export interface FormValues {
   recordings: boolean;
   processing: boolean;
 }
+
+export const getInitialValues = () => {
+  return {
+    period: "3",
+    youth: "f",
+    time: "1",
+    childLastName: "",
+    childFirstName: "",
+    dob: undefined,
+    gender: "male",
+    club: "",
+    position: "",
+    misc: "",
+    size: "128",
+    parentLastName: "",
+    parentFirstName: "",
+    street: "",
+    number: "",
+    postalCode: "",
+    city: "",
+    email: "",
+    phone: "",
+    agree: false,
+    name: "",
+    iban: "",
+    bic: "",
+    conditions: false,
+    privacy: false,
+    recordings: false,
+    processing: false,
+  };
+};

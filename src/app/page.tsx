@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Stepper, Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { FormValues } from "./form";
+import { FormValues, getInitialValues } from "./form";
 import Header from "./components/header";
 import Step1 from "./steps/1";
 import Step2 from "./steps/2";
@@ -15,38 +15,8 @@ export default function Home() {
   const [active, setActive] = useState(0);
 
   const form = useForm<FormValues>({
-    mode: "uncontrolled",
     validateInputOnChange: true,
-    initialValues: {
-      period: "3",
-      youth: "f",
-      time: "1",
-      childLastName: "",
-      childFirstName: "",
-      dob: undefined,
-      gender: "male",
-      club: "",
-      position: "",
-      misc: "",
-      size: "128",
-      parentLastName: "",
-      parentFirstName: "",
-      street: "",
-      number: "",
-      postalCode: "",
-      city: "",
-      email: "",
-      phone: "",
-      agree: false,
-      name: "",
-      iban: "",
-      bic: "",
-      conditions: false,
-      privacy: false,
-      recordings: false,
-      processing: false,
-    },
-
+    initialValues: getInitialValues(),
     validate: (values: FormValues) => validateForm(active, values),
   });
 
@@ -59,8 +29,12 @@ export default function Home() {
   return (
     <section className="flex flex-col justify-center items-center">
       <Header />
-      <div className="w-[1080px] my-8">
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <div className="w-[1024px] my-8">
+        <form
+          onSubmit={form.onSubmit((values) =>
+            console.log(JSON.stringify(values, null, 2))
+          )}
+        >
           <Stepper
             active={active}
             allowNextStepsSelect={false}
@@ -115,7 +89,9 @@ export default function Home() {
                 Weiter
               </Button>
             ) : (
-              <Button type="submit">Anmeldung abschicken</Button>
+              <Button type="submit" disabled={!form.isValid()}>
+                Anmeldung abschicken
+              </Button>
             )}
           </div>
         </form>

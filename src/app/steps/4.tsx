@@ -27,8 +27,8 @@ export default function Step4({
         <TextInput
           className="col-span-2"
           label="Name des Kontoinhabers"
-          key={form.key("lastName")}
-          {...form.getInputProps("lastName")}
+          key={form.key("name")}
+          {...form.getInputProps("name")}
         />
         <TextInput
           label="IBAN"
