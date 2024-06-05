@@ -1,101 +1,47 @@
 "use client";
-import { useState } from "react";
-import { Stepper, Button } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { FormValues, getInitialValues } from "./form";
+import { Button, Paper } from "@mantine/core";
 import Header from "./components/header";
-import Step1 from "./steps/1";
-import Step2 from "./steps/2";
-import Step3 from "./steps/3";
-import Step4 from "./steps/4";
-import Step5 from "./steps/5";
-import { validateForm } from "./validation";
+import SignUp from "./components/signUp";
+import Title from "./components/title";
+import { useState } from "react";
 
 export default function Home() {
-  const [active, setActive] = useState(0);
-
-  const form = useForm<FormValues>({
-    validateInputOnChange: true,
-    initialValues: getInitialValues(),
-    validate: (values: FormValues) => validateForm(active, values),
-  });
-
-  const nextStep = () =>
-    setActive((current) => (current < 5 ? current + 1 : current));
-
-  const prevStep = () =>
-    setActive((current) => (current > 0 ? current - 1 : current));
+  const [signUp, setSignUp] = useState(false);
 
   return (
     <section className="flex flex-col justify-center items-center">
       <Header />
-      <div className="w-[1024px] my-8">
-        <form
-          onSubmit={form.onSubmit((values) =>
-            console.log(JSON.stringify(values, null, 2))
-          )}
+      {signUp ? (
+        <SignUp />
+      ) : (
+        <Paper
+          shadow="xl"
+          radius="md"
+          p="xl"
+          className="relative max-w-[520px] m-auto my-16 flex flex-col gap-4"
         >
-          <Stepper
-            active={active}
-            allowNextStepsSelect={false}
-            iconSize={32}
-            size="sm"
-            styles={{
-              content: {
-                position: "relative",
-                margin: "32px auto 16px",
-                padding: "48px 32px",
-                maxWidth: "880px",
-                borderRadius: "var(--mantine-radius-md)",
-                background: "var(--mantine-color-gray-0)",
-                boxShadow: "var(--mantine-shadow-xl)",
-              },
-              separator: {
-                marginInline: "var(--mantine-spacing-xs)",
-              },
-            }}
-          >
-            <Stepper.Step label="Zeitraum & Termin">
-              <Step1 form={form} />
-            </Stepper.Step>
-            <Stepper.Step label="Teilnehmendes Kind">
-              <Step2 form={form} />
-            </Stepper.Step>
-            <Stepper.Step label="Erziehungsberechtigter">
-              <Step3 form={form} />
-            </Stepper.Step>
-            <Stepper.Step label="Zahlungsinformationen">
-              <Step4 form={form} />
-            </Stepper.Step>
-            <Stepper.Step label="Bestätigung">
-              <Step5 form={form} />
-            </Stepper.Step>
-            <Stepper.Completed>
-              <b>Anmeldung erfolgreich abgeschlossen!</b> Bitte überprüfen Sie
-              das Postfach der angegebenen Mail für weitere Informationen.
-            </Stepper.Completed>
-          </Stepper>
-
-          <div className="max-w-[880px] m-auto flex justify-between px-4">
-            {active > 0 ? (
-              <Button variant="light" onClick={prevStep}>
-                Zurück
-              </Button>
-            ) : (
-              <div />
-            )}
-            {active < 4 ? (
-              <Button onClick={nextStep} disabled={!form.isValid()}>
-                Weiter
-              </Button>
-            ) : (
-              <Button type="submit" disabled={!form.isValid()}>
-                Anmeldung abschicken
-              </Button>
-            )}
-          </div>
-        </form>
-      </div>
+          <Title text="Anmeldung zur 1. FCN Fussballschule" />
+          <p>
+            In unserer Fußballschule trainieren junge Fußballspieler/-innen
+            zwischen 7 und 13 Jahren unter professionellen Trainingsbedingungen.
+            Die Einheiten gelten als zusätzliches Fördertraining neben dem
+            Vereinstraining. Dabei steht der Spaß und die Leidenschaft für den
+            Fußball im Vordergrund!
+          </p>
+          <p>
+            Bei Fragen stehen wir gerne unter <a href="">+49 911 940 79 375</a>{" "}
+            bzw. <a href="">fussballschule@fcn.de</a> zur Verfügung.
+          </p>
+          <Button onClick={() => setSignUp(true)} className="my-4">
+            Jetzt anmelden
+          </Button>
+          <p className="muted small">
+            <b>Achtung!</b> Die Teilnehmerzahl ist begrenzt. Sie erhalten eine
+            Rückmeldung per E-Mail, ob Ihre Anmeldung berücksichtigt werden
+            konnte.
+          </p>
+        </Paper>
+      )}
     </section>
   );
 }

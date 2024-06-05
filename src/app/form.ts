@@ -10,6 +10,7 @@ export interface FormValues {
   position?: string;
   misc?: string;
   size: string;
+  membership?: string;
   parentLastName: string;
   parentFirstName: string;
   street: string;
@@ -32,7 +33,7 @@ export const getInitialValues = () => {
   return {
     period: "3",
     youth: "f",
-    time: "1",
+    time: "Mo",
     childLastName: "",
     childFirstName: "",
     dob: undefined,
@@ -41,6 +42,7 @@ export const getInitialValues = () => {
     position: "",
     misc: "",
     size: "128",
+    membership: "",
     parentLastName: "",
     parentFirstName: "",
     street: "",

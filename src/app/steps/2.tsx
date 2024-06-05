@@ -13,6 +13,7 @@ import {
 import Label from "../components/label";
 import { DatePickerInput, DatesProvider } from "@mantine/dates";
 import { FormValues } from "../form";
+import { FormRow, FormWrapper } from "../components/form";
 
 export default function Step2({
   form,
@@ -24,9 +25,9 @@ export default function Step2({
   return (
     <DatesProvider settings={{ locale: "de" }}>
       <FocusTrap>
-        <div className="flex flex-col gap-8">
+        <FormWrapper>
           <Title text="Angaben zum teilnehmenden Kind" />
-          <div className="grid grid-cols-2 gap-4">
+          <FormRow>
             <TextInput
               label="Nachname"
               key={form.key("childLastName")}
@@ -37,6 +38,8 @@ export default function Step2({
               key={form.key("childFirstName")}
               {...form.getInputProps("childFirstName")}
             />
+          </FormRow>
+          <FormRow>
             <DatePickerInput
               defaultDate={new Date(2010, 1)}
               defaultLevel="decade"
@@ -60,6 +63,8 @@ export default function Step2({
                 transitionTimingFunction="linear"
               />
             </div>
+          </FormRow>
+          <FormRow>
             <TextInput
               label="Verein"
               description="(optional)"
@@ -74,33 +79,48 @@ export default function Step2({
               key={form.key("position")}
               {...form.getInputProps("position")}
             />
-            <Textarea
-              className="col-span-2"
-              label="Besonderheiten (Allergien, Krankheiten, Medikamente etc.)"
-              description="(optional)"
-              key={form.key("misc")}
-              {...form.getInputProps("misc")}
+          </FormRow>
+          <Textarea
+            label="Besonderheiten"
+            description="(optional)"
+            placeholder="Allergien, Krankheiten, Medikamente etc."
+            key={form.key("misc")}
+            {...form.getInputProps("misc")}
+          />
+          <div>
+            <Label text="Konfektionsgröße" />
+            <SegmentedControl
+              key={form.key("size")}
+              {...form.getInputProps("size")}
+              fullWidth
+              data={["128", "140", "152", "164", "176", "S", "M"]}
+              transitionTimingFunction="linear"
             />
-            <div className="col-span-2">
-              <Label text="Konfektionsgröße" />
-              <SegmentedControl
-                key={form.key("size")}
-                {...form.getInputProps("size")}
-                fullWidth
-                data={["128", "140", "152", "164", "176", "S", "M"]}
-                transitionTimingFunction="linear"
-              />
-              <p className="mt-2 col-span-2 muted small">
-                Mit der Anmeldung erhalten Sie als Teilnehmer ein exklusives
-                Trainings-Outfit der Fußballschule. Dieses besteht aus einem
-                Trikot, Hose und Stutzen sowie einer 1. FC Nürnberg Trinkflasche
-                und wird gegen eine Gebühr von 39,00€ vor Ort an den Teilnehmer
-                vergeben. Ein Umtausch ist für 14 Tage und nur in einem
-                angemessenen Zustand möglich.
+            <p className="mt-2 col-span-2 muted small">
+              Mit der Anmeldung erhalten Sie als Teilnehmer ein exklusives
+              Trainings-Outfit der Fußballschule. Dieses besteht aus einem
+              Trikot, Hose und Stutzen sowie einer 1. FC Nürnberg Trinkflasche
+              und wird gegen eine Gebühr von 39,00€ vor Ort an den Teilnehmer
+              vergeben. Ein Umtausch ist für 14 Tage und nur in einem
+              angemessenen Zustand möglich.
+            </p>
+          </div>
+          <FormRow>
+            <img src="/mitglied.png" className="col-span-2 rounded" />
+            <div>
+              <h3>50% Rabatt</h3>
+              <p>
+                Auf den 1. Monat für Club-Mitglieder – auch bei Neuanmeldung
               </p>
             </div>
-          </div>
-        </div>
+            <TextInput
+              label="Mitgliedsnummer"
+              description="(optional)"
+              key={form.key("membership")}
+              {...form.getInputProps("membership")}
+            />
+          </FormRow>
+        </FormWrapper>
       </FocusTrap>
     </DatesProvider>
   );

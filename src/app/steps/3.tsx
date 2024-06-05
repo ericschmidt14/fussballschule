@@ -2,6 +2,7 @@ import { UseFormReturnType } from "@mantine/form";
 import Title from "../components/title";
 import { FocusTrap, TextInput } from "@mantine/core";
 import { FormValues } from "../form";
+import { FormRow, FormWrapper } from "../components/form";
 
 export default function Step3({
   form,
@@ -10,9 +11,9 @@ export default function Step3({
 }) {
   return (
     <FocusTrap>
-      <div className="flex flex-col gap-8">
+      <FormWrapper>
         <Title text="Angaben zum Erziehungsberechtigten" />
-        <div className="grid grid-cols-2 gap-4">
+        <FormRow>
           <TextInput
             label="Nachname"
             key={form.key("parentLastName")}
@@ -23,32 +24,34 @@ export default function Step3({
             key={form.key("parentFirstName")}
             {...form.getInputProps("parentFirstName")}
           />
-          <div className="col-span-2 grid grid-cols-4 gap-4">
-            <TextInput
-              className="col-span-3"
-              label="Straße"
-              key={form.key("street")}
-              {...form.getInputProps("street")}
-            />
-            <TextInput
-              label="Hausnummer"
-              key={form.key("number")}
-              {...form.getInputProps("number")}
-            />
-          </div>
-          <div className="col-span-2 grid grid-cols-4 gap-4">
-            <TextInput
-              label="Postleitzahl"
-              key={form.key("postalCode")}
-              {...form.getInputProps("postalCode")}
-            />
-            <TextInput
-              className="col-span-3"
-              label="Ort"
-              key={form.key("city")}
-              {...form.getInputProps("city")}
-            />
-          </div>
+        </FormRow>
+        <FormRow asymmetric>
+          <TextInput
+            className="col-span-3"
+            label="Straße"
+            key={form.key("street")}
+            {...form.getInputProps("street")}
+          />
+          <TextInput
+            label="Hausnummer"
+            key={form.key("number")}
+            {...form.getInputProps("number")}
+          />
+        </FormRow>
+        <FormRow asymmetric>
+          <TextInput
+            label="Postleitzahl"
+            key={form.key("postalCode")}
+            {...form.getInputProps("postalCode")}
+          />
+          <TextInput
+            className="col-span-3"
+            label="Ort"
+            key={form.key("city")}
+            {...form.getInputProps("city")}
+          />
+        </FormRow>
+        <FormRow>
           <TextInput
             label="E-Mail"
             description="Für Ihre Anmeldebestätigung"
@@ -61,8 +64,8 @@ export default function Step3({
             key={form.key("phone")}
             {...form.getInputProps("phone")}
           />
-        </div>
-      </div>
+        </FormRow>
+      </FormWrapper>
     </FocusTrap>
   );
 }

@@ -4,6 +4,7 @@ import { SegmentedControl, Select } from "@mantine/core";
 import Label from "../components/label";
 import { UseFormReturnType } from "@mantine/form";
 import { FormValues } from "../form";
+import { FormRow, FormWrapper } from "../components/form";
 
 export default function Step1({
   form,
@@ -28,21 +29,21 @@ export default function Step1({
     [key: string]: { label: string; value: string }[];
   } = {
     f: [
-      { label: "Montag, 15:00 – 16:30 Uhr", value: "1" },
-      { label: "Dienstag, 15:00 – 16:30 Uhr", value: "2" },
+      { label: "Montag, 15:00 – 16:30 Uhr", value: "Mo" },
+      { label: "Dienstag, 15:00 – 16:30 Uhr", value: "Di" },
     ],
 
     e: [
-      { label: "Montag, 15:00 – 16:30 Uhr", value: "3" },
-      { label: "Dienstag, 15:00 – 16:30 Uhr", value: "4" },
-      { label: "Mittwoch, 15:00 – 16:30 Uhr", value: "5" },
+      { label: "Montag, 15:00 – 16:30 Uhr", value: "Mo" },
+      { label: "Dienstag, 15:00 – 16:30 Uhr", value: "Di" },
+      { label: "Mittwoch, 15:00 – 16:30 Uhr", value: "Mi" },
     ],
 
-    d: [{ label: "Freitag, 15:00 – 16:30 Uhr", value: "6" }],
-    t: [{ label: "Mittwoch, 15:00 – 16:30 Uhr", value: "7" }],
+    d: [{ label: "Freitag, 15:00 – 16:30 Uhr", value: "Fr" }],
+    t: [{ label: "Mittwoch, 15:00 – 16:30 Uhr", value: "Mi" }],
   };
   return (
-    <div className="flex flex-col gap-8">
+    <FormWrapper>
       <Title text="Zeitraum & Termin" />
       <SegmentedControl
         key={form.key("period")}
@@ -71,7 +72,7 @@ export default function Step1({
         transitionDuration={500}
         transitionTimingFunction="linear"
       />
-      <div className="grid grid-cols-2 gap-4">
+      <FormRow>
         <div>
           <Label text="Jugend" />
           <SegmentedControl
@@ -100,13 +101,13 @@ export default function Step1({
           {...form.getInputProps("time")}
           data={times[youth]}
         />
-      </div>
+      </FormRow>
       <div>
         <p className="small">
           <b>Das Training findet ganzjährig statt</b>, ausgenommen sind
           Feiertage und Schulferien. Eine Anmeldung ist ganzjährig möglich.
         </p>
       </div>
-    </div>
+    </FormWrapper>
   );
 }

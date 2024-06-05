@@ -4,6 +4,7 @@ import Title from "../components/title";
 import { Checkbox, Collapse, Divider, Spoiler } from "@mantine/core";
 import { FormValues } from "../form";
 import { useState } from "react";
+import { FormWrapper } from "../components/form";
 
 export default function Step5({
   form,
@@ -14,7 +15,7 @@ export default function Step5({
   const [privacy, setPrivacy] = useState(false);
 
   return (
-    <div className="flex flex-col gap-8">
+    <FormWrapper>
       <Title text="Zusammenfassung & Bestätigung" />
       <Spoiler
         maxHeight={120}
@@ -141,6 +142,6 @@ export default function Step5({
           wird.
         </p>
       </div>
-    </div>
+    </FormWrapper>
   );
 }

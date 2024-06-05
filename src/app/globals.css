@@ -12,7 +12,7 @@ body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
     160deg,
-    rgba(var(--background-rgb), 1) 33%,
+    rgb(var(--background-rgb)) 33%,
     var(--mantine-color-gray-5) 100%
   );
 }
@@ -56,15 +56,6 @@ a:hover,
     calc(var(--mantine-font-size-sm) - calc(0.125rem * var(--mantine-scale)))
   );
   line-height: 1.2;
-}
-
-.outline {
-  color: white;
-  background-color: white;
-  text-shadow: -1px -1px 0 rgb(var(--foreground-rgb)),
-    1px -1px 0 rgb(var(--foreground-rgb)), -1px 1px 0 rgb(var(--foreground-rgb)),
-    1px 1px 0 rgb(var(--foreground-rgb));
-  /* -webkit-text-stroke: 1px black; */
 }
 
 .muted {

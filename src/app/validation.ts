@@ -24,8 +24,8 @@ export function validateForm(active: number, values: FormValues) {
         values.name,
         "Bitte vollständigen Namen angeben"
       ),
-      iban: ibanValidation(values.iban),
-      bic: values.bic.trim().length < 1 ? "Ungültige BIC" : null,
+      // iban: ibanValidation(values.iban),
+      // bic: values.bic.trim().length < 1 ? "Ungültige BIC" : null,
     };
   }
 
