@@ -42,7 +42,6 @@ export default function SignUp() {
             position: "relative",
             margin: "32px auto 16px",
             padding: "48px 32px",
-            maxWidth: "880px",
             borderRadius: "var(--mantine-radius-md)",
             background: "var(--mantine-color-gray-0)",
             boxShadow: "var(--mantine-shadow-xl)",
@@ -50,6 +49,7 @@ export default function SignUp() {
           stepBody: {
             display: "none",
           },
+          stepIcon: { boxShadow: "var(--mantine-shadow-xl)" },
           separator: {
             marginLeft: rem(-2),
             marginRight: rem(-2),
@@ -72,14 +72,14 @@ export default function SignUp() {
           <Step5 form={form} />
         </Stepper.Step>
         <Stepper.Completed>
-          <b>Anmeldung erfolgreich abgeschlossen!</b> Bitte überprüfen Sie das
+          <b>Anmeldung erfolgreich abgeschickt!</b> Bitte überprüfen Sie das
           Postfach der angegebenen Mail für weitere Informationen.
         </Stepper.Completed>
       </Stepper>
 
       <div className="w-full m-auto flex justify-between px-4">
         {active > 0 ? (
-          <Button variant="light" onClick={prevStep}>
+          <Button variant="white" onClick={prevStep}>
             Zurück
           </Button>
         ) : (
@@ -90,7 +90,7 @@ export default function SignUp() {
             Weiter
           </Button>
         ) : (
-          <Button type="submit" disabled={!form.isValid()}>
+          <Button type="submit" disabled={!form.isValid()} onClick={nextStep}>
             Anmeldung abschicken
           </Button>
         )}

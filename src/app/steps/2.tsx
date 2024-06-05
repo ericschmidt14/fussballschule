@@ -106,7 +106,12 @@ export default function Step2({
             </p>
           </div>
           <FormRow>
-            <img src="/mitglied.png" className="col-span-2 rounded" />
+            {/*eslint-disable-next-line @next/next/no-img-element*/}
+            <img
+              src="/mitglied.png"
+              alt="Werde Mitglied"
+              className="col-span-2 rounded"
+            />
             <div>
               <h3>50% Rabatt</h3>
               <p>

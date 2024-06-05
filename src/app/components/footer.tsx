@@ -4,16 +4,16 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <MantineProvider>
-      <footer className="px-8 py-4 justify-between items-center flex flex-col-reverse md:flex-row gap-4 bg-black text-white">
+      <footer className="px-8 py-4 justify-between items-center flex flex-col-reverse md:flex-row gap-4 text-white">
         <div className="justify-start items-start gap-8 flex">
           <p className="hidden md:block">
             <b>© 1. FC Nürnberg e.V.</b>
           </p>
-          <nav className="flex gap-4">
+          {/* <nav className="flex gap-4">
             <a href="">FAQs</a>
             <a href="">Impressum</a>
             <a href="">Datenschutz</a>
-          </nav>
+          </nav> */}
         </div>
         <div className="justify-start items-center gap-3 flex">
           <Image src="/logo.svg" alt="1. FCN Logo" width={48} height={48} />
