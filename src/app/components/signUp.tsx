@@ -28,9 +28,17 @@ export default function SignUp() {
   return (
     <form
       className="w-full md:w-[768px] p-4 flex flex-col"
-      onSubmit={form.onSubmit((values) =>
-        console.log(JSON.stringify(values, null, 2))
-      )}
+      onSubmit={form.onSubmit((values) => {
+        console.log(JSON.stringify(values, null, 2));
+        fetch("https://stage.comoso.biz:8443/FCNWebApi/api/SoccerSchool", {
+          method: "POST",
+          headers: { Accept: "*/*", "Content-Type": "application/json" },
+          body: JSON.stringify(values, null, 2),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.error(error));
+      })}
     >
       <Stepper
         active={active}

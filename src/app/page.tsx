@@ -1,6 +1,5 @@
 "use client";
 import { Button, Paper } from "@mantine/core";
-import Header from "./components/header";
 import SignUp from "./components/signUp";
 import Title from "./components/title";
 import { useState } from "react";
@@ -10,7 +9,6 @@ export default function Home() {
 
   return (
     <section className="flex flex-col justify-center items-center">
-      <Header />
       {signUp ? (
         <SignUp />
       ) : (

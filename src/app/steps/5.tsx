@@ -1,10 +1,11 @@
 "use client";
 import { UseFormReturnType } from "@mantine/form";
 import Title from "../components/title";
-import { Checkbox, Collapse, Divider, Spoiler } from "@mantine/core";
+import { Checkbox, Collapse, Divider, Spoiler, Table } from "@mantine/core";
 import { FormValues } from "../form";
 import { useState } from "react";
 import { FormWrapper } from "../components/form";
+import { genders, youths } from "../values";
 
 export default function Step5({
   form,
@@ -22,32 +23,7 @@ export default function Step5({
         showLabel="Mehr anzeigen"
         hideLabel="Weniger anzeigen"
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-        qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit
-        amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        <Summary form={form} />
       </Spoiler>
       <div className="flex flex-col gap-4">
         <Divider label="Allgemeine Hinweise" labelPosition="center" />
@@ -143,5 +119,103 @@ export default function Step5({
         </p>
       </div>
     </FormWrapper>
+  );
+}
+
+function Summary({ form }: { form: UseFormReturnType<FormValues> }) {
+  const data = [
+    {
+      description: "Zeitraum",
+      value: `${form.getValues().period} Monate`,
+    },
+    {
+      description: "Termin",
+      value: `${youths[form.getValues().youth]} – ${
+        form.getValues().time
+      }, 15:00 – 16:30 Uhr`,
+    },
+    {
+      description: "Name",
+      value: `${form.getValues().childFirstName} ${
+        form.getValues().childLastName
+      }`,
+    },
+    {
+      description: "Geschlecht",
+      value: genders[form.getValues().gender],
+    },
+    {
+      description: "Geburtstag",
+      value: "",
+    },
+    {
+      description: "Verein",
+      value: form.getValues().club,
+    },
+    {
+      description: "Position",
+      value: form.getValues().position,
+    },
+    {
+      description: "Besonderheiten",
+      value: form.getValues().misc,
+    },
+    {
+      description: "Konfektionsgröße",
+      value: form.getValues().size,
+    },
+    {
+      description: "Mitgliedsnummer",
+      value: form.getValues().membership,
+    },
+    {
+      description: "Name",
+      value: `${form.getValues().parentFirstName} ${
+        form.getValues().parentLastName
+      }`,
+    },
+    {
+      description: "Adresse",
+      value: `${form.getValues().street} ${form.getValues().number}, ${
+        form.getValues().postalCode
+      } ${form.getValues().city}`,
+    },
+    {
+      description: "E-Mail",
+      value: form.getValues().email,
+    },
+    {
+      description: "Handy / Telefon",
+      value: form.getValues().phone,
+    },
+    {
+      description: "Kontoinhaber",
+      value: form.getValues().name,
+    },
+    {
+      description: "IBAN",
+      value: form.getValues().iban,
+    },
+    {
+      description: "BIC",
+      value: form.getValues().bic,
+    },
+  ];
+
+  return (
+    <Table>
+      <Table.Tbody>
+        {data.map((entry, index) => {
+          return (
+            <Table.Tr key={index}>
+              <Table.Td>
+                <b>{entry.description}</b>
+              </Table.Td>
+              <Table.Td>{entry.value ? entry.value : ""}</Table.Td>
+            </Table.Tr>
+          );
+        })}
+      </Table.Tbody>
+    </Table>
   );
 }

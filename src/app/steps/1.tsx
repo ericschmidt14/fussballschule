@@ -5,6 +5,7 @@ import Label from "../components/label";
 import { UseFormReturnType } from "@mantine/form";
 import { FormValues } from "../form";
 import { FormRow, FormWrapper } from "../components/form";
+import { times, ageGroups } from "../values";
 
 export default function Step1({
   form,
@@ -18,30 +19,6 @@ export default function Step1({
     form.setFieldValue("time", times[value][0].value);
   });
 
-  const youths: { [key: string]: string } = {
-    f: "7 – 8",
-    e: "9 – 10",
-    d: "10 – 12",
-    t: "10 – 12",
-  };
-
-  const times: {
-    [key: string]: { label: string; value: string }[];
-  } = {
-    f: [
-      { label: "Montag, 15:00 – 16:30 Uhr", value: "Mo" },
-      { label: "Dienstag, 15:00 – 16:30 Uhr", value: "Di" },
-    ],
-
-    e: [
-      { label: "Montag, 15:00 – 16:30 Uhr", value: "Mo" },
-      { label: "Dienstag, 15:00 – 16:30 Uhr", value: "Di" },
-      { label: "Mittwoch, 15:00 – 16:30 Uhr", value: "Mi" },
-    ],
-
-    d: [{ label: "Freitag, 15:00 – 16:30 Uhr", value: "Fr" }],
-    t: [{ label: "Mittwoch, 15:00 – 16:30 Uhr", value: "Mi" }],
-  };
   return (
     <FormWrapper>
       <Title text="Zeitraum & Termin" />
@@ -92,7 +69,7 @@ export default function Step1({
             className="small muted"
             style={{ marginTop: "calc(var(--mantine-spacing-xs) / 2)" }}
           >
-            {youths[youth]} Jahre
+            {ageGroups[youth]} Jahre
           </p>
         </div>
         <Select

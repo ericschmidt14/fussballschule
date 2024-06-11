@@ -7,11 +7,28 @@ export function validateForm(active: number, values: FormValues) {
     };
   }
 
+  if (active === 1) {
+    return {
+      childLastName: notEmptyValidation(
+        values.childLastName,
+        "Bitte Nachnamen angeben"
+      ),
+      childFirstName: notEmptyValidation(
+        values.childFirstName,
+        "Bitte Vornamen angeben"
+      ),
+    };
+  }
+
   if (active === 2) {
     return {
       parentLastName: notEmptyValidation(
         values.parentLastName,
         "Bitte Nachnamen angeben"
+      ),
+      parentFirstName: notEmptyValidation(
+        values.parentFirstName,
+        "Bitte Vornamen angeben"
       ),
       postalCode: postalCodeValidation(values.postalCode),
     };
@@ -25,7 +42,7 @@ export function validateForm(active: number, values: FormValues) {
         "Bitte vollständigen Namen angeben"
       ),
       // iban: ibanValidation(values.iban),
-      // bic: values.bic.trim().length < 1 ? "Ungültige BIC" : null,
+      bic: notEmptyValidation(values.bic, "Bitte BIC angeben"),
     };
   }
 

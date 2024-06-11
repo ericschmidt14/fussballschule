@@ -5,6 +5,7 @@ import "@mantine/dates/styles.css";
 import "./globals.css";
 import { ColorSchemeScript, MantineProvider, createTheme } from "@mantine/core";
 import Footer from "./components/footer";
+import Header from "./components/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,12 +43,15 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body className={inter.className}>
-        <main
-          className={`min-h-screen ${inter.className} flex flex-col justify-between`}
-        >
-          <MantineProvider theme={theme}>{children}</MantineProvider>
-          <Footer />
-        </main>
+        <MantineProvider theme={theme}>
+          <main className="min-h-screen flex flex-col justify-between">
+            <div className="flex flex-col justify-between">
+              <Header />
+              {children}
+            </div>
+            <Footer />
+          </main>
+        </MantineProvider>
       </body>
     </html>
   );
