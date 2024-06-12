@@ -16,6 +16,8 @@ import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { SoccerSchoolEntry, SoccerSchoolParticipant } from "../form";
 import {
+  IconArticleOff,
+  IconCameraOff,
   IconCopy,
   IconFileInvoice,
   IconMail,
@@ -89,6 +91,12 @@ export default function Page() {
               defaultValue="Anmeldung bestätigt"
             />
           </Table.Td>
+          <Table.Td>
+            <IconCameraOff color="gray" />
+          </Table.Td>
+          <Table.Td>
+            <IconArticleOff color="gray" />
+          </Table.Td>
           <Table.Td align="right">
             <Button
               variant="light"
@@ -115,6 +123,8 @@ export default function Page() {
           <Table.Th>Alter</Table.Th>
           <Table.Th>Größe</Table.Th>
           <Table.Th>Status</Table.Th>
+          <Table.Th />
+          <Table.Th />
           <Table.Th />
         </Table.Tr>
       </Table.Thead>

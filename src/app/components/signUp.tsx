@@ -29,14 +29,19 @@ export default function SignUp() {
     <form
       className="w-full md:w-[768px] p-4 flex flex-col"
       onSubmit={form.onSubmit((values) => {
-        console.log(JSON.stringify(values, null, 2));
         fetch("https://stage.comoso.biz:8443/FCNWebApi/api/SoccerSchool", {
           method: "POST",
-          headers: { Accept: "*/*", "Content-Type": "application/json" },
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json; charset=UTF-8",
+          },
           body: JSON.stringify(values, null, 2),
         })
           .then((res) => res.json())
-          .then((data) => console.log(data))
+          .then((data) => {
+            console.log(data);
+            nextStep();
+          })
           .catch((error) => console.error(error));
       })}
     >
@@ -81,7 +86,7 @@ export default function SignUp() {
         </Stepper.Step>
         <Stepper.Completed>
           <b>Anmeldung erfolgreich abgeschickt!</b> Bitte überprüfen Sie das
-          Postfach der angegebenen Mail für weitere Informationen.
+          Postfach der angegebenen Mailadresse für weitere Informationen.
         </Stepper.Completed>
       </Stepper>
 
@@ -93,12 +98,13 @@ export default function SignUp() {
         ) : (
           <div />
         )}
-        {active < 4 ? (
+        {active < 4 && (
           <Button onClick={nextStep} disabled={!form.isValid()}>
             Weiter
           </Button>
-        ) : (
-          <Button type="submit" disabled={!form.isValid()} onClick={nextStep}>
+        )}
+        {active === 4 && (
+          <Button type="submit" disabled={!form.isValid()}>
             Anmeldung abschicken
           </Button>
         )}

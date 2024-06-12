@@ -30,7 +30,12 @@ export function validateForm(active: number, values: FormValues) {
         values.parentFirstName,
         "Bitte Vornamen angeben"
       ),
+      street: notEmptyValidation(values.street, "Bitte Straße angeben"),
+      number: notEmptyValidation(values.number, "Bitte Hausnummer angeben"),
       postalCode: postalCodeValidation(values.postalCode),
+      city: notEmptyValidation(values.street, "Bitte Ort angeben"),
+      email: emailValidation(values.email),
+      phone: notEmptyValidation(values.phone, "Bitte Rufnummer angeben"),
     };
   }
 
@@ -41,7 +46,7 @@ export function validateForm(active: number, values: FormValues) {
         values.name,
         "Bitte vollständigen Namen angeben"
       ),
-      // iban: ibanValidation(values.iban),
+      iban: ibanValidation(values.iban),
       bic: notEmptyValidation(values.bic, "Bitte BIC angeben"),
     };
   }
@@ -64,6 +69,10 @@ const postalCodeValidation = (code: string) => {
   return /^[0-9][0-9][0-9][0-9][0-9]$/.test(code)
     ? null
     : "Ungültige Postleitzahl";
+};
+
+const emailValidation = (email: string) => {
+  return /\S+@\S+\.\S+/.test(email) ? null : "Ungültige Mailadresse";
 };
 
 const ibanValidation = (iban: string) => {
