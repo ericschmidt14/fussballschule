@@ -11,7 +11,7 @@ export const getInitialValues = () => {
     position: "",
     misc: "",
     size: "128",
-    membership: "",
+    memberno: "",
     parentLastName: "",
     parentFirstName: "",
     street: "",
@@ -43,7 +43,7 @@ export interface FormValues {
   position?: string;
   misc?: string;
   size: string;
-  membership?: string;
+  memberno?: string;
   parentLastName: string;
   parentFirstName: string;
   street: string;
@@ -63,9 +63,10 @@ export interface FormValues {
 }
 
 export interface SoccerSchoolEntry {
-  id: number;
-  lastName: string;
-  firstName: string;
+  parentToken: string;
+  parentLastName: string;
+  parentFirstName: string;
+  memberno: string;
   street: string;
   number: string;
   postalCode: string;
@@ -81,24 +82,22 @@ export interface SoccerSchoolEntry {
   privacy: boolean;
   recordings: boolean;
   processing: boolean;
-  created: string;
-  mailing: null;
-  confirmed: null;
-  token: string;
-  childs: Array<SoccerSchoolParticipant>;
-}
-
-export interface SoccerSchoolParticipant {
-  id: number;
-  parentId: number;
+  parentCreated: string;
+  mailing: string | null;
+  confirmed: string | null;
+  started: string | null;
+  ended: string | null;
+  billing: string | null;
   youth: string;
   time: string;
-  lastName: string;
-  firstName: string;
+  childLastName: string;
+  childFirstName: string;
   gender: string;
+  dob: string;
   club: string;
   position: string;
   size: string;
   misc: string;
-  created: string;
+  childCreated: string;
+  childToken: string;
 }

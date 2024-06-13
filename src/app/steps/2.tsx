@@ -106,12 +106,6 @@ export default function Step2({
             </p>
           </div>
           <FormRow>
-            {/*eslint-disable-next-line @next/next/no-img-element*/}
-            <img
-              src="/mitglied.png"
-              alt="Werde Mitglied"
-              className="col-span-2 rounded"
-            />
             <div>
               <h3>50% Rabatt</h3>
               <p>
@@ -121,8 +115,8 @@ export default function Step2({
             <TextInput
               label="Mitgliedsnummer"
               description="(optional)"
-              key={form.key("membership")}
-              {...form.getInputProps("membership")}
+              key={form.key("memberno")}
+              {...form.getInputProps("memberno")}
             />
           </FormRow>
         </FormWrapper>

@@ -5,6 +5,7 @@ import {
   Divider,
   Drawer,
   Paper,
+  Popover,
   Select,
   Table,
   Tabs,
@@ -14,7 +15,7 @@ import Title from "../components/title";
 import { differenceInYears, format } from "date-fns";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
-import { SoccerSchoolEntry, SoccerSchoolParticipant } from "../form";
+import { SoccerSchoolEntry } from "../form";
 import {
   IconArticleOff,
   IconCameraOff,
@@ -22,15 +23,15 @@ import {
   IconFileInvoice,
   IconMail,
   IconPhone,
+  IconTrash,
 } from "@tabler/icons-react";
 import { copy } from "../utils";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<string | null>("f");
-  const [activeDrawer, setActiveDrawer] = useState(0);
+  const [activeDrawer, setActiveDrawer] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
   const [data, setData] = useState<SoccerSchoolEntry[]>();
-  const [participants, setParticipants] = useState<SoccerSchoolParticipant[]>();
 
   useEffect(() => {
     fetch("https://stage.comoso.biz:8443/FCNWebApi/api/SoccerSchool", {
@@ -44,40 +45,31 @@ export default function Page() {
       .catch((error) => console.error(error));
   }, []);
 
-  useEffect(() => {
-    data &&
-      setParticipants(
-        data.map((el) => el.childs).reduce((a, c) => a.concat(c), [])
-      );
-  }, [data]);
-
   const rows =
-    participants &&
-    participants
+    data &&
+    data
       // .filter((el) => {
       //   return el.youth.toLowerCase() === activeTab;
       // })
       .map((participant, index) => (
         <Table.Tr key={index}>
           <Table.Td>{index + 1}</Table.Td>
-          <Table.Td>{participant.firstName}</Table.Td>
-          <Table.Td>{participant.lastName}</Table.Td>
+          <Table.Td>{participant.childFirstName}</Table.Td>
+          <Table.Td>{participant.childLastName}</Table.Td>
           <Table.Td>
-            {format(new Date(participant.created), "dd.MM.yyyy")}
+            {format(new Date(participant.childCreated), "dd.MM.yyyy")}
             <Badge variant="transparent" color="gray">
               Noch 12 Einheiten
             </Badge>
           </Table.Td>
           <Table.Td>
-            <Tooltip
-              label={format(new Date(participant.created), "dd.MM.yyyy")}
+            {/* <Tooltip
+              label={format(new Date(participant.dob), "dd.MM.yyyy")}
               position="left"
               withArrow
             >
-              <p>
-                {differenceInYears(new Date(), new Date(participant.created))}
-              </p>
-            </Tooltip>
+              <p>{differenceInYears(new Date(), new Date(participant.dob))}</p>
+            </Tooltip> */}
           </Table.Td>
           <Table.Td>{participant.size}</Table.Td>
           <Table.Td>
@@ -92,10 +84,10 @@ export default function Page() {
             />
           </Table.Td>
           <Table.Td>
-            <IconCameraOff color="gray" />
+            {!participant.recordings && <IconCameraOff color="gray" />}
           </Table.Td>
           <Table.Td>
-            <IconArticleOff color="gray" />
+            {!participant.processing && <IconArticleOff color="gray" />}
           </Table.Td>
           <Table.Td align="right">
             <Button
@@ -103,7 +95,7 @@ export default function Page() {
               size="xs"
               onClick={() => {
                 open();
-                setActiveDrawer(participant.id);
+                setActiveDrawer(participant.childToken);
               }}
             >
               Mehr anzeigen
@@ -158,14 +150,10 @@ export default function Page() {
         overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
       >
         <DrawerContent
-          parent={
+          data={
             activeDrawer &&
             data.filter(
-              (parent) =>
-                parent.id ===
-                participants?.filter(
-                  (participant) => participant.id === activeDrawer
-                )[0].parentId
+              (participant) => participant.childToken === activeDrawer
             )[0]
           }
         />
@@ -176,9 +164,11 @@ export default function Page() {
   );
 }
 
-function DrawerContent({ parent }: { parent: SoccerSchoolEntry | 0 }) {
+function DrawerContent({ data }: { data: SoccerSchoolEntry | "" }) {
+  const [opened, setOpened] = useState(false);
+
   return (
-    parent !== 0 && (
+    data !== "" && (
       <>
         <Divider
           label="Angaben zum Erziehungsberechtigten"
@@ -191,7 +181,7 @@ function DrawerContent({ parent }: { parent: SoccerSchoolEntry | 0 }) {
                 <b>Name</b>
               </Table.Td>
               <Table.Td>
-                {parent.firstName} {parent.lastName}
+                {data.parentFirstName} {data.parentLastName}
               </Table.Td>
             </Table.Tr>
             <Table.Tr>
@@ -199,17 +189,16 @@ function DrawerContent({ parent }: { parent: SoccerSchoolEntry | 0 }) {
                 <b>Adresse</b>
               </Table.Td>
               <Table.Td>
-                {parent.street} {parent.number}, {parent.postalCode}{" "}
-                {parent.city}
+                {data.street} {data.number}, {data.postalCode} {data.city}
               </Table.Td>
             </Table.Tr>
             <Table.Tr>
               <Table.Td colSpan={2} align="center">
                 <Button variant="transparent" size="xs">
-                  <IconMail size={16} className="mr-2" /> {parent.email}
+                  <IconMail size={16} className="mr-2" /> {data.email}
                 </Button>
                 <Button variant="transparent" size="xs">
-                  <IconPhone size={16} className="mr-2" /> {parent.phone}
+                  <IconPhone size={16} className="mr-2" /> {data.phone}
                 </Button>
               </Table.Td>
             </Table.Tr>
@@ -233,12 +222,12 @@ function DrawerContent({ parent }: { parent: SoccerSchoolEntry | 0 }) {
               <Table.Td>
                 <b>IBAN</b>
               </Table.Td>
-              <Table.Td>{parent.iban}</Table.Td>
+              <Table.Td>{data.iban}</Table.Td>
               <Table.Td>
                 <Button
                   variant="transparent"
                   size="xs"
-                  onClick={() => copy(parent.iban)}
+                  onClick={() => copy(data.iban)}
                 >
                   <IconCopy size={14} />
                 </Button>
@@ -248,12 +237,12 @@ function DrawerContent({ parent }: { parent: SoccerSchoolEntry | 0 }) {
               <Table.Td>
                 <b>BIC</b>
               </Table.Td>
-              <Table.Td>{parent.bic}</Table.Td>
+              <Table.Td>{data.bic}</Table.Td>
               <Table.Td>
                 <Button
                   variant="transparent"
                   size="xs"
-                  onClick={() => copy(parent.bic)}
+                  onClick={() => copy(data.bic)}
                 >
                   <IconCopy size={14} />
                 </Button>
@@ -261,9 +250,32 @@ function DrawerContent({ parent }: { parent: SoccerSchoolEntry | 0 }) {
             </Table.Tr>
           </Table.Tbody>
         </Table>
-        <Button fullWidth>
+        <Button variant="light" className="mt-8" fullWidth>
           <IconFileInvoice size={16} className="mr-2" /> Rechnung erstellen
         </Button>
+        <Popover opened={opened} onChange={setOpened} width="target" withArrow>
+          <Popover.Target>
+            <Button
+              fullWidth
+              className="mt-2"
+              onClick={() => setOpened((o) => !o)}
+            >
+              <IconTrash size={16} className="mr-2" /> Eintrag löschen
+            </Button>
+          </Popover.Target>
+          <Popover.Dropdown className="flex justify-between items-baseline">
+            <p>Anmeldung wirklich löschen?</p>
+            <div>
+              <Button>Ja</Button>
+              <Button
+                variant="transparent"
+                onClick={() => setOpened((o) => !o)}
+              >
+                Nein
+              </Button>
+            </div>
+          </Popover.Dropdown>
+        </Popover>
       </>
     )
   );

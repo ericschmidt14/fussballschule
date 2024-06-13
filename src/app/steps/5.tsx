@@ -166,7 +166,7 @@ function Summary({ form }: { form: UseFormReturnType<FormValues> }) {
     },
     {
       description: "Mitgliedsnummer",
-      value: form.getValues().membership,
+      value: form.getValues().memberno,
     },
     {
       description: "Name",

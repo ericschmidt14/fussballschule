@@ -17,6 +17,7 @@ export function validateForm(active: number, values: FormValues) {
         values.childFirstName,
         "Bitte Vornamen angeben"
       ),
+      dob: values.dob ? null : "Bitte Geburtsdatum angeben",
     };
   }
 

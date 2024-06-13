@@ -37,7 +37,7 @@ export default function SignUp() {
           },
           body: JSON.stringify(values, null, 2),
         })
-          .then((res) => res.json())
+          .then((res) => res.text())
           .then((data) => {
             console.log(data);
             nextStep();
