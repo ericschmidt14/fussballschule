@@ -1,4 +1,5 @@
 "use client";
+import { SOCCER_SCHOOL_API } from "../constants";
 import {
   Badge,
   Button,
@@ -25,7 +26,7 @@ import {
   IconPhone,
   IconTrash,
 } from "@tabler/icons-react";
-import { copy } from "../utils";
+import { convertDOB, copy } from "../utils";
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState<string | null>("f");
@@ -34,7 +35,7 @@ export default function Page() {
   const [data, setData] = useState<SoccerSchoolEntry[]>();
 
   useEffect(() => {
-    fetch("https://stage.comoso.biz:8443/FCNWebApi/api/SoccerSchool", {
+    fetch(SOCCER_SCHOOL_API, {
       method: "GET",
       headers: { Accept: "*/*" },
     })
@@ -63,13 +64,13 @@ export default function Page() {
             </Badge>
           </Table.Td>
           <Table.Td>
-            {/* <Tooltip
-              label={format(new Date(participant.dob), "dd.MM.yyyy")}
+            <Tooltip
+              label={convertDOB(participant.dob)}
               position="left"
               withArrow
             >
               <p>{differenceInYears(new Date(), new Date(participant.dob))}</p>
-            </Tooltip> */}
+            </Tooltip>
           </Table.Td>
           <Table.Td>{participant.size}</Table.Td>
           <Table.Td>
@@ -84,10 +85,26 @@ export default function Page() {
             />
           </Table.Td>
           <Table.Td>
-            {!participant.recordings && <IconCameraOff color="gray" />}
+            {!participant.recordings && (
+              <Tooltip
+                label="Keine Ton-, Foto- & Videoaufnahmen"
+                position="left"
+                withArrow
+              >
+                <IconCameraOff color="gray" />
+              </Tooltip>
+            )}
           </Table.Td>
           <Table.Td>
-            {!participant.processing && <IconArticleOff color="gray" />}
+            {!participant.processing && (
+              <Tooltip
+                label="Keine Verarbeitung personenbezogener Daten"
+                position="left"
+                withArrow
+              >
+                <IconArticleOff color="gray" />
+              </Tooltip>
+            )}
           </Table.Td>
           <Table.Td align="right">
             <Button

@@ -10,8 +10,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: url("/bg.png") center center no-repeat;
-  background-size: cover;
+  background-image: linear-gradient(160deg, #dfe9f3 0%, white 100%);
 }
 
 h1 {

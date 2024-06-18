@@ -1,4 +1,5 @@
 "use client";
+import { SOCCER_SCHOOL_API } from "../constants";
 import { useState } from "react";
 import { Stepper, Button, rem } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -30,7 +31,7 @@ export default function Home() {
       <form
         className="w-full md:w-[768px] p-4 flex flex-col"
         onSubmit={form.onSubmit((values) => {
-          fetch("https://stage.comoso.biz:8443/FCNWebApi/api/SoccerSchool", {
+          fetch(SOCCER_SCHOOL_API, {
             method: "POST",
             headers: {
               Accept: "*/*",
@@ -59,6 +60,10 @@ export default function Home() {
               borderRadius: "var(--mantine-radius-md)",
               background: "var(--mantine-color-gray-0)",
               boxShadow: "var(--mantine-shadow-xl)",
+            },
+            steps: {
+              width: "260px",
+              margin: "0 auto",
             },
             stepBody: {
               display: "none",

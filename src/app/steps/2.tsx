@@ -45,7 +45,7 @@ export default function Step2({
               defaultLevel="decade"
               valueFormat="DD.MM.YYYY"
               label="Geburtstag"
-              placeholder="04.05.1900"
+              placeholder="TT.MM.JJJJ"
               key={form.key("dob")}
               {...form.getInputProps("dob")}
             />

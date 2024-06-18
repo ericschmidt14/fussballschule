@@ -25,11 +25,9 @@ export default function Home() {
               Anmeldung berücksichtigt werden konnte.
             </p>
             <Contact />
-            <Link href="/signup/">
-              <Button className="my-4" fullWidth>
-                Weitere Anmeldung ausfüllen
-              </Button>
-            </Link>
+            <Button className="my-4" fullWidth component={Link} href="/signup/">
+              Weitere Anmeldung ausfüllen
+            </Button>
           </>
         ) : (
           <>
@@ -42,11 +40,9 @@ export default function Home() {
               die Leidenschaft für den Fußball im Vordergrund!
             </p>
             <Contact />
-            <Link href="/signup/">
-              <Button className="my-4" fullWidth>
-                Jetzt anmelden
-              </Button>
-            </Link>
+            <Button className="my-4" fullWidth component={Link} href="/signup/">
+              Jetzt anmelden
+            </Button>
             <p className="muted small">
               <b>Achtung!</b> Die Teilnehmerzahl ist begrenzt. Sie erhalten eine
               Rückmeldung per E-Mail, ob Ihre Anmeldung berücksichtigt werden
@@ -62,8 +58,10 @@ export default function Home() {
 function Contact() {
   return (
     <p>
-      Bei Fragen stehen wir gerne unter <a href="">+49 911 940 79 375</a> bzw.{" "}
-      <a href="">fussballschule@fcn.de</a> zur Verfügung.
+      Bei Fragen stehen wir gerne unter{" "}
+      <a href="tel:091194079375">+49 911 940 79 375</a> bzw.{" "}
+      <a href="mailto:fussballschule@fcn.de">fussballschule@fcn.de</a> zur
+      Verfügung.
     </p>
   );
 }
