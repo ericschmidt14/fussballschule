@@ -12,7 +12,7 @@ import Step4 from "./../steps/4";
 import Step5 from "./../steps/5";
 
 export default function Home() {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(4);
 
   const form = useForm<FormValues>({
     validateInputOnChange: true,
@@ -62,7 +62,7 @@ export default function Home() {
               boxShadow: "var(--mantine-shadow-xl)",
             },
             steps: {
-              width: "260px",
+              width: "320px",
               margin: "0 auto",
             },
             stepBody: {

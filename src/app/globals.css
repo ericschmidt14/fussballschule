@@ -10,7 +10,18 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-image: linear-gradient(160deg, #dfe9f3 0%, white 100%);
+  background-color: #e4e4e1;
+  background-image: radial-gradient(
+      at top center,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(0, 0, 0, 0.03) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(143, 152, 157, 0.6) 100%
+    );
+  background-blend-mode: normal, multiply;
 }
 
 h1 {
@@ -46,12 +57,28 @@ a:hover,
   cursor: pointer;
 }
 
-.small {
+.small,
+article.small p {
   font-size: var(
     --input-description-size,
     calc(var(--mantine-font-size-sm) - calc(0.125rem * var(--mantine-scale)))
   );
   line-height: 1.2;
+}
+
+article.small p {
+  margin-block-end: calc(0.4rem * var(--mantine-scale));
+}
+
+article.small h4 {
+  font-weight: bold;
+  margin-block-end: calc(0.4rem * var(--mantine-scale));
+}
+
+article.small li {
+  list-style-type: disc;
+  margin-left: 1rem;
+  margin-block-end: calc(0.4rem * var(--mantine-scale));
 }
 
 .muted {
