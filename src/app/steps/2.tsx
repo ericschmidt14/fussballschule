@@ -109,7 +109,8 @@ export default function Step2({
             <div>
               <h3>50% Rabatt</h3>
               <p>
-                Auf den 1. Monat für Club-Mitglieder – auch bei Neuanmeldung
+                Auf den 1. Monat für Club-Mitglieder <br /> – auch bei
+                Neuanmeldung
               </p>
             </div>
             <TextInput

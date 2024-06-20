@@ -60,7 +60,7 @@ export default function Page() {
           <Table.Td>
             {format(new Date(participant.childCreated), "dd.MM.yyyy")}
             <Badge variant="transparent" color="gray">
-              Noch 12 Einheiten
+              Noch {+participant.period * 4} Einheiten
             </Badge>
           </Table.Td>
           <Table.Td>

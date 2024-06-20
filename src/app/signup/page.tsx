@@ -98,7 +98,7 @@ export default function Home() {
 
         <div className="w-full m-auto flex justify-between px-4">
           {active > 0 ? (
-            <Button variant="white" onClick={prevStep}>
+            <Button variant="transparent" onClick={prevStep}>
               Zurück
             </Button>
           ) : (

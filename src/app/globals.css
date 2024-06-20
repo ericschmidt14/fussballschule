@@ -63,7 +63,7 @@ article.small p {
     --input-description-size,
     calc(var(--mantine-font-size-sm) - calc(0.125rem * var(--mantine-scale)))
   );
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
 article.small p {

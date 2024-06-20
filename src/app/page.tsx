@@ -1,8 +1,11 @@
 "use client";
+import { SOCCER_SCHOOL_API } from "./constants";
 import { Button, Paper } from "@mantine/core";
 import Title from "./components/title";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { SoccerSchoolEntry } from "./form";
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -17,18 +20,7 @@ export default function Home() {
         className="relative max-w-[520px] m-auto my-16 flex flex-col gap-4"
       >
         {token ? (
-          <>
-            <Title text="Vielen Dank für Ihre Anmeldung" />
-            <p>
-              Wir haben Ihre Anmeldung für {token} erhalten und werden diese
-              prüfen. Sie erhalten eine Rückmeldung per E-Mail sobald Ihre
-              Anmeldung berücksichtigt werden konnte.
-            </p>
-            <Contact />
-            <Button className="my-4" fullWidth component={Link} href="/signup/">
-              Weitere Anmeldung ausfüllen
-            </Button>
-          </>
+          <WithToken token={token} />
         ) : (
           <>
             <Title text="Anmeldung zur 1. FCN Fussballschule" />
@@ -52,6 +44,43 @@ export default function Home() {
         )}
       </Paper>
     </section>
+  );
+}
+
+function WithToken({ token }: { token: string }) {
+  const [data, setData] = useState<SoccerSchoolEntry>();
+
+  useEffect(() => {
+    fetch(`${SOCCER_SCHOOL_API}/${token}`, {
+      method: "GET",
+      headers: { Accept: "*/*" },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setData(res[0]);
+      })
+      .catch((error) => console.error(error));
+  }, [token]);
+
+  return (
+    <>
+      <Title text="Vielen Dank" />
+      <p>
+        <b>
+          Wir haben Ihre Anmeldung{" "}
+          {data &&
+            `für ${data?.childFirstName}
+          ${data?.childLastName} `}
+          erhalten und werden diese prüfen.
+        </b>{" "}
+        Sie erhalten eine Rückmeldung per E-Mail sobald Ihre Anmeldung
+        berücksichtigt werden konnte.
+      </p>
+      <Contact />
+      <Button className="my-4" fullWidth component={Link} href="/signup/">
+        Weitere Anmeldung ausfüllen
+      </Button>
+    </>
   );
 }
 

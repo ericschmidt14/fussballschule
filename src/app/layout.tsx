@@ -6,6 +6,7 @@ import "./globals.css";
 import { ColorSchemeScript, MantineProvider, createTheme } from "@mantine/core";
 import Footer from "./components/footer";
 import Header from "./components/header";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,13 +45,15 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <MantineProvider theme={theme}>
-          <main className="min-h-screen flex flex-col justify-between">
-            <div className="flex flex-col justify-between">
-              <Header />
-              {children}
-            </div>
-            <Footer />
-          </main>
+          <Suspense>
+            <main className="min-h-screen flex flex-col justify-between">
+              <div className="flex flex-col justify-between">
+                <Header />
+                {children}
+              </div>
+              <Footer />
+            </main>
+          </Suspense>
         </MantineProvider>
       </body>
     </html>
