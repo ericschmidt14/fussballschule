@@ -27,9 +27,10 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import { convertDOB, copy } from "../utils";
+import { genders } from "../values";
 
 export default function Page() {
-  const [activeTab, setActiveTab] = useState<string | null>("f");
+  const [activeTab, setActiveTab] = useState<string | null>("a");
   const [activeDrawer, setActiveDrawer] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
   const [data, setData] = useState<SoccerSchoolEntry[]>();
@@ -49,9 +50,10 @@ export default function Page() {
   const rows =
     data &&
     data
-      // .filter((el) => {
-      //   return el.youth.toLowerCase() === activeTab;
-      // })
+      .filter((el) => {
+        return activeTab === "a" ? true : el.youth.toLowerCase() === activeTab;
+      })
+      .reverse()
       .map((participant, index) => (
         <Table.Tr key={index}>
           <Table.Td>{index + 1}</Table.Td>
@@ -60,7 +62,7 @@ export default function Page() {
           <Table.Td>
             {format(new Date(participant.childCreated), "dd.MM.yyyy")}
             <Badge variant="transparent" color="gray">
-              Noch {+participant.period * 4} Einheiten
+              {+participant.period * 4} Einheiten
             </Badge>
           </Table.Td>
           <Table.Td>
@@ -72,6 +74,7 @@ export default function Page() {
               <p>{differenceInYears(new Date(), new Date(participant.dob))}</p>
             </Tooltip>
           </Table.Td>
+          <Table.Td>{genders[participant.gender]}</Table.Td>
           <Table.Td>{participant.size}</Table.Td>
           <Table.Td>
             <Select
@@ -80,8 +83,9 @@ export default function Page() {
                 "Anmeldung bestätigt",
                 "Zahlung bestätigt",
                 "Training gestartet",
+                "Training beendet",
               ]}
-              defaultValue="Anmeldung bestätigt"
+              defaultValue="Anmeldung eingegangen"
             />
           </Table.Td>
           <Table.Td>
@@ -130,6 +134,7 @@ export default function Page() {
           <Table.Th>Nachname</Table.Th>
           <Table.Th>Angemeldet seit</Table.Th>
           <Table.Th>Alter</Table.Th>
+          <Table.Th>Geschlecht</Table.Th>
           <Table.Th>Größe</Table.Th>
           <Table.Th>Status</Table.Th>
           <Table.Th />
@@ -147,11 +152,13 @@ export default function Page() {
         <Title text="Anmeldungen zur Fussballschule" />
         <Tabs value={activeTab} onChange={setActiveTab}>
           <Tabs.List>
+            <Tabs.Tab value="a">Alle</Tabs.Tab>
             <Tabs.Tab value="f">F-Jugend</Tabs.Tab>
             <Tabs.Tab value="e">E-Jugend</Tabs.Tab>
             <Tabs.Tab value="d">D-Jugend</Tabs.Tab>
             <Tabs.Tab value="t">Torwarttraining</Tabs.Tab>
           </Tabs.List>
+          <Tabs.Panel value="a">{table}</Tabs.Panel>
           <Tabs.Panel value="f">{table}</Tabs.Panel>
           <Tabs.Panel value="e">{table}</Tabs.Panel>
           <Tabs.Panel value="d">{table}</Tabs.Panel>
@@ -187,9 +194,20 @@ function DrawerContent({ data }: { data: SoccerSchoolEntry | "" }) {
   return (
     data !== "" && (
       <>
+        <Table>
+          <Table.Tbody>
+            <Table.Tr>
+              <Table.Td>
+                <b>Mitgliedsnummer</b>
+              </Table.Td>
+              <Table.Td>{data.memberno}</Table.Td>
+            </Table.Tr>
+          </Table.Tbody>
+        </Table>
         <Divider
           label="Angaben zum Erziehungsberechtigten"
           labelPosition="left"
+          className="mt-8"
         />
         <Table>
           <Table.Tbody>
