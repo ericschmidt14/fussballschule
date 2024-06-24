@@ -77,6 +77,8 @@ export default function Step1({
           key={form.key("time")}
           {...form.getInputProps("time")}
           data={times[youth]}
+          allowDeselect={false}
+          checkIconPosition="right"
         />
       </FormRow>
       <div>
