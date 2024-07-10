@@ -31,7 +31,7 @@ export default function Step1({
             label: (
               <>
                 <h3>3 Monate à 55€</h3>
-                <p className="muted">12 Trainingseinheiten</p>
+                <p className="muted">12 Einheiten</p>
               </>
             ),
             value: "3",
@@ -40,7 +40,7 @@ export default function Step1({
             label: (
               <>
                 <h3>6 Monate à 50€</h3>
-                <p className="muted">24 Trainingseinheiten</p>
+                <p className="muted">24 Einheiten</p>
               </>
             ),
             value: "6",

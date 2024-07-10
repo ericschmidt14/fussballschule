@@ -5,6 +5,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { UseFormReturnType } from "@mantine/form";
 import Title from "../components/title";
 import {
+  Fieldset,
   FocusTrap,
   SegmentedControl,
   TextInput,
@@ -105,21 +106,23 @@ export default function Step2({
               angemessenen Zustand möglich.
             </p>
           </div>
-          <FormRow>
-            <div>
-              <h3>50% Rabatt</h3>
-              <p>
-                Auf den 1. Monat für Club-Mitglieder <br /> – auch bei
-                Neuanmeldung
-              </p>
-            </div>
-            <TextInput
-              label="Mitgliedsnummer"
-              description="(optional)"
-              key={form.key("memberno")}
-              {...form.getInputProps("memberno")}
-            />
-          </FormRow>
+          <Fieldset legend="Mitgliederbereich">
+            <FormRow>
+              <div>
+                <h3>50% Rabatt</h3>
+                <p>
+                  Auf den 1. Monat für Club-Mitglieder <br /> – auch bei
+                  Neuanmeldung
+                </p>
+              </div>
+              <TextInput
+                label="Mitgliedsnummer"
+                description="(optional)"
+                key={form.key("memberno")}
+                {...form.getInputProps("memberno")}
+              />
+            </FormRow>
+          </Fieldset>
         </FormWrapper>
       </FocusTrap>
     </DatesProvider>

@@ -84,3 +84,9 @@ article.small li {
 .muted {
   color: var(--mantine-color-dimmed);
 }
+
+@media (max-width: 640px) {
+  h3 {
+    font-size: 14px;
+  }
+}

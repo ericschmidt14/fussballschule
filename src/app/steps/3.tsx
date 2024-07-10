@@ -33,14 +33,14 @@ export default function Step3({
             {...form.getInputProps("street")}
           />
           <TextInput
-            label="Hausnummer"
+            label="Nr"
             key={form.key("number")}
             {...form.getInputProps("number")}
           />
         </FormRow>
         <FormRow asymmetric>
           <TextInput
-            label="Postleitzahl"
+            label="PLZ"
             key={form.key("postalCode")}
             {...form.getInputProps("postalCode")}
           />

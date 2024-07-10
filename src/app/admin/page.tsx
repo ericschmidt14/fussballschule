@@ -1,24 +1,28 @@
 "use client";
-import { SOCCER_SCHOOL_API } from "../constants";
-import { Drawer, Paper, Table, Tabs } from "@mantine/core";
+import { Button, Drawer, Paper, Table, Tabs } from "@mantine/core";
 import Title from "../components/title";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { SoccerSchoolEntry } from "../form";
 import { DrawerContent } from "./components/drawer";
 import { ParticipantRow } from "./components/row";
+import { youths } from "../values";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { IconBrandWindows } from "@tabler/icons-react";
 
 export default function Page() {
+  const { data: session } = useSession();
   const ALL_PARTICIPANTS = "a";
   const [activeTab, setActiveTab] = useState<string | null>(ALL_PARTICIPANTS);
   const [activeDrawer, setActiveDrawer] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
   const [data, setData] = useState<SoccerSchoolEntry[]>();
 
+  const tabs = [ALL_PARTICIPANTS, "f", "e", "d", "t"];
+
   useEffect(() => {
-    fetch(SOCCER_SCHOOL_API, {
+    fetch("/api/soccerschool", {
       method: "GET",
-      headers: { Accept: "*/*" },
     })
       .then((res) => res.json())
       .then((res) => {
@@ -67,23 +71,50 @@ export default function Page() {
     </Table>
   );
 
+  if (!session) {
+    return (
+      <Paper
+        className="relative w-[520px] my-8 mx-auto p-8 flex flex-col gap-4"
+        radius="md"
+      >
+        <p className="text-center">Für den Admin-Bereich bitte anmelden.</p>
+        <Button
+          variant="light"
+          onClick={() => signIn("azure-ad")}
+          leftSection={<IconBrandWindows />}
+        >
+          Mit Microsoft Account einloggen
+        </Button>
+      </Paper>
+    );
+  }
+
   return data ? (
     <>
+      <div className="flex justify-between px-8">
+        <p>{session?.user?.name}</p>
+        <Button onClick={() => signOut()}>Ausloggen</Button>
+      </div>
       <Paper className="relative m-8 p-4 pt-8" radius="md">
         <Title text="Anmeldungen zur Fussballschule" />
+
         <Tabs value={activeTab} onChange={setActiveTab}>
           <Tabs.List>
-            <Tabs.Tab value={ALL_PARTICIPANTS}>Alle</Tabs.Tab>
-            <Tabs.Tab value="f">F-Jugend</Tabs.Tab>
-            <Tabs.Tab value="e">E-Jugend</Tabs.Tab>
-            <Tabs.Tab value="d">D-Jugend</Tabs.Tab>
-            <Tabs.Tab value="t">Torwarttraining</Tabs.Tab>
+            {tabs.map((t) => {
+              return (
+                <Tabs.Tab key={t} value={t}>
+                  {youths[t]}
+                </Tabs.Tab>
+              );
+            })}
           </Tabs.List>
-          <Tabs.Panel value={ALL_PARTICIPANTS}>{table}</Tabs.Panel>
-          <Tabs.Panel value="f">{table}</Tabs.Panel>
-          <Tabs.Panel value="e">{table}</Tabs.Panel>
-          <Tabs.Panel value="d">{table}</Tabs.Panel>
-          <Tabs.Panel value="t">{table}</Tabs.Panel>
+          {tabs.map((t) => {
+            return (
+              <Tabs.Panel key={t} value={t}>
+                {table}
+              </Tabs.Panel>
+            );
+          })}
         </Tabs>
       </Paper>
 

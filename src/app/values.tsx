@@ -1,4 +1,5 @@
 export const youths: { [key: string]: string } = {
+  a: "Alle",
   f: "F-Jugend",
   e: "E-Jugend",
   d: "D-Jugend",

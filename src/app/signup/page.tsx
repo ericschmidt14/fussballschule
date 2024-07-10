@@ -1,5 +1,4 @@
 "use client";
-import { SOCCER_SCHOOL_API } from "../constants";
 import { useState } from "react";
 import { Stepper, Button, rem } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -31,12 +30,8 @@ export default function Home() {
       <form
         className="w-full md:w-[768px] p-4 flex flex-col"
         onSubmit={form.onSubmit((values) => {
-          fetch(SOCCER_SCHOOL_API, {
+          fetch("/api/soccerschool", {
             method: "POST",
-            headers: {
-              Accept: "*/*",
-              "Content-Type": "application/json; charset=UTF-8",
-            },
             body: JSON.stringify(values, null, 2),
           })
             .then((res) => res.text())
