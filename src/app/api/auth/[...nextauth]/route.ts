@@ -21,13 +21,18 @@ const handler = NextAuth({
     async redirect({ url, baseUrl }) {
       return `${baseUrl}/admin`;
     },
-    async session({ session, user, token }) {
-      session.user = user;
+    async session({ session, token }) {
+      session.user!.email = token.email;
+      session.user!.name = token.name;
+      session.user!.image = token.picture;
       return session;
     },
     async jwt({ token, user, account, profile }) {
-      if (user) {
+      if (user && profile) {
         token.id = user.id;
+        token.email = profile.email;
+        token.name = profile.name;
+        token.picture = profile.image;
       }
       return token;
     },

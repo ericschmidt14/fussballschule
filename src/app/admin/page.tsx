@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { Button, Drawer, Paper, Table, Tabs } from "@mantine/core";
 import Title from "../components/title";
@@ -8,10 +9,10 @@ import { DrawerContent } from "./components/drawer";
 import { ParticipantRow } from "./components/row";
 import { youths } from "../values";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { IconBrandWindows } from "@tabler/icons-react";
+import { IconBrandWindows, IconLogout } from "@tabler/icons-react";
 
 export default function Page() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const ALL_PARTICIPANTS = "a";
   const [activeTab, setActiveTab] = useState<string | null>(ALL_PARTICIPANTS);
   const [activeDrawer, setActiveDrawer] = useState("");
@@ -71,6 +72,10 @@ export default function Page() {
     </Table>
   );
 
+  if (status === "loading") {
+    return <></>;
+  }
+
   if (!session) {
     return (
       <Paper
@@ -91,9 +96,30 @@ export default function Page() {
 
   return data ? (
     <>
-      <div className="flex justify-between px-8">
-        <p>{session?.user?.name}</p>
-        <Button onClick={() => signOut()}>Ausloggen</Button>
+      <div className="flex justify-between px-8 pt-2">
+        <div className="flex gap-2 items-center">
+          {session?.user?.image && (
+            <img
+              src={session?.user?.image}
+              alt="User Image"
+              className="rounded-full"
+            />
+          )}
+          <div>
+            <p>
+              <b>{session?.user?.name}</b>
+            </p>
+            <p>{session?.user?.email}</p>
+          </div>
+        </div>
+        <Button
+          variant="light"
+          color="gray"
+          onClick={() => signOut()}
+          leftSection={<IconLogout />}
+        >
+          Ausloggen
+        </Button>
       </div>
       <Paper className="relative m-8 p-4 pt-8" radius="md">
         <Title text="Anmeldungen zur Fussballschule" />
