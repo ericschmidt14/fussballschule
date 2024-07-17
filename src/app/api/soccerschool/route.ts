@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       Accept: "*/*",
       "Content-Type": "application/json; charset=UTF-8",
     },
-    body: JSON.stringify(request.json()),
+    body: JSON.stringify(await request.json()),
   });
   const token = await res.text();
 
