@@ -24,6 +24,12 @@ body {
   background-blend-mode: normal, multiply;
 }
 
+#lp {
+  background: url(/bg.png) center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 h1 {
   font-size: 72px;
   font-weight: bold;
@@ -44,14 +50,14 @@ p {
   font-size: 14px;
 }
 
-a,
+a:not(.logo):not(.mantine-Button-root),
 .link {
   font-size: 14px;
   color: var(--mantine-color-dimmed);
   transition: var(--transition);
 }
 
-a:hover,
+a:not(.logo):not(.mantine-Button-root):hover,
 .link:hover {
   color: var(--mantine-color-anchor);
   cursor: pointer;

@@ -8,8 +8,8 @@ import { SoccerSchoolEntry } from "../form";
 import { DrawerContent } from "./components/drawer";
 import { ParticipantRow } from "./components/row";
 import { youths } from "../values";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { IconBrandWindows, IconLogout } from "@tabler/icons-react";
+import { signOut, useSession } from "next-auth/react";
+import { IconLogout } from "@tabler/icons-react";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -77,53 +77,13 @@ export default function Page() {
   }
 
   if (!session) {
-    return (
-      <Paper
-        className="relative w-[520px] my-8 mx-auto p-8 flex flex-col gap-4"
-        radius="md"
-      >
-        <p className="text-center">Für den Admin-Bereich bitte anmelden.</p>
-        <Button
-          variant="light"
-          onClick={() => signIn("azure-ad")}
-          leftSection={<IconBrandWindows />}
-        >
-          Mit Microsoft Account einloggen
-        </Button>
-      </Paper>
-    );
+    return <></>;
   }
 
   return data ? (
     <>
-      <div className="flex justify-between px-8 pt-2">
-        <div className="flex gap-2 items-center">
-          {session?.user?.image && (
-            <img
-              src={session?.user?.image}
-              alt="User Image"
-              className="rounded-full"
-            />
-          )}
-          <div>
-            <p>
-              <b>{session?.user?.name}</b>
-            </p>
-            <p>{session?.user?.email}</p>
-          </div>
-        </div>
-        <Button
-          variant="light"
-          color="gray"
-          onClick={() => signOut()}
-          leftSection={<IconLogout />}
-        >
-          Ausloggen
-        </Button>
-      </div>
       <Paper className="relative m-8 p-4 pt-8" radius="md">
         <Title text="Anmeldungen zur Fussballschule" />
-
         <Tabs value={activeTab} onChange={setActiveTab}>
           <Tabs.List>
             {tabs.map((t) => {
