@@ -58,7 +58,6 @@ export function ParticipantRow({
           onChange={(value) => setState(value)}
           allowDeselect={false}
           checkIconPosition="right"
-          disabled
         />
       </Table.Td>
       <Table.Td>
