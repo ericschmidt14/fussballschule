@@ -64,13 +64,24 @@ function WithToken({ token }: { token: string }) {
   const [data, setData] = useState<SoccerSchoolEntry>();
 
   useEffect(() => {
-    fetch(`${SOCCER_SCHOOL_API}/${token}`, {
+    fetch(`/api/token/${token}`, {
       method: "GET",
       headers: { Accept: "*/*" },
     })
       .then((res) => res.json())
       .then((res) => {
         setData(res[0]);
+      })
+      .catch((error) => console.error(error));
+
+    fetch("/api/confirm", {
+      method: "POST",
+      headers: { Accept: "*/*" },
+      body: JSON.stringify({ token: token }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
       })
       .catch((error) => console.error(error));
   }, [token]);
@@ -80,13 +91,13 @@ function WithToken({ token }: { token: string }) {
       <Title text="Vielen Dank" />
       <p>
         <b>
-          Wir haben Ihre Anmeldung{" "}
+          Die Anmeldung{" "}
           {data &&
             `für ${data?.childFirstName}
           ${data?.childLastName} `}
-          erhalten und werden diese prüfen.
+          wurde bestätigt und wird nun geprüft.
         </b>{" "}
-        Sie erhalten eine Rückmeldung per E-Mail sobald Ihre Anmeldung
+        Sie erhalten eine Rückmeldung per E-Mail sobald die Anmeldung
         berücksichtigt werden konnte.
       </p>
       <Contact />
