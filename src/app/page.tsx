@@ -1,6 +1,6 @@
 "use client";
 import { SOCCER_SCHOOL_API } from "./constants";
-import { Button, Paper } from "@mantine/core";
+import { Button, Divider, Paper, Spoiler, Table } from "@mantine/core";
 import Title from "./components/title";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { SoccerSchoolEntry } from "./form";
 import Footer from "./components/footer";
 import Header from "./components/header";
+import { genders, youths } from "./values";
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -101,6 +102,11 @@ function WithToken({ token }: { token: string }) {
         berücksichtigt werden konnte.
       </p>
       <Contact />
+      {data && (
+        <>
+          <Summary entry={data} />
+        </>
+      )}
       <Button className="my-4" fullWidth component={Link} href="/signup/">
         Weitere Anmeldung ausfüllen
       </Button>
@@ -116,5 +122,103 @@ function Contact() {
       <a href="mailto:fussballschule@fcn.de">fussballschule@fcn.de</a> zur
       Verfügung.
     </p>
+  );
+}
+
+function Summary({ entry }: { entry: SoccerSchoolEntry }) {
+  const data = [
+    {
+      description: "Zeitraum",
+      value: `${entry.period} Monate`,
+    },
+    {
+      description: "Termin",
+      value: `${youths[entry.youth]} – ${entry.time}, 15:00 – 16:30 Uhr`,
+    },
+    {
+      description: "Name",
+      value: `${entry.childFirstName} ${entry.childLastName}`,
+    },
+    {
+      description: "Geschlecht",
+      value: genders[entry.gender],
+    },
+    {
+      description: "Geburtstag",
+      value: "",
+    },
+    {
+      description: "Verein",
+      value: entry.club,
+    },
+    {
+      description: "Position",
+      value: entry.position,
+    },
+    {
+      description: "Besonderheiten",
+      value: entry.misc,
+    },
+    {
+      description: "Konfektionsgröße",
+      value: entry.size,
+    },
+    {
+      description: "Mitgliedsnummer",
+      value: entry.memberno,
+    },
+    {
+      description: "Name",
+      value: `${entry.parentFirstName} ${entry.parentLastName}`,
+    },
+    {
+      description: "Adresse",
+      value: `${entry.street} ${entry.number}, ${entry.postalCode} ${entry.city}`,
+    },
+    {
+      description: "E-Mail",
+      value: entry.email,
+    },
+    {
+      description: "Handy / Telefon",
+      value: entry.phone,
+    },
+    {
+      description: "Kontoinhaber",
+      value: entry.name,
+    },
+    {
+      description: "IBAN",
+      value: entry.iban,
+    },
+    {
+      description: "BIC",
+      value: entry.bic,
+    },
+  ];
+
+  return (
+    <Spoiler
+      maxHeight={200}
+      showLabel="Mehr anzeigen"
+      hideLabel="Weniger anzeigen"
+      className="mt-4"
+    >
+      <Divider label="Zusammenfassung" labelPosition="left" />
+      <Table>
+        <Table.Tbody>
+          {data.map((entry, index) => {
+            return (
+              <Table.Tr key={index}>
+                <Table.Td>
+                  <b>{entry.description}</b>
+                </Table.Td>
+                <Table.Td>{entry.value ? entry.value : ""}</Table.Td>
+              </Table.Tr>
+            );
+          })}
+        </Table.Tbody>
+      </Table>
+    </Spoiler>
   );
 }
