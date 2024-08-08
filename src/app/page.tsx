@@ -145,7 +145,7 @@ function Summary({ entry }: { entry: SoccerSchoolEntry }) {
     },
     {
       description: "Geburtstag",
-      value: "",
+      value: entry.dob,
     },
     {
       description: "Verein",

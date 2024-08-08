@@ -1,3 +1,8 @@
+export const prices: { [key: string]: string } = {
+  3: "55€",
+  6: "50€",
+};
+
 export const youths: { [key: string]: string } = {
   a: "Alle",
   f: "F-Jugend",

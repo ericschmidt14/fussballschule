@@ -130,7 +130,7 @@ function Summary({ form }: { form: UseFormReturnType<FormValues> }) {
     },
     {
       description: "Geburtstag",
-      value: "",
+      value: form.getValues().dob?.toDateString(),
     },
     {
       description: "Verein",

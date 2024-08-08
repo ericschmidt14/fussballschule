@@ -2,21 +2,18 @@
 "use client";
 import { Button, Drawer, Paper, Table, Tabs } from "@mantine/core";
 import Title from "../components/title";
-import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { SoccerSchoolEntry } from "../form";
-import { DrawerContent } from "./components/drawer";
 import { ParticipantRow } from "./components/row";
-import { youths } from "../values";
-import { signOut, useSession } from "next-auth/react";
-import { IconLogout } from "@tabler/icons-react";
+import { prices, youths } from "../values";
+import { useSession } from "next-auth/react";
+import { IconFileTypeCsv } from "@tabler/icons-react";
+import { exportCSV } from "../utils";
 
 export default function Page() {
   const { data: session, status } = useSession();
   const ALL_PARTICIPANTS = "a";
   const [activeTab, setActiveTab] = useState<string | null>(ALL_PARTICIPANTS);
-  const [activeDrawer, setActiveDrawer] = useState("");
-  const [opened, { open, close }] = useDisclosure(false);
   const [data, setData] = useState<SoccerSchoolEntry[]>();
 
   const tabs = [ALL_PARTICIPANTS, "f", "e", "d", "t"];
@@ -42,13 +39,7 @@ export default function Page() {
       })
       .reverse()
       .map((participant, index) => (
-        <ParticipantRow
-          key={index}
-          index={index}
-          participant={participant}
-          setActiveDrawer={setActiveDrawer}
-          open={open}
-        />
+        <ParticipantRow key={index} index={index} participant={participant} />
       ));
 
   const table = (
@@ -81,11 +72,11 @@ export default function Page() {
   }
 
   return data ? (
-    <>
-      <Paper className="relative m-8 p-4 pt-8" radius="md">
-        <Title text="Anmeldungen zur Fussballschule" />
-        <Tabs value={activeTab} onChange={setActiveTab}>
-          <Tabs.List>
+    <Paper className="relative m-8 p-4 pt-8" radius="md">
+      <Title text="Anmeldungen zur Fussballschule" />
+      <Tabs value={activeTab} onChange={setActiveTab}>
+        <Tabs.List className="flex justify-between">
+          <div className="flex">
             {tabs.map((t) => {
               return (
                 <Tabs.Tab key={t} value={t}>
@@ -93,34 +84,39 @@ export default function Page() {
                 </Tabs.Tab>
               );
             })}
-          </Tabs.List>
-          {tabs.map((t) => {
-            return (
-              <Tabs.Panel key={t} value={t}>
-                {table}
-              </Tabs.Panel>
-            );
-          })}
-        </Tabs>
-      </Paper>
-
-      <Drawer
-        opened={opened}
-        onClose={close}
-        title="Details"
-        position="right"
-        overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
-      >
-        <DrawerContent
-          data={
-            activeDrawer &&
-            data.filter(
-              (participant) => participant.childToken === activeDrawer
-            )[0]
-          }
-        />
-      </Drawer>
-    </>
+          </div>
+          <Button
+            variant="transparent"
+            leftSection={<IconFileTypeCsv size={20} />}
+            onClick={() =>
+              exportCSV(
+                JSON.stringify(
+                  data.map((d) => {
+                    return {
+                      Kontoinhaber: d.name,
+                      IBAN: d.iban,
+                      BIC: d.bic,
+                      Betrag: prices[d.period],
+                    };
+                  }),
+                  null,
+                  2
+                )
+              )
+            }
+          >
+            Exportieren
+          </Button>
+        </Tabs.List>
+        {tabs.map((t) => {
+          return (
+            <Tabs.Panel key={t} value={t}>
+              {table}
+            </Tabs.Panel>
+          );
+        })}
+      </Tabs>
+    </Paper>
   ) : (
     <></>
   );

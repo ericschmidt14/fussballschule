@@ -30,7 +30,7 @@ export default function Home() {
       <form
         className="w-full md:w-[768px] p-4 flex flex-col"
         onSubmit={form.onSubmit((values) => {
-          fetch("/api/soccerschool", {
+          fetch("/api/save", {
             method: "POST",
             body: JSON.stringify(values, null, 2),
           })
