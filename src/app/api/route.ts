@@ -1,4 +1,4 @@
-import { SOCCER_SCHOOL_API } from "../../constants";
+import { SOCCER_SCHOOL_API } from "../constants";
 
 export async function GET() {
   const res = await fetch(SOCCER_SCHOOL_API, {

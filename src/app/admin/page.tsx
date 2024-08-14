@@ -1,6 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
-import { Button, Drawer, Paper, Table, Tabs } from "@mantine/core";
+import { Button, Paper, Table, Tabs } from "@mantine/core";
 import Title from "../components/title";
 import { useEffect, useState } from "react";
 import { SoccerSchoolEntry } from "../form";
@@ -9,6 +8,7 @@ import { prices, youths } from "../values";
 import { useSession } from "next-auth/react";
 import { IconFileTypeCsv } from "@tabler/icons-react";
 import { exportCSV } from "../utils";
+import { SOCCER_SCHOOL_API } from "../constants";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -19,7 +19,7 @@ export default function Page() {
   const tabs = [ALL_PARTICIPANTS, "f", "e", "d", "t"];
 
   useEffect(() => {
-    fetch("/api/soccerschool", {
+    fetch("/api", {
       method: "GET",
     })
       .then((res) => res.json())

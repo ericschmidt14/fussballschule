@@ -16,10 +16,46 @@ export function ParticipantRow({
   participant: SoccerSchoolEntry;
 }) {
   const checkState = () => {
+    if (participant.ended !== null) {
+      return "ended";
+    }
+    if (participant.started !== null) {
+      return "started";
+    }
     if (participant.confirmed !== null) {
       return "confirmed";
     }
     return "mailing";
+  };
+
+  const setStarted = () => {
+    fetch("/api/started", {
+      method: "POST",
+      headers: { Accept: "*/*" },
+      body: JSON.stringify({
+        token: participant.childToken,
+        datetime: new Date().toISOString(),
+      }),
+    }).catch((error) => console.error(error));
+    fetch("/api/ended", {
+      method: "POST",
+      headers: { Accept: "*/*" },
+      body: JSON.stringify({
+        token: participant.childToken,
+        datetime: null,
+      }),
+    }).catch((error) => console.error(error));
+  };
+
+  const setEnded = () => {
+    fetch("/api/ended", {
+      method: "POST",
+      headers: { Accept: "*/*" },
+      body: JSON.stringify({
+        token: participant.childToken,
+        datetime: new Date().toISOString(),
+      }),
+    }).catch((error) => console.error(error));
   };
 
   const [state, setState] = useState<string | null>(checkState());
@@ -32,7 +68,7 @@ export function ParticipantRow({
         <Table.Td>{participant.childFirstName}</Table.Td>
         <Table.Td>{participant.childLastName}</Table.Td>
         <Table.Td>
-          {format(new Date(participant.childCreated), "dd.MM.yyyy")}
+          {format(new Date(participant.created), "dd.MM.yyyy")}
           <Badge variant="transparent">
             {+participant.period * 4} Einheiten
           </Badge>
@@ -56,12 +92,19 @@ export function ParticipantRow({
                 label: "Anmeldung eingegangen",
               },
               { value: "confirmed", label: "Anmeldung bestätigt" },
-              { value: "billing", label: "Zahlung bestätigt" },
               { value: "started", label: "Training gestartet" },
               { value: "ended", label: "Training beendet" },
             ]}
             defaultValue={state}
-            onChange={(value) => setState(value)}
+            onChange={(value) => {
+              setState(value);
+              if (value === "started") {
+                setStarted();
+              }
+              if (value === "ended") {
+                setEnded();
+              }
+            }}
             allowDeselect={false}
             checkIconPosition="right"
           />

@@ -98,6 +98,6 @@ export interface SoccerSchoolEntry {
   position: string;
   size: string;
   misc: string;
-  childCreated: string;
+  created: string;
   childToken: string;
 }
