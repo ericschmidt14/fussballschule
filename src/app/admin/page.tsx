@@ -1,6 +1,5 @@
 "use client";
 import { Button, Paper, Table, Tabs } from "@mantine/core";
-import Title from "../components/title";
 import { useEffect, useState } from "react";
 import { SoccerSchoolEntry } from "../form";
 import { ParticipantRow } from "./components/row";
@@ -73,7 +72,6 @@ export default function Page() {
 
   return data ? (
     <Paper className="relative m-8 p-4 pt-8" radius="md">
-      <Title text="Anmeldungen zur Fussballschule" />
       <Tabs value={activeTab} onChange={setActiveTab}>
         <Tabs.List className="flex justify-between">
           <div className="flex">
@@ -91,14 +89,16 @@ export default function Page() {
             onClick={() =>
               exportCSV(
                 JSON.stringify(
-                  data.map((d) => {
-                    return {
-                      Kontoinhaber: d.name,
-                      IBAN: d.iban,
-                      BIC: d.bic,
-                      Betrag: prices[d.period],
-                    };
-                  }),
+                  data
+                    .filter((d) => d.ended === null)
+                    .map((d) => {
+                      return {
+                        Kontoinhaber: d.name,
+                        IBAN: d.iban,
+                        BIC: d.bic,
+                        Betrag: prices[d.period],
+                      };
+                    }),
                   null,
                   2
                 )

@@ -52,8 +52,10 @@ export default function Home() {
               position: "relative",
               margin: "32px auto 16px",
               padding: "48px 32px",
+              border:
+                "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-6)",
               borderRadius: "var(--mantine-radius-md)",
-              background: "var(--mantine-color-gray-0)",
+              background: "rgba(255, 255, 255, 0.0925)",
               boxShadow: "var(--mantine-shadow-xl)",
             },
             steps: {

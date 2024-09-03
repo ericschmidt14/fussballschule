@@ -1,12 +1,9 @@
 import { SoccerSchoolEntry } from "@/app/form";
 import { copy } from "@/app/utils";
-import { Button, Divider, Popover, Table } from "@mantine/core";
-import { IconCopy, IconMail, IconPhone, IconTrash } from "@tabler/icons-react";
-import { useState } from "react";
+import { Button, Divider, Table } from "@mantine/core";
+import { IconCopy, IconMail, IconPhone } from "@tabler/icons-react";
 
 export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
-  const [opened, setOpened] = useState(false);
-
   return (
     <>
       <Table>
@@ -100,27 +97,6 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
           </Table.Tr>
         </Table.Tbody>
       </Table>
-      <Popover opened={opened} onChange={setOpened} width="target" withArrow>
-        <Popover.Target>
-          <Button
-            fullWidth
-            variant="light"
-            className="mt-2"
-            onClick={() => setOpened((o) => !o)}
-          >
-            <IconTrash size={16} className="mr-2" /> Eintrag löschen
-          </Button>
-        </Popover.Target>
-        <Popover.Dropdown className="flex justify-between items-baseline">
-          <p>Anmeldung wirklich löschen?</p>
-          <div>
-            <Button>Ja</Button>
-            <Button variant="transparent" onClick={() => setOpened((o) => !o)}>
-              Nein
-            </Button>
-          </div>
-        </Popover.Dropdown>
-      </Popover>
     </>
   );
 }
