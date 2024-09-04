@@ -1,10 +1,10 @@
 import { UseFormReturnType } from "@mantine/form";
-import Title from "../components/title";
+import Title from "../../components/title";
 import { FocusTrap, TextInput } from "@mantine/core";
-import { FormValues } from "../form";
-import { FormRow, FormWrapper } from "../components/form";
+import { FormValues } from "../form/form";
+import { FormRow, FormWrapper } from "../../components/form";
 
-export default function Step3({
+export default function ParentInfo({
   form,
 }: {
   form: UseFormReturnType<FormValues>;
@@ -15,14 +15,14 @@ export default function Step3({
         <Title text="Angaben zum Erziehungsberechtigten" />
         <FormRow>
           <TextInput
-            label="Nachname"
-            key={form.key("parentLastName")}
-            {...form.getInputProps("parentLastName")}
-          />
-          <TextInput
             label="Vorname"
             key={form.key("parentFirstName")}
             {...form.getInputProps("parentFirstName")}
+          />
+          <TextInput
+            label="Nachname"
+            key={form.key("parentLastName")}
+            {...form.getInputProps("parentLastName")}
           />
         </FormRow>
         <FormRow asymmetric>

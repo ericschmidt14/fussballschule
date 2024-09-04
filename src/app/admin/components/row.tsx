@@ -1,4 +1,4 @@
-import { SoccerSchoolEntry } from "@/app/form";
+import { SoccerSchoolEntry } from "@/app/interfaces";
 import { convertDOB } from "@/app/utils";
 import { genders } from "@/app/values";
 import { Badge, Button, Drawer, Select, Table, Tooltip } from "@mantine/core";

@@ -1,13 +1,13 @@
 "use client";
 import { Button, Paper, Table, Tabs } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { SoccerSchoolEntry } from "../form";
 import { ParticipantRow } from "./components/row";
 import { prices, youths } from "../values";
 import { useSession } from "next-auth/react";
 import { IconFileTypeCsv } from "@tabler/icons-react";
 import { exportCSV } from "../utils";
 import { SOCCER_SCHOOL_API } from "../constants";
+import { SoccerSchoolEntry } from "../interfaces";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -18,7 +18,8 @@ export default function Page() {
   const tabs = [ALL_PARTICIPANTS, "f", "e", "d", "t"];
 
   useEffect(() => {
-    fetch("/api", {
+    //fetch("/api", {
+    fetch(SOCCER_SCHOOL_API, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -93,6 +94,7 @@ export default function Page() {
                     .filter((d) => d.ended === null)
                     .map((d) => {
                       return {
+                        Nummer: "",
                         Kontoinhaber: d.name,
                         IBAN: d.iban,
                         BIC: d.bic,

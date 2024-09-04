@@ -1,4 +1,4 @@
-import { SoccerSchoolEntry } from "@/app/form";
+import { SoccerSchoolEntry } from "@/app/interfaces";
 import { copy } from "@/app/utils";
 import { Button, Divider, Table } from "@mantine/core";
 import { IconCopy, IconMail, IconPhone } from "@tabler/icons-react";
