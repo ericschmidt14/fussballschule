@@ -11,7 +11,7 @@ export default function Conditions() {
       </p>
       <p>
         Anmeldungen sind möglich per Post oder Mail. Die Anmeldung wird erst
-        verbindlich, wenn sie vom1.FC Nürnberg bestätigt worden ist. Diese
+        verbindlich, wenn sie vom 1.FC Nürnberg bestätigt worden ist. Diese
         Rückmeldung erfolgt per E-Mail, in Ausnahmefällen per Post. Für die An-
         und Abreise zum Trainingsgelände sind die Teilnehmer selbst
         verantwortlich.

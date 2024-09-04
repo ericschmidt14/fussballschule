@@ -13,17 +13,17 @@ export default function Step3({
   return (
     <FormWrapper>
       <Title text="Teilnahmebedingungen" />
-      <Fieldset>
-        <Spoiler showLabel="Mehr anzeigen" hideLabel="Weniger anziegen">
-          <Conditions />
-        </Spoiler>
-      </Fieldset>
       <Checkbox
         size="md"
         label="Ich habe die Teilnahmebedingungen gelesen und akzeptiert."
         key={form.key("conditions")}
         {...form.getInputProps("conditions", { type: "checkbox" })}
       />
+      <Fieldset>
+        <Spoiler showLabel="Mehr anzeigen" hideLabel="Weniger anziegen">
+          <Conditions />
+        </Spoiler>
+      </Fieldset>
     </FormWrapper>
   );
 }
