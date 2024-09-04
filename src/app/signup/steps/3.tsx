@@ -5,7 +5,7 @@ import { FormValues } from "../form/form";
 import { FormWrapper } from "../../components/form";
 import Conditions from "@/app/components/conditions";
 
-export default function Accept({
+export default function Step3({
   form,
 }: {
   form: UseFormReturnType<FormValues>;

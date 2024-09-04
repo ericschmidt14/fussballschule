@@ -11,7 +11,7 @@ import { FormValues } from "../form/form";
 import { FormRow, FormWrapper } from "../../components/form";
 import { formatIBAN } from "@/app/utils";
 
-export default function BankData({
+export default function Step2({
   form,
 }: {
   form: UseFormReturnType<FormValues>;

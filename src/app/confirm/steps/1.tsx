@@ -4,12 +4,13 @@ import Title from "../../components/title";
 import { Fieldset, Table } from "@mantine/core";
 import { FormValues } from "../form/form";
 import { FormWrapper } from "../../components/form";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { SoccerSchoolEntry } from "@/app/interfaces";
 import { genders, youths } from "@/app/values";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { convertDOB } from "@/app/utils";
 
-export default function Summary({
+export default function Step1({
   form,
 }: {
   form: UseFormReturnType<FormValues>;
@@ -42,6 +43,15 @@ export default function Summary({
     //   .catch((error) => console.error(error));
   }, [token]);
 
+  useEffect(() => {
+    data &&
+      form.setFieldValue(
+        "name",
+        `${data.parentFirstName} ${data.parentLastName}`
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   return (
     <FormWrapper>
       <Title text="Anmeldung vervollständigen" />
@@ -62,7 +72,7 @@ function Details({ entry }: { entry: SoccerSchoolEntry }) {
     },
     {
       description: "Geburtstag",
-      value: entry.dob,
+      value: convertDOB(entry.dob),
     },
     {
       description: "Termin",

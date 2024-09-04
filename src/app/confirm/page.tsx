@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Stepper, Button, rem } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { FormValues, getInitialValues } from "./form/form";
@@ -70,13 +70,13 @@ export default function Home() {
             },
           }}
         >
-          <Stepper.Step label="Zeitraum & Termin">
+          <Stepper.Step>
             <Step1 form={form} />
           </Stepper.Step>
-          <Stepper.Step label="Teilnehmendes Kind">
+          <Stepper.Step>
             <Step2 form={form} />
           </Stepper.Step>
-          <Stepper.Step label="Erziehungsberechtigter">
+          <Stepper.Step>
             <Step3 form={form} />
           </Stepper.Step>
           <Stepper.Completed>

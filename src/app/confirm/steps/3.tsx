@@ -7,7 +7,7 @@ import { useState } from "react";
 import { FormWrapper } from "../../components/form";
 import Conditions from "@/app/components/conditions";
 
-export default function Agree({
+export default function Step3({
   form,
 }: {
   form: UseFormReturnType<FormValues>;
@@ -137,27 +137,23 @@ function Privacy() {
         Wenn Sie Ihr Kind für unsere Fußballschule anmelden wollen, erheben wir
         folgende Informationen:
       </p>
-      <p>
-        <ul>
-          <li> Angaben zum teilnehmenden Kind </li>
-          <li> Vorname </li>
-          <li> Nachname </li>
-          <li> Geburtsdatum </li>
-          <li> Geschlecht </li>
-          <li> Anschrift (Straße, Hausnummer, PLZ, Ort) </li>
-          <li> Telefon- und Handynummer </li>
-          <li>Konfektionsgröße </li>
-          <li>
-            Besonderheiten (wie bspw. Allergien, Krankheiten, Medikamente)
-          </li>
-          <li> Angaben zum Erziehungsberechtigten </li>
-          <li> Name des Erziehungsberechtigten </li>
-          <li> Telefonnummer </li>
-          <li>Handynummer </li>
-          <li> E-Mail-Adresse </li>
-          <li> Kontodaten</li>
-        </ul>
-      </p>
+      <ul>
+        <li> Angaben zum teilnehmenden Kind </li>
+        <li> Vorname </li>
+        <li> Nachname </li>
+        <li> Geburtsdatum </li>
+        <li> Geschlecht </li>
+        <li> Anschrift (Straße, Hausnummer, PLZ, Ort) </li>
+        <li> Telefon- und Handynummer </li>
+        <li>Konfektionsgröße </li>
+        <li>Besonderheiten (wie bspw. Allergien, Krankheiten, Medikamente)</li>
+        <li> Angaben zum Erziehungsberechtigten </li>
+        <li> Name des Erziehungsberechtigten </li>
+        <li> Telefonnummer </li>
+        <li>Handynummer </li>
+        <li> E-Mail-Adresse </li>
+        <li> Kontodaten</li>
+      </ul>
       <p>
         Während der Teilnahme in der Fußballschule werden möglicherweise noch
         Ton-, Foto- oder Filmaufnahmen von den Teilnehmern angefertigt.
