@@ -37,6 +37,24 @@ export const formatIBAN = (iban: string) => {
     .toUpperCase();
 };
 
+export const notEmptyValidation = (value: string, error: string) => {
+  return value.trim().length < 1 ? error : null;
+};
+
+export const postalCodeValidation = (code: string) => {
+  return /^[0-9][0-9][0-9][0-9][0-9]$/.test(code)
+    ? null
+    : "Ungültige Postleitzahl";
+};
+
+export const emailValidation = (email: string) => {
+  return /\S+@\S+\.\S+/.test(email) ? null : "Ungültige Mailadresse";
+};
+
+export const ibanValidation = (iban: string) => {
+  return isValidIBAN(iban) ? null : "Ungültige IBAN";
+};
+
 export const isValidIBAN = (iban: string) => {
   const ibanPattern = /^[A-Z]{2}\d{2}[A-Z0-9]{1,30}$/;
   const formattedIban = iban.replace(/\s+/g, "").toUpperCase();
