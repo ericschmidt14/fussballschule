@@ -5,38 +5,63 @@ export const prices: { [key: string]: string } = {
 
 export const youths: { [key: string]: string } = {
   a: "Alle",
-  f: "F-Jugend",
-  e: "E-Jugend",
-  d: "D-Jugend",
-  t: "Torwarttraining",
+  k: "Kindergarten (4 – 6 Jahre)",
+  f1: "Fußballschule (7 – 9 Jahre)",
+  f2: "Fußballschule (8 – 10 Jahre)",
+  f3: "Fußballschule (10 – 13 Jahre)",
+  m: "Mädels-Fußballschule (4 – 14 Jahre)",
 };
 
-export const ageGroups: { [key: string]: string } = {
-  f: "7 – 8",
-  e: "9 – 10",
-  d: "10 – 12",
-  t: "10 – 12",
-};
+export const ageGroups = [
+  {
+    value: "k",
+    min: 4,
+    max: 6,
+  },
+  {
+    value: "f1",
+    min: 7,
+    max: 9,
+  },
+  {
+    value: "f2",
+    min: 8,
+    max: 10,
+  },
+  {
+    value: "f3",
+    min: 10,
+    max: 13,
+  },
+];
 
 export const times: {
   [key: string]: { label: string; value: string }[];
 } = {
-  f: [
+  k: [
+    { label: "Montag, 14:00 – 15:00 Uhr", value: "Mo" },
+    { label: "Donnerstag, 15:00 – 16:00 Uhr", value: "Do" },
+    { label: "Freitag, 14:00 – 15:00 Uhr", value: "Fr" },
+  ],
+  f1: [
     { label: "Montag, 15:00 – 16:30 Uhr", value: "Mo" },
     { label: "Dienstag, 15:00 – 16:30 Uhr", value: "Di" },
   ],
-
-  e: [
-    { label: "Montag, 15:00 – 16:30 Uhr", value: "Mo" },
-    { label: "Dienstag, 15:00 – 16:30 Uhr", value: "Di" },
-    { label: "Mittwoch, 15:00 – 16:30 Uhr", value: "Mi" },
-  ],
-
-  d: [{ label: "Freitag, 15:00 – 16:30 Uhr", value: "Fr" }],
-  t: [{ label: "Mittwoch, 15:00 – 16:30 Uhr", value: "Mi" }],
+  f2: [{ label: "Mittwoch, 15:00 – 16:30 Uhr", value: "Mi" }],
+  f3: [{ label: "Freitag, 15:00 – 16:30 Uhr", value: "Fr" }],
+  m: [{ label: "Freitag, 15:00 – 16:30 Uhr", value: "Fr" }],
 };
 
 export const genders: { [key: string]: string } = {
   male: "Junge",
   female: "Mädchen",
+};
+
+export const sizes: { [key: string]: string } = {
+  YS: "134 – 140",
+  YM: "146 – 152",
+  YL: "152 – 158",
+  YXL: "164 – 170",
+  S: "170 – 176",
+  M: "176 – 188",
 };

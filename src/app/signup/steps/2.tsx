@@ -53,7 +53,7 @@ export default function Step2({
       <FormRow>
         <TextInput
           label="E-Mail"
-          description="Für Ihre Anmeldebestätigung"
+          description="Für die Anmeldebestätigung"
           key={form.key("email")}
           {...form.getInputProps("email")}
         />

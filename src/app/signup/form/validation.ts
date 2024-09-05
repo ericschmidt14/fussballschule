@@ -17,6 +17,7 @@ export function validateForm(active: number, values: FormValues) {
         "Bitte Vornamen angeben"
       ),
       dob: values.dob ? null : "Bitte Geburtsdatum angeben",
+      youth: values.youth ? null : "Bitte Gruppe auswählen",
       time: values.time ? null : "Bitte Zeitraum auswählen",
     };
   }

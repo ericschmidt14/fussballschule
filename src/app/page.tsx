@@ -7,7 +7,7 @@ import Header from "./components/header";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col justify-between" id="lp">
+    <main className="min-h-screen flex flex-col justify-between">
       <Header />
       <section className="flex flex-col justify-center items-center">
         <Paper
@@ -15,6 +15,10 @@ export default function Home() {
           radius="md"
           p="xl"
           className="relative max-w-[520px] m-auto my-16 flex flex-col gap-4"
+          style={{
+            border:
+              "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-6)",
+          }}
         >
           <Title text="Anmeldung zur Fußballschule" />
           <p>

@@ -48,7 +48,7 @@ export default function Home() {
           styles={{
             content: {
               position: "relative",
-              margin: "32px auto 16px",
+              margin: "16px auto",
               padding: "48px 32px",
               border:
                 "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-6)",

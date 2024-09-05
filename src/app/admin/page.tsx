@@ -1,8 +1,8 @@
 "use client";
-import { Button, Paper, Table, Tabs } from "@mantine/core";
+import { Button, Paper, Table } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { ParticipantRow } from "./components/row";
-import { prices, youths } from "../values";
+import { prices } from "../values";
 import { useSession } from "next-auth/react";
 import { IconFileTypeCsv } from "@tabler/icons-react";
 import { exportCSV } from "../utils";
@@ -11,11 +11,7 @@ import { SoccerSchoolEntry } from "../interfaces";
 
 export default function Page() {
   const { data: session, status } = useSession();
-  const ALL_PARTICIPANTS = "a";
-  const [activeTab, setActiveTab] = useState<string | null>(ALL_PARTICIPANTS);
   const [data, setData] = useState<SoccerSchoolEntry[]>();
-
-  const tabs = [ALL_PARTICIPANTS, "f", "e", "d", "t"];
 
   useEffect(() => {
     //fetch("/api", {
@@ -32,11 +28,6 @@ export default function Page() {
   const rows =
     data &&
     data
-      .filter((el) => {
-        return activeTab === ALL_PARTICIPANTS
-          ? true
-          : el.youth.toLowerCase() === activeTab;
-      })
       .reverse()
       .map((participant, index) => (
         <ParticipantRow key={index} index={index} participant={participant} />
@@ -72,52 +63,35 @@ export default function Page() {
   }
 
   return data ? (
-    <Paper className="relative m-8 p-4 pt-8" radius="md">
-      <Tabs value={activeTab} onChange={setActiveTab}>
-        <Tabs.List className="flex justify-between">
-          <div className="flex">
-            {tabs.map((t) => {
-              return (
-                <Tabs.Tab key={t} value={t}>
-                  {youths[t]}
-                </Tabs.Tab>
-              );
-            })}
-          </div>
-          <Button
-            variant="transparent"
-            leftSection={<IconFileTypeCsv size={20} />}
-            onClick={() =>
-              exportCSV(
-                JSON.stringify(
-                  data
-                    .filter((d) => d.ended === null)
-                    .map((d) => {
-                      return {
-                        Nummer: "",
-                        Kontoinhaber: d.name,
-                        IBAN: d.iban,
-                        BIC: d.bic,
-                        Betrag: prices[d.period],
-                      };
-                    }),
-                  null,
-                  2
-                )
+    <Paper className="relative m-8 p-4" radius="md">
+      <div className="flex justify-end">
+        <Button
+          variant="transparent"
+          leftSection={<IconFileTypeCsv size={20} />}
+          onClick={() =>
+            exportCSV(
+              JSON.stringify(
+                data
+                  .filter((d) => d.ended === null)
+                  .map((d) => {
+                    return {
+                      Nummer: "",
+                      Kontoinhaber: d.name,
+                      IBAN: d.iban,
+                      BIC: d.bic,
+                      Betrag: prices[d.period],
+                    };
+                  }),
+                null,
+                2
               )
-            }
-          >
-            Exportieren
-          </Button>
-        </Tabs.List>
-        {tabs.map((t) => {
-          return (
-            <Tabs.Panel key={t} value={t}>
-              {table}
-            </Tabs.Panel>
-          );
-        })}
-      </Tabs>
+            )
+          }
+        >
+          Exportieren
+        </Button>
+      </div>
+      {table}
     </Paper>
   ) : (
     <></>

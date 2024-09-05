@@ -13,12 +13,6 @@ body {
   background-color: var(--background);
 }
 
-#lp {
-  background: url(/bg.png) center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 h1 {
   font-size: 72px;
   font-weight: bold;

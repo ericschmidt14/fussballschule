@@ -1,6 +1,6 @@
 export const getInitialValues = () => {
   return {
-    youth: "f",
+    youth: "k",
     time: "Mo",
     childLastName: "",
     childFirstName: "",
