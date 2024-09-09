@@ -1,8 +1,7 @@
 import { SoccerSchoolEntry } from "@/app/interfaces";
 import { convertDOB } from "@/app/utils";
 import { genders } from "@/app/values";
-import { Badge, Button, Drawer, Select, Table, Tooltip } from "@mantine/core";
-import { IconArticleOff, IconCameraOff } from "@tabler/icons-react";
+import { Button, Drawer, Select, Table, Tooltip } from "@mantine/core";
 import { differenceInYears, format } from "date-fns";
 import { useState } from "react";
 import { DrawerContent } from "./drawer";
@@ -69,9 +68,6 @@ export function ParticipantRow({
         <Table.Td>{participant.childLastName}</Table.Td>
         <Table.Td>
           {format(new Date(participant.created), "dd.MM.yyyy")}
-          <Badge variant="transparent">
-            {+participant.period * 4} Einheiten
-          </Badge>
         </Table.Td>
         <Table.Td>
           <Tooltip
@@ -108,28 +104,6 @@ export function ParticipantRow({
             allowDeselect={false}
             checkIconPosition="right"
           />
-        </Table.Td>
-        <Table.Td>
-          {!participant.recordings && (
-            <Tooltip
-              label="Keine Ton-, Foto- & Videoaufnahmen"
-              position="left"
-              withArrow
-            >
-              <IconCameraOff color="gray" />
-            </Tooltip>
-          )}
-        </Table.Td>
-        <Table.Td>
-          {!participant.processing && (
-            <Tooltip
-              label="Keine Verarbeitung personenbezogener Daten"
-              position="left"
-              withArrow
-            >
-              <IconArticleOff color="gray" />
-            </Tooltip>
-          )}
         </Table.Td>
         <Table.Td align="right">
           <Button

@@ -1,11 +1,13 @@
 import { SoccerSchoolEntry } from "@/app/interfaces";
 import { copy } from "@/app/utils";
+import { prices } from "@/app/values";
 import { Button, Divider, Table } from "@mantine/core";
 import { IconCopy, IconMail, IconPhone } from "@tabler/icons-react";
 
 export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
   return (
     <>
+      <Divider label="Weitere Angaben" labelPosition="left" />
       <Table>
         <Table.Tbody>
           <Table.Tr>
@@ -13,6 +15,24 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
               <b>Mitgliedsnummer</b>
             </Table.Td>
             <Table.Td>{data.memberno}</Table.Td>
+          </Table.Tr>
+          <Table.Tr>
+            <Table.Td>
+              <b>Verein</b>
+            </Table.Td>
+            <Table.Td>{data.club}</Table.Td>
+          </Table.Tr>
+          <Table.Tr>
+            <Table.Td>
+              <b>Position</b>
+            </Table.Td>
+            <Table.Td>{data.position}</Table.Td>
+          </Table.Tr>
+          <Table.Tr>
+            <Table.Td>
+              <b>Besonderheiten</b>
+            </Table.Td>
+            <Table.Td>{data.misc}</Table.Td>
           </Table.Tr>
         </Table.Tbody>
       </Table>
@@ -62,7 +82,7 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
             <Table.Td>
               <b>Kontoinhaber</b>
             </Table.Td>
-            <Table.Td>{parent.name}</Table.Td>
+            <Table.Td>{data.name}</Table.Td>
             <Table.Td />
           </Table.Tr>
           <Table.Tr>
@@ -94,6 +114,15 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
                 <IconCopy size={14} />
               </Button>
             </Table.Td>
+          </Table.Tr>
+          <Table.Tr>
+            <Table.Td>
+              <b>Zeitraum</b>
+            </Table.Td>
+            <Table.Td>
+              {data.period} Monate ({prices[data.period]} / Monat)
+            </Table.Td>
+            <Table.Td />
           </Table.Tr>
         </Table.Tbody>
       </Table>

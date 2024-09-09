@@ -46,8 +46,6 @@ export default function Page() {
           <Table.Th>Größe</Table.Th>
           <Table.Th>Status</Table.Th>
           <Table.Th />
-          <Table.Th />
-          <Table.Th />
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>{rows}</Table.Tbody>
@@ -66,7 +64,6 @@ export default function Page() {
     <Paper className="relative m-8 p-4" radius="md">
       <div className="flex justify-end">
         <Button
-          variant="transparent"
           leftSection={<IconFileTypeCsv size={20} />}
           onClick={() =>
             exportCSV(
@@ -76,10 +73,73 @@ export default function Page() {
                   .map((d) => {
                     return {
                       Nummer: "",
-                      Kontoinhaber: d.name,
+                      Title: "",
+                      "Academic Title": "",
+                      Vorname: d.parentFirstName,
+                      Nachname: d.parentLastName,
+                      Spielername: `${d.childFirstName} ${d.childLastName}`,
+                      Status: "Aktiv",
+                      Sprache: "DE - Deutsch",
+                      Kontaktaufnahme: "1 - erlaubt",
+                      Interessent: "",
+                      Land: "DE - Deutschland",
+                      Hausnummer: d.number,
+                      Kündigung: "",
+                      Vertragsabschlussdatum: d.created,
+                      Vertragslaufzeit: `${d.period} Monate`,
+                      Rabatt: "",
+                      Straße: d.street,
+                      "Adresszeile 4": "",
+                      "Adresszeile 5": "",
+                      Ort: d.city,
+                      Bundesland: "",
+                      Postleitzahl: d.postalCode,
+                      Steuerstandortcode: "",
+                      Postfach: "",
+                      "Postleitzahl des Postfachs": "",
+                      Telefon: "",
+                      Fax: "",
+                      Mobiltelefon: d.phone,
+                      "E-Mail": d.email,
+                      "Bevorzugte Kontaktart": "",
+                      "ABC-Klassifikation": "",
+                      Geburtsdatum: d.dob,
+                      Kundennotiz: "",
+                      Verkaufsorganisationsnummer: "EV2000",
+                      Vertriebsweg: "Z3 - Direktvertrieb",
+                      Lieferpriorität: "",
+                      Komplettlieferung: "",
+                      Incoterms: "",
+                      "Incoterms-Ort": "",
+                      Kundengruppe: "Z3 - 1. FCN Fußball-Erlebnis",
+                      Zahlungsbedingungen: "ZD01 - Nach Erhalt netto",
+                      Währung: "EUR - Euro",
+                      Banknummer: d.bic,
+                      "Konto-ID": "",
                       IBAN: d.iban,
-                      BIC: d.bic,
-                      Betrag: prices[d.period],
+                      Kontoinhaber: "EV1000",
+                      Unternehmensnummer: "4010 - Foderung LuL",
+                      Kontenfindungsgruppe: "",
+                      "Grund der Zahlungssperre": "",
+                      Column8: "04 - Lastschrift durch Einzug",
+                      Column7: "",
+                      Column6: "",
+                      "Ablaufdatum der Zahlungssperre": "",
+                      Zahlweg: "",
+                      "Instruction 1": "",
+                      "Instruction 2": "",
+                      "Instruction 3": "",
+                      "Instruction 4": "",
+                      "Bankgebühren gezahlt von": "",
+                      Kreditlimit: "Nein",
+                      Kreditlimitwährungstyp: "",
+                      Beteiligtenrolle: "",
+                      "Direkt zuständiger Mitarbeiter": "",
+                      Dublettenprüfung: "Nein",
+                      ObjectNodeSenderTechnicalID: "",
+                      "Change StateID": "",
+                      UUID: "",
+                      "Betrag abzubuchen": prices[d.period].replace("€", ""),
                     };
                   }),
                 null,
