@@ -1,10 +1,15 @@
 "use client";
-import { Button, Paper, Table } from "@mantine/core";
+import { Button, Paper, Select, Table, TextInput } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { ParticipantRow } from "./components/row";
-import { prices } from "../values";
+import { prices, youths } from "../values";
 import { useSession } from "next-auth/react";
-import { IconFileTypeCsv } from "@tabler/icons-react";
+import {
+  IconFileTypeCsv,
+  IconFilter,
+  IconSearch,
+  IconUsersGroup,
+} from "@tabler/icons-react";
 import { exportCSV } from "../utils";
 import { SOCCER_SCHOOL_API } from "../constants";
 import { SoccerSchoolEntry } from "../interfaces";
@@ -12,9 +17,11 @@ import { SoccerSchoolEntry } from "../interfaces";
 export default function Page() {
   const { data: session, status } = useSession();
   const [data, setData] = useState<SoccerSchoolEntry[]>();
+  const [search, setSearch] = useState<string>("");
+  const [group, setGroup] = useState<string | null>("");
 
   useEffect(() => {
-    //fetch("/api", {
+    // fetch("/api", {
     fetch(SOCCER_SCHOOL_API, {
       method: "GET",
     })
@@ -28,6 +35,15 @@ export default function Page() {
   const rows =
     data &&
     data
+      .filter((d) => (group ? d.youth === group : true))
+      .filter((d) =>
+        [
+          d.parentFirstName,
+          d.parentLastName,
+          d.childFirstName,
+          d.childLastName,
+        ].some((value) => value.toLowerCase().includes(search.toLowerCase()))
+      )
       .reverse()
       .map((participant, index) => (
         <ParticipantRow key={index} index={index} participant={participant} />
@@ -62,7 +78,24 @@ export default function Page() {
 
   return data ? (
     <Paper className="relative m-8 p-4" radius="md">
-      <div className="flex justify-end">
+      <div className="grid grid-cols-4 gap-2 items-center">
+        <TextInput
+          placeholder="Suchen ..."
+          leftSection={<IconSearch size={16} />}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="col-span-2"
+        />
+        <Select
+          data={["k", "f1", "f2", "f3", "m"].map((g) => {
+            return { value: g, label: youths[g] };
+          })}
+          placeholder="Gruppe wählen"
+          leftSection={<IconUsersGroup size={16} />}
+          checkIconPosition="right"
+          value={group}
+          onChange={setGroup}
+        />
         <Button
           leftSection={<IconFileTypeCsv size={20} />}
           onClick={() =>

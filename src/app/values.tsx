@@ -4,7 +4,6 @@ export const prices: { [key: string]: string } = {
 };
 
 export const youths: { [key: string]: string } = {
-  a: "Alle",
   k: "Kindergarten (4 – 6 Jahre)",
   f1: "Fußballschule (7 – 9 Jahre)",
   f2: "Fußballschule (8 – 10 Jahre)",

@@ -24,7 +24,10 @@ export function ParticipantRow({
     if (participant.confirmed !== null) {
       return "confirmed";
     }
-    return "mailing";
+    if (participant.mailing !== null) {
+      return "mailing";
+    }
+    return "new";
   };
 
   const setStarted = () => {
@@ -84,12 +87,16 @@ export function ParticipantRow({
           <Select
             data={[
               {
-                value: "mailing",
-                label: "Anmeldung eingegangen",
+                value: "new",
+                label: "Neu",
               },
-              { value: "confirmed", label: "Anmeldung bestätigt" },
-              { value: "started", label: "Training gestartet" },
-              { value: "ended", label: "Training beendet" },
+              {
+                value: "mailing",
+                label: "Im Probetraining",
+              },
+              { value: "confirmed", label: "Eingeladen" },
+              { value: "started", label: "Gestartet" },
+              { value: "ended", label: "Beendet" },
             ]}
             defaultValue={state}
             onChange={(value) => {
@@ -107,7 +114,7 @@ export function ParticipantRow({
         </Table.Td>
         <Table.Td align="right">
           <Button
-            variant="light"
+            variant="transparent"
             size="xs"
             onClick={() => {
               open();
