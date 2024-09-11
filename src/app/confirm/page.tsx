@@ -7,9 +7,27 @@ import { validateForm } from "./form/validation";
 import Step1 from "./steps/1";
 import Step2 from "./steps/2";
 import Step3 from "./steps/3";
+import { useSearchParams } from "next/navigation";
+import { SoccerSchoolEntry } from "../interfaces";
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
+  const [entry, setEntry] = useState<SoccerSchoolEntry>();
   const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    fetch(`/api/token/${token}`, {
+      method: "GET",
+      headers: { Accept: "*/*" },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setEntry(res[0]);
+      })
+      .catch((error) => console.error(error));
+  }, [token]);
 
   const form = useForm<FormValues>({
     validateInputOnChange: true,
@@ -30,7 +48,42 @@ export default function Home() {
         onSubmit={form.onSubmit((values) => {
           fetch("/api/save", {
             method: "POST",
-            body: JSON.stringify(values, null, 2),
+            body: JSON.stringify(
+              entry && {
+                // values from existing entry:
+                youth: entry.youth,
+                time: entry.time,
+                childLastName: entry.childLastName,
+                childFirstName: entry.childFirstName,
+                dob: entry.dob,
+                gender: entry.gender,
+                club: entry.club,
+                position: entry.position,
+                misc: entry.misc,
+                size: entry.size,
+                parentLastName: entry.parentLastName,
+                parentFirstName: entry.parentFirstName,
+                street: entry.street,
+                number: entry.number,
+                postalCode: entry.postalCode,
+                city: entry.city,
+                email: entry.email,
+                phone: entry.phone,
+                conditions: entry.conditions,
+                // new values:
+                period: values.period,
+                memberno: values.memberno,
+                agree: values.agree,
+                name: values.name,
+                iban: values.iban,
+                bic: values.bic,
+                privacy: values.privacy,
+                recordings: values.recordings,
+                processing: values.processing,
+              },
+              null,
+              2
+            ),
           })
             .then((res) => res.text())
             .then((data) => {
@@ -71,7 +124,7 @@ export default function Home() {
           }}
         >
           <Stepper.Step>
-            <Step1 form={form} />
+            <Step1 form={form} entry={entry} />
           </Stepper.Step>
           <Stepper.Step>
             <Step2 form={form} />
@@ -80,7 +133,7 @@ export default function Home() {
             <Step3 form={form} />
           </Stepper.Step>
           <Stepper.Completed>
-            <b>Anmeldung erfolgreich abgeschickt!</b> Bitte überprüfen Sie das
+            <b>Anmeldung erfolgreich abgeschickt!</b> Bitte überprüfe das
             Postfach der angegebenen Mailadresse für weitere Informationen.
           </Stepper.Completed>
         </Stepper>

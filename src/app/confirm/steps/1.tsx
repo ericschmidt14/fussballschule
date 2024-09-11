@@ -12,37 +12,11 @@ import { convertDOB } from "@/app/utils";
 
 export default function Step1({
   form,
+  entry,
 }: {
   form: UseFormReturnType<FormValues>;
+  entry: SoccerSchoolEntry | undefined;
 }) {
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
-
-  const [entry, setEntry] = useState<SoccerSchoolEntry>();
-
-  useEffect(() => {
-    fetch(`/api/token/${token}`, {
-      method: "GET",
-      headers: { Accept: "*/*" },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        setEntry(res[0]);
-      })
-      .catch((error) => console.error(error));
-
-    // fetch("/api/confirm", {
-    //   method: "POST",
-    //   headers: { Accept: "*/*" },
-    //   body: JSON.stringify({ token: token }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((error) => console.error(error));
-  }, [token]);
-
   useEffect(() => {
     entry &&
       form.setFieldValue(

@@ -31,8 +31,8 @@ export default function Home() {
           <h3>Meldet euch hier an!</h3>
           <p>
             Ihr wollt beim 1. FCN Fördertraining für Kindergartenkinder oder
-            Schüler dabei sein? Dann meldet euch hier online an. Nach
-            erfolgreicher Anmeldung bekommt ihr eine Bestätigungsmail,
+            Schüler dabei sein? Dann meldet euch hier online zum Probetraining
+            an. Nach erfolgreicher Anmeldung bekommt ihr eine Bestätigungsmail,
             anschließend setzen wir uns mit euch in Verbindung, um alle weiteren
             Details zu klären.
           </p>
@@ -41,7 +41,7 @@ export default function Home() {
             Jetzt anmelden
           </Button>
           <p className="muted small">
-            <b>Achtung!</b> Die Teilnehmerzahl ist begrenzt. Sie erhalten eine
+            <b>Achtung!</b> Die Teilnehmerzahl ist begrenzt. Ihr erhaltet eine
             Rückmeldung per E-Mail, ob Ihre Anmeldung berücksichtigt werden
             konnte.
           </p>

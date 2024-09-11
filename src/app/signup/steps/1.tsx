@@ -130,7 +130,7 @@ export default function Step1({
             {sizes[form.getValues().size]} cm
           </p>
           <p className="mt-2 col-span-2 muted small">
-            Mit der Anmeldung erhalten Sie als Teilnehmer ein exklusives
+            Mit der Anmeldung erhält jeder Teilnehmer ein exklusives
             Trainings-Outfit der Fußballschule. Dieses besteht aus einem Trikot,
             Hose und Stutzen sowie einer 1. FC Nürnberg Trinkflasche und wird
             gegen eine Gebühr von 39,00€ vor Ort an den Teilnehmer vergeben. Ein

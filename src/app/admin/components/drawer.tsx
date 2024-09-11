@@ -71,61 +71,65 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
           </Table.Tr>
         </Table.Tbody>
       </Table>
-      <Divider
-        label="Zahlungsinformationen"
-        labelPosition="left"
-        className="mt-8"
-      />
-      <Table>
-        <Table.Tbody>
-          <Table.Tr>
-            <Table.Td>
-              <b>Kontoinhaber</b>
-            </Table.Td>
-            <Table.Td>{data.name}</Table.Td>
-            <Table.Td />
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <b>IBAN</b>
-            </Table.Td>
-            <Table.Td>{data.iban}</Table.Td>
-            <Table.Td>
-              <Button
-                variant="transparent"
-                size="xs"
-                onClick={() => copy(data.iban)}
-              >
-                <IconCopy size={14} />
-              </Button>
-            </Table.Td>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <b>BIC</b>
-            </Table.Td>
-            <Table.Td>{data.bic}</Table.Td>
-            <Table.Td>
-              <Button
-                variant="transparent"
-                size="xs"
-                onClick={() => copy(data.bic)}
-              >
-                <IconCopy size={14} />
-              </Button>
-            </Table.Td>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <b>Zeitraum</b>
-            </Table.Td>
-            <Table.Td>
-              {data.period} Monate ({prices[data.period]} / Monat)
-            </Table.Td>
-            <Table.Td />
-          </Table.Tr>
-        </Table.Tbody>
-      </Table>
+      {data.iban !== "" && (
+        <>
+          <Divider
+            label="Zahlungsinformationen"
+            labelPosition="left"
+            className="mt-8"
+          />
+          <Table>
+            <Table.Tbody>
+              <Table.Tr>
+                <Table.Td>
+                  <b>Kontoinhaber</b>
+                </Table.Td>
+                <Table.Td>{data.name}</Table.Td>
+                <Table.Td />
+              </Table.Tr>
+              <Table.Tr>
+                <Table.Td>
+                  <b>IBAN</b>
+                </Table.Td>
+                <Table.Td>{data.iban}</Table.Td>
+                <Table.Td>
+                  <Button
+                    variant="transparent"
+                    size="xs"
+                    onClick={() => copy(data.iban)}
+                  >
+                    <IconCopy size={14} />
+                  </Button>
+                </Table.Td>
+              </Table.Tr>
+              <Table.Tr>
+                <Table.Td>
+                  <b>BIC</b>
+                </Table.Td>
+                <Table.Td>{data.bic}</Table.Td>
+                <Table.Td>
+                  <Button
+                    variant="transparent"
+                    size="xs"
+                    onClick={() => copy(data.bic)}
+                  >
+                    <IconCopy size={14} />
+                  </Button>
+                </Table.Td>
+              </Table.Tr>
+              <Table.Tr>
+                <Table.Td>
+                  <b>Zeitraum</b>
+                </Table.Td>
+                <Table.Td>
+                  {data.period} Monate ({prices[data.period]} / Monat)
+                </Table.Td>
+                <Table.Td />
+              </Table.Tr>
+            </Table.Tbody>
+          </Table>
+        </>
+      )}
     </>
   );
 }

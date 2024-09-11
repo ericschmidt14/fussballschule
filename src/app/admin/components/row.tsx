@@ -120,7 +120,7 @@ export function ParticipantRow({
               open();
             }}
           >
-            Mehr anzeigen
+            Details anzeigen
           </Button>
         </Table.Td>
       </Table.Tr>

@@ -6,7 +6,6 @@ import { prices, youths } from "../values";
 import { useSession } from "next-auth/react";
 import {
   IconFileTypeCsv,
-  IconFilter,
   IconSearch,
   IconUsersGroup,
 } from "@tabler/icons-react";
@@ -102,7 +101,7 @@ export default function Page() {
             exportCSV(
               JSON.stringify(
                 data
-                  .filter((d) => d.ended === null)
+                  .filter((d) => d.iban !== "" && d.ended === null)
                   .map((d) => {
                     return {
                       Nummer: "",

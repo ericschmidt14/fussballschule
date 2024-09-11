@@ -30,7 +30,41 @@ export default function Home() {
         onSubmit={form.onSubmit((values) => {
           fetch("/api/save", {
             method: "POST",
-            body: JSON.stringify(values, null, 2),
+            body: JSON.stringify(
+              {
+                youth: values.youth,
+                time: values.time,
+                childLastName: values.childLastName,
+                childFirstName: values.childFirstName,
+                dob: values.dob,
+                gender: values.gender,
+                club: values.club,
+                position: values.position,
+                misc: values.misc,
+                size: values.size,
+                parentLastName: values.parentLastName,
+                parentFirstName: values.parentFirstName,
+                street: values.street,
+                number: values.number,
+                postalCode: values.postalCode,
+                city: values.city,
+                email: values.email,
+                phone: values.phone,
+                conditions: values.conditions,
+                // values added during confirmation:
+                period: "",
+                memberno: "",
+                agree: false,
+                name: "",
+                iban: "",
+                bic: "",
+                privacy: false,
+                recordings: false,
+                processing: false,
+              },
+              null,
+              2
+            ),
           })
             .then((res) => res.text())
             .then((data) => {
@@ -79,7 +113,7 @@ export default function Home() {
             <Step3 form={form} />
           </Stepper.Step>
           <Stepper.Completed>
-            <b>Anmeldung erfolgreich abgeschickt!</b> Bitte überprüfen Sie das
+            <b>Anmeldung erfolgreich abgeschickt!</b> Bitte überprüfe das
             Postfach der angegebenen Mailadresse für weitere Informationen.
           </Stepper.Completed>
         </Stepper>
