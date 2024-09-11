@@ -10,7 +10,6 @@ import {
   IconUsersGroup,
 } from "@tabler/icons-react";
 import { exportCSV } from "../utils";
-import { SOCCER_SCHOOL_API } from "../constants";
 import { SoccerSchoolEntry } from "../interfaces";
 
 export default function Page() {
@@ -20,8 +19,7 @@ export default function Page() {
   const [group, setGroup] = useState<string | null>("");
 
   useEffect(() => {
-    // fetch("/api", {
-    fetch(SOCCER_SCHOOL_API, {
+    fetch("/api", {
       method: "GET",
     })
       .then((res) => res.json())
