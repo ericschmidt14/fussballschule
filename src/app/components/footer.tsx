@@ -17,14 +17,7 @@ export default function Footer() {
           </a>
         </nav>
       </div>
-      <div className="justify-start items-center gap-3 flex">
-        <Image src="/logo.svg" alt="1. FCN Logo" width={48} height={48} />
-        <div className="text-4xl font-bold italic">NLZ</div>
-        <div className="w-px h-[28px] bg-white" />
-        <div className="text-[8px] leading-snug font-light uppercase">
-          Nachwuchs- <br /> Leistungszentrum
-        </div>
-      </div>
+      <Image src="/unser-club.png" alt="1. FCN Logo" width={125} height={16} />
     </footer>
   );
 }

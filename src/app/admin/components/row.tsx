@@ -30,6 +30,32 @@ export function ParticipantRow({
     return "new";
   };
 
+  const setConfirm = () => {
+    fetch("/api/confirm", {
+      method: "POST",
+      headers: { Accept: "*/*" },
+      body: JSON.stringify({
+        token: participant.childToken,
+      }),
+    }).catch((error) => console.error(error));
+    fetch("/api/started", {
+      method: "POST",
+      headers: { Accept: "*/*" },
+      body: JSON.stringify({
+        token: participant.childToken,
+        datetime: null,
+      }),
+    }).catch((error) => console.error(error));
+    fetch("/api/ended", {
+      method: "POST",
+      headers: { Accept: "*/*" },
+      body: JSON.stringify({
+        token: participant.childToken,
+        datetime: null,
+      }),
+    }).catch((error) => console.error(error));
+  };
+
   const setStarted = () => {
     fetch("/api/started", {
       method: "POST",
@@ -70,7 +96,8 @@ export function ParticipantRow({
         <Table.Td>{participant.childFirstName}</Table.Td>
         <Table.Td>{participant.childLastName}</Table.Td>
         <Table.Td>
-          {format(new Date(participant.created), "dd.MM.yyyy")}
+          {participant.created &&
+            format(new Date(participant.created), "dd.MM.yyyy")}
         </Table.Td>
         <Table.Td>
           <Tooltip
@@ -101,6 +128,9 @@ export function ParticipantRow({
             defaultValue={state}
             onChange={(value) => {
               setState(value);
+              if (value === "confirmed") {
+                setConfirm();
+              }
               if (value === "started") {
                 setStarted();
               }

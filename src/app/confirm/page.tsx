@@ -51,25 +51,7 @@ export default function Home() {
             body: JSON.stringify(
               entry && {
                 // values from existing entry:
-                youth: entry.youth,
-                time: entry.time,
-                childLastName: entry.childLastName,
-                childFirstName: entry.childFirstName,
-                dob: entry.dob,
-                gender: entry.gender,
-                club: entry.club,
-                position: entry.position,
-                misc: entry.misc,
-                size: entry.size,
-                parentLastName: entry.parentLastName,
-                parentFirstName: entry.parentFirstName,
-                street: entry.street,
-                number: entry.number,
-                postalCode: entry.postalCode,
-                city: entry.city,
-                email: entry.email,
-                phone: entry.phone,
-                conditions: entry.conditions,
+                ...entry,
                 // new values:
                 period: values.period,
                 memberno: values.memberno,
@@ -133,8 +115,8 @@ export default function Home() {
             <Step3 form={form} />
           </Stepper.Step>
           <Stepper.Completed>
-            <b>Anmeldung erfolgreich abgeschickt!</b> Bitte überprüfe das
-            Postfach der angegebenen Mailadresse für weitere Informationen.
+            <b>Anmeldung erfolgreich vervollständigt!</b> Wir freuen uns dich in
+            der Fußballschule des 1. FC Nürnberg begrüßen zu dürfen.
           </Stepper.Completed>
         </Stepper>
 

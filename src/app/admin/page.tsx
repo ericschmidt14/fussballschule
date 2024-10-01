@@ -11,6 +11,7 @@ import {
 } from "@tabler/icons-react";
 import { exportCSV } from "../utils";
 import { SoccerSchoolEntry } from "../interfaces";
+import { SOCCER_SCHOOL_API } from "../constants";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -99,7 +100,10 @@ export default function Page() {
             exportCSV(
               JSON.stringify(
                 data
-                  .filter((d) => d.iban !== "" && d.ended === null)
+                  .filter(
+                    (d) =>
+                      d.iban !== "" && d.started !== null && d.ended === null
+                  )
                   .map((d) => {
                     return {
                       Nummer: "",

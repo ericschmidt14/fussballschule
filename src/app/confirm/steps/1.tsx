@@ -87,13 +87,15 @@ export default function Step1({
           <Table>
             <Table.Tbody>
               {data.map((entry, index) => {
-                return (
+                return entry.value !== "" ? (
                   <Table.Tr key={index}>
                     <Table.Td>
                       <b>{entry.description}</b>
                     </Table.Td>
-                    <Table.Td>{entry.value ? entry.value : ""}</Table.Td>
+                    <Table.Td>{entry.value}</Table.Td>
                   </Table.Tr>
+                ) : (
+                  <></>
                 );
               })}
             </Table.Tbody>
