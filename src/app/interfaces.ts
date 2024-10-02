@@ -34,6 +34,6 @@ export interface SoccerSchoolEntry {
   position: string;
   size: string;
   misc: string;
-  created: string;
+  childCreated: string;
   childToken: string;
 }

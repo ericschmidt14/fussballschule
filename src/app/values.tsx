@@ -35,20 +35,17 @@ export const ageGroups = [
 ];
 
 export const times: {
-  [key: string]: { label: string; value: string }[];
+  [key: string]: string[];
 } = {
   k: [
-    { label: "Montag, 14:00 – 15:00 Uhr", value: "Mo" },
-    { label: "Donnerstag, 15:00 – 16:00 Uhr", value: "Do" },
-    { label: "Freitag, 14:00 – 15:00 Uhr", value: "Fr" },
+    "Montag, 14:00 – 15:00 Uhr",
+    "Donnerstag, 15:00 – 16:00 Uhr",
+    "Freitag, 14:00 – 15:00 Uhr",
   ],
-  f1: [
-    { label: "Montag, 15:00 – 16:30 Uhr", value: "Mo" },
-    { label: "Dienstag, 15:00 – 16:30 Uhr", value: "Di" },
-  ],
-  f2: [{ label: "Mittwoch, 15:00 – 16:30 Uhr", value: "Mi" }],
-  f3: [{ label: "Freitag, 15:00 – 16:30 Uhr", value: "Fr" }],
-  m: [{ label: "Freitag, 15:00 – 16:30 Uhr", value: "Fr" }],
+  f1: ["Montag, 15:00 – 16:30 Uhr", "Dienstag, 15:00 – 16:30 Uhr"],
+  f2: ["Mittwoch, 15:00 – 16:30 Uhr"],
+  f3: ["Freitag, 15:00 – 16:30 Uhr"],
+  m: ["Freitag, 15:00 – 16:30 Uhr"],
 };
 
 export const genders: { [key: string]: string } = {
@@ -57,10 +54,10 @@ export const genders: { [key: string]: string } = {
 };
 
 export const sizes: { [key: string]: string } = {
-  YS: "134 – 140",
-  YM: "146 – 152",
-  YL: "152 – 158",
-  YXL: "164 – 170",
-  S: "170 – 176",
-  M: "176 – 188",
+  YXS: "128",
+  YS: "140",
+  YM: "152",
+  YL: "164",
+  S: "S",
+  M: "M",
 };

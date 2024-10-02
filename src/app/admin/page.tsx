@@ -21,6 +21,7 @@ export default function Page() {
 
   useEffect(() => {
     fetch("/api", {
+      // fetch(SOCCER_SCHOOL_API, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -56,7 +57,7 @@ export default function Page() {
           <Table.Th>Nachname</Table.Th>
           <Table.Th>Angemeldet seit</Table.Th>
           <Table.Th>Alter</Table.Th>
-          <Table.Th>Geschlecht</Table.Th>
+          <Table.Th>Gruppe</Table.Th>
           <Table.Th>Größe</Table.Th>
           <Table.Th>Status</Table.Th>
           <Table.Th />
@@ -119,7 +120,7 @@ export default function Page() {
                       Land: "DE - Deutschland",
                       Hausnummer: d.number,
                       Kündigung: "",
-                      Vertragsabschlussdatum: d.created,
+                      Vertragsabschlussdatum: d.started,
                       Vertragslaufzeit: `${d.period} Monate`,
                       Rabatt: "",
                       Straße: d.street,

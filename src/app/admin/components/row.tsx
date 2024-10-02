@@ -1,6 +1,6 @@
 import { SoccerSchoolEntry } from "@/app/interfaces";
 import { convertDOB } from "@/app/utils";
-import { genders } from "@/app/values";
+import { genders, youths } from "@/app/values";
 import { Button, Drawer, Select, Table, Tooltip } from "@mantine/core";
 import { differenceInYears, format } from "date-fns";
 import { useState } from "react";
@@ -96,8 +96,8 @@ export function ParticipantRow({
         <Table.Td>{participant.childFirstName}</Table.Td>
         <Table.Td>{participant.childLastName}</Table.Td>
         <Table.Td>
-          {participant.created &&
-            format(new Date(participant.created), "dd.MM.yyyy")}
+          {participant.childCreated &&
+            format(new Date(participant.childCreated), "dd.MM.yyyy")}
         </Table.Td>
         <Table.Td>
           <Tooltip
@@ -108,7 +108,11 @@ export function ParticipantRow({
             <p>{differenceInYears(new Date(), new Date(participant.dob))}</p>
           </Tooltip>
         </Table.Td>
-        <Table.Td>{genders[participant.gender]}</Table.Td>
+        <Table.Td>
+          <Tooltip label={participant.time} position="left" withArrow>
+            <p>{youths[participant.youth]}</p>
+          </Tooltip>
+        </Table.Td>
         <Table.Td>{participant.size}</Table.Td>
         <Table.Td>
           <Select

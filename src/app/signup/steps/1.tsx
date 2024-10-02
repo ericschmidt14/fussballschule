@@ -46,7 +46,7 @@ export default function Step1({
   });
 
   form.watch("youth", ({ value }) => {
-    form.setFieldValue("time", times[value][0].value);
+    form.setFieldValue("time", times[value][0]);
   });
 
   return (
@@ -120,14 +120,14 @@ export default function Step1({
             key={form.key("size")}
             {...form.getInputProps("size")}
             fullWidth
-            data={["YS", "YM", "YL", "YXL", "S", "M"]}
+            data={["YXS", "YS", "YM", "YL", "S", "M"]}
             transitionTimingFunction="linear"
           />
           <p
             className="small muted"
             style={{ marginTop: "calc(var(--mantine-spacing-xs) / 2)" }}
           >
-            {sizes[form.getValues().size]} cm
+            Konfektionsgröße {sizes[form.getValues().size]}
           </p>
           <p className="mt-2 col-span-2 muted small">
             Mit der Anmeldung erhält jeder Teilnehmer ein exklusives
