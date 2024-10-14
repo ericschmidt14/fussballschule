@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { json2csv } from "json-2-csv";
+import { prices } from "./values";
 
 export function exportCSV(data: string) {
   const csv = json2csv(JSON.parse(data));
@@ -20,6 +21,10 @@ export function exportCSV(data: string) {
 export function copy(text: string) {
   navigator.clipboard.writeText(text);
 }
+
+export const getPrice = (youth: string, period: string) => {
+  return youth === "k" ? prices[period] - 10 : prices[period];
+};
 
 export function convertDOB(dob: string) {
   try {

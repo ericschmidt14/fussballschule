@@ -17,6 +17,7 @@ import { FormValues } from "../form/form";
 import { FormRow, FormWrapper } from "../../components/form";
 import { ageGroups, sizes, times } from "../../values";
 import { differenceInYears } from "date-fns";
+import { getPrice } from "@/app/utils";
 
 export default function Step1({
   form,
@@ -91,20 +92,30 @@ export default function Step1({
           </div>
         </FormRow>
         <FormRow>
-          <Select
-            label="Gruppe"
-            key={form.key("youth")}
-            {...form.getInputProps("youth")}
-            data={[
-              { label: "Kindergarten (4 – 6 Jahre)", value: "k" },
-              { label: "Fußballschule (7 – 9 Jahre)", value: "f1" },
-              { label: "Fußballschule (8 – 10 Jahre)", value: "f2" },
-              { label: "Fußballschule (10 – 13 Jahre)", value: "f3" },
-              { label: "Mädels-Fußballschule (4 – 14 Jahre)", value: "m" },
-            ]}
-            allowDeselect={false}
-            checkIconPosition="right"
-          />
+          <div>
+            <Select
+              label="Gruppe"
+              key={form.key("youth")}
+              {...form.getInputProps("youth")}
+              data={[
+                { label: "Kindergarten (4 – 6 Jahre)", value: "k" },
+                { label: "Fußballschule (7 – 9 Jahre)", value: "f1" },
+                { label: "Fußballschule (8 – 10 Jahre)", value: "f2" },
+                { label: "Fußballschule (10 – 13 Jahre)", value: "f3" },
+                { label: "Mädels-Fußballschule (4 – 14 Jahre)", value: "m" },
+              ]}
+              allowDeselect={false}
+              checkIconPosition="right"
+            />
+            <p
+              className="small muted"
+              style={{ marginTop: "calc(var(--mantine-spacing-xs) / 2)" }}
+            >
+              Preis: 6 Monate à {getPrice(form.getValues().youth, "6")}€ / 3
+              Monate à {getPrice(form.getValues().youth, "3")}€
+            </p>
+          </div>
+
           <Select
             label="Zeit"
             key={form.key("time")}
@@ -131,11 +142,10 @@ export default function Step1({
           </p>
           <p className="mt-2 col-span-2 muted small">
             Mit der Anmeldung erhält jeder Teilnehmer ein exklusives
-            Trainings-Outfit der Fußballschule. Dieses besteht aus einem Trikot,
-            Hose und Stutzen sowie einer 1. FC Nürnberg Trinkflasche und wird
-            gegen eine Gebühr von 39,00€ vor Ort an den Teilnehmer vergeben. Ein
-            Umtausch ist für 14 Tage und nur in einem angemessenen Zustand
-            möglich.
+            Trainings-Outfit. Dieses besteht aus einem Trikot, Hose und Stutzen
+            sowie einer 1. FC Nürnberg Trinkflasche und wird gegen eine Gebühr
+            von 39,00€ vor Ort an den Teilnehmer vergeben. Ein Umtausch ist für
+            14 Tage und nur in einem angemessenen Zustand möglich.
           </p>
         </div>
         <Fieldset legend="Optionale Angaben">

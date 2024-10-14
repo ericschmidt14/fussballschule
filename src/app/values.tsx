@@ -1,6 +1,6 @@
-export const prices: { [key: string]: string } = {
-  3: "55€",
-  6: "50€",
+export const prices: { [key: string]: number } = {
+  3: 55,
+  6: 50,
 };
 
 export const youths: { [key: string]: string } = {
@@ -13,24 +13,34 @@ export const youths: { [key: string]: string } = {
 
 export const ageGroups = [
   {
+    label: "Kindergarten (4 – 6 Jahre)",
     value: "k",
     min: 4,
     max: 6,
   },
   {
+    label: "Fußballschule (7 – 9 Jahre)",
     value: "f1",
     min: 7,
     max: 9,
   },
   {
+    label: "Fußballschule (8 – 10 Jahre)",
     value: "f2",
     min: 8,
     max: 10,
   },
   {
+    label: "Fußballschule (10 – 13 Jahre)",
     value: "f3",
     min: 10,
     max: 13,
+  },
+  {
+    label: "Mädels-Fußballschule (4 – 14 Jahre)",
+    value: "m",
+    min: 4,
+    max: 14,
   },
 ];
 

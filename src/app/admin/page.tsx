@@ -2,14 +2,14 @@
 import { Button, Paper, Select, Table, TextInput } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { ParticipantRow } from "./components/row";
-import { prices, youths } from "../values";
+import { youths } from "../values";
 import { useSession } from "next-auth/react";
 import {
   IconFileTypeCsv,
   IconSearch,
   IconUsersGroup,
 } from "@tabler/icons-react";
-import { exportCSV } from "../utils";
+import { exportCSV, getPrice } from "../utils";
 import { SoccerSchoolEntry } from "../interfaces";
 import { SOCCER_SCHOOL_API } from "../constants";
 
@@ -174,7 +174,7 @@ export default function Page() {
                       ObjectNodeSenderTechnicalID: "",
                       "Change StateID": "",
                       UUID: "",
-                      "Betrag abzubuchen": prices[d.period].replace("€", ""),
+                      "Betrag abzubuchen": getPrice(d.youth, d.period),
                     };
                   }),
                 null,

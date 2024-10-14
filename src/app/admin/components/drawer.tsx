@@ -1,7 +1,6 @@
 "use client";
 import { SoccerSchoolEntry } from "@/app/interfaces";
-import { copy } from "@/app/utils";
-import { prices } from "@/app/values";
+import { copy, getPrice } from "@/app/utils";
 import { Button, Divider, Table } from "@mantine/core";
 import { IconCopy, IconMail, IconPhone } from "@tabler/icons-react";
 
@@ -121,7 +120,7 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
               <b>Zeitraum</b>
             </Table.Td>
             <Table.Td>
-              {data.period} Monate ({prices[data.period]} / Monat)
+              {data.period} Monate à {getPrice(data.youth, data.period)}€
             </Table.Td>
             <Table.Td />
           </Table.Tr>

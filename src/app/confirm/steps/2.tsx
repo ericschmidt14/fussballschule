@@ -9,12 +9,15 @@ import {
 } from "@mantine/core";
 import { FormValues } from "../form/form";
 import { FormRow, FormWrapper } from "../../components/form";
-import { formatIBAN } from "@/app/utils";
+import { formatIBAN, getPrice } from "@/app/utils";
+import { SoccerSchoolEntry } from "@/app/interfaces";
 
 export default function Step2({
   form,
+  entry,
 }: {
   form: UseFormReturnType<FormValues>;
+  entry: SoccerSchoolEntry | undefined;
 }) {
   return (
     <FormWrapper>
@@ -67,7 +70,7 @@ export default function Step2({
           {
             label: (
               <>
-                <h3>3 Monate à 55€</h3>
+                <h3>3 Monate à {getPrice(entry?.youth || "", "3")}€</h3>
                 <p className="muted">12 Einheiten</p>
               </>
             ),
@@ -76,7 +79,7 @@ export default function Step2({
           {
             label: (
               <>
-                <h3>6 Monate à 50€</h3>
+                <h3>6 Monate à {getPrice(entry?.youth || "", "6")}€</h3>
                 <p className="muted">24 Einheiten</p>
               </>
             ),

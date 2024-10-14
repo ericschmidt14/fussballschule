@@ -109,7 +109,7 @@ export default function Home() {
             <Step1 form={form} entry={entry} />
           </Stepper.Step>
           <Stepper.Step>
-            <Step2 form={form} />
+            <Step2 form={form} entry={entry} />
           </Stepper.Step>
           <Stepper.Step>
             <Step3 form={form} />

@@ -24,17 +24,18 @@ export default function Home() {
           <p>
             In unserer Fußballschule trainieren junge Fußballspieler/-innen
             zwischen 7 und 13 Jahren unter professionellen Trainingsbedingungen.
-            Die Einheiten gelten als zusätzliches Fördertraining neben dem
-            Vereinstraining. Dabei steht der Spaß und die Leidenschaft für den
-            Fußball im Vordergrund!
+            Zusätzlich bieten wir unseren Fußball-Kindergarten für Kinder
+            zwischen 4 und & Jahren an. Die Einheiten gelten als ergänzendes
+            Fördertraining neben dem Vereinstraining. Dabei steht der Spaß und
+            die Leidenschaft für den Fußball im Vordergrund!
           </p>
           <h3>Meldet euch hier an!</h3>
           <p>
             Ihr wollt beim 1. FCN Fördertraining für Kindergartenkinder oder
-            Schüler dabei sein? Dann meldet euch hier online zum Probetraining
-            an. Nach erfolgreicher Anmeldung bekommt ihr eine Bestätigungsmail,
-            anschließend setzen wir uns mit euch in Verbindung, um alle weiteren
-            Details zu klären.
+            Schüler dabei sein? Dann meldet euch hier online für zwei
+            Probeeinheiten an. Nach erfolgreicher Anmeldung bekommt ihr eine
+            Bestätigungsmail, anschließend setzen wir uns mit euch in
+            Verbindung, um alle weiteren Details zu klären.
           </p>
           <Contact />
           <Button className="my-4" fullWidth component={Link} href="/signup/">
