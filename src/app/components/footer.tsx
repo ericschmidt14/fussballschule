@@ -17,7 +17,14 @@ export default function Footer() {
           </a>
         </nav>
       </div>
-      <Image src="/unser-club.png" alt="1. FCN Logo" width={125} height={16} />
+      <a href="https://unserclub.de/" target="_blank">
+        <Image
+          src="/unser-club.png"
+          alt="1. FCN Logo"
+          width={125}
+          height={16}
+        />
+      </a>
     </footer>
   );
 }

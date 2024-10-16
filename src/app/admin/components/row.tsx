@@ -1,6 +1,6 @@
 import { SoccerSchoolEntry } from "@/app/interfaces";
 import { convertDOB } from "@/app/utils";
-import { genders, youths } from "@/app/values";
+import { youths } from "@/app/values";
 import { Button, Drawer, Select, Table, Tooltip } from "@mantine/core";
 import { differenceInYears, format } from "date-fns";
 import { useState } from "react";
@@ -28,6 +28,17 @@ export function ParticipantRow({
       return "mailing";
     }
     return "new";
+  };
+
+  const sendMail = (type: "2" | "3") => {
+    fetch("/api/mailing", {
+      method: "POST",
+      headers: { Accept: "*/*" },
+      body: JSON.stringify({
+        type: type,
+        childToken: participant.childToken,
+      }),
+    }).catch((error) => console.error(error));
   };
 
   const setConfirm = () => {
@@ -129,10 +140,11 @@ export function ParticipantRow({
               { value: "started", label: "Gestartet" },
               { value: "ended", label: "Beendet" },
             ]}
-            defaultValue={state}
+            value={state}
             onChange={(value) => {
               setState(value);
               if (value === "confirmed") {
+                console.log("confirm");
                 setConfirm();
               }
               if (value === "started") {

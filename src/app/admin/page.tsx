@@ -21,8 +21,9 @@ export default function Page() {
 
   useEffect(() => {
     fetch("/api", {
-      // fetch(SOCCER_SCHOOL_API, {
+      //fetch(SOCCER_SCHOOL_API, {
       method: "GET",
+      cache: "no-store",
     })
       .then((res) => res.json())
       .then((res) => {
