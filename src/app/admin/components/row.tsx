@@ -1,6 +1,6 @@
 import { SoccerSchoolEntry } from "@/app/interfaces";
 import { checkState, convertDOB } from "@/app/utils";
-import { youths } from "@/app/values";
+import { states, youths } from "@/app/values";
 import { Button, Drawer, Select, Table, Tooltip } from "@mantine/core";
 import { differenceInYears, format } from "date-fns";
 import { useState } from "react";
@@ -106,20 +106,7 @@ export function ParticipantRow({
         <Table.Td>
           <Select
             key={`${participant.childToken}-${filterState || "no-state"}`}
-            data={[
-              {
-                value: "new",
-                label: "Neu",
-              },
-              {
-                value: "mailing2",
-                label: "Einladung zum Probetraining",
-              },
-              { value: "mailing3", label: "Einladung zur Fußballschule" },
-              { value: "confirmed", label: "Zahlungsdaten eingegangen" },
-              { value: "started", label: "Gestartet" },
-              { value: "ended", label: "Beendet" },
-            ]}
+            data={states}
             value={state}
             onChange={(value) => {
               setState(value);

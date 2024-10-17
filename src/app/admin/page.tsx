@@ -2,10 +2,11 @@
 import { Button, Paper, Select, Table, TextInput } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { ParticipantRow } from "./components/row";
-import { youths } from "../values";
+import { states, youths } from "../values";
 import { useSession } from "next-auth/react";
 import {
   IconFileTypeCsv,
+  IconFilter,
   IconSearch,
   IconUsersGroup,
 } from "@tabler/icons-react";
@@ -101,21 +102,9 @@ export default function Page() {
           onChange={setGroup}
         />
         <Select
-          data={[
-            {
-              value: "new",
-              label: "Neu",
-            },
-            {
-              value: "mailing2",
-              label: "Einladung zum Probetraining",
-            },
-            { value: "mailing3", label: "Einladung zur Fußballschule" },
-            { value: "confirmed", label: "Zahlungsdaten eingegangen" },
-            { value: "started", label: "Gestartet" },
-            { value: "ended", label: "Beendet" },
-          ]}
+          data={states}
           placeholder="Status wählen"
+          leftSection={<IconFilter size={16} />}
           value={state}
           onChange={setState}
           checkIconPosition="right"
