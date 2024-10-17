@@ -1,5 +1,5 @@
 import { SoccerSchoolEntry } from "@/app/interfaces";
-import { convertDOB } from "@/app/utils";
+import { checkState, convertDOB } from "@/app/utils";
 import { youths } from "@/app/values";
 import { Button, Drawer, Select, Table, Tooltip } from "@mantine/core";
 import { differenceInYears, format } from "date-fns";
@@ -11,29 +11,12 @@ import { IconId } from "@tabler/icons-react";
 export function ParticipantRow({
   index,
   participant,
+  filterState,
 }: {
   index: number;
   participant: SoccerSchoolEntry;
+  filterState: string | null;
 }) {
-  const checkState = () => {
-    if (participant.ended !== null) {
-      return "ended";
-    }
-    if (participant.started !== null) {
-      return "started";
-    }
-    if (participant.confirmed !== null) {
-      return "confirmed";
-    }
-    if (participant.mailing3 !== null || participant.mailing == "3") {
-      return "mailing3";
-    }
-    if (participant.mailing2 !== null || participant.mailing == "2") {
-      return "mailing2";
-    }
-    return "new";
-  };
-
   const sendMail = (type: "2" | "3") => {
     fetch("/api/mailing", {
       method: "POST",
@@ -94,7 +77,7 @@ export function ParticipantRow({
     }).catch((error) => console.error(error));
   };
 
-  const [state, setState] = useState<string | null>(checkState());
+  const [state, setState] = useState<string | null>(checkState(participant));
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -122,6 +105,7 @@ export function ParticipantRow({
         <Table.Td>{participant.size}</Table.Td>
         <Table.Td>
           <Select
+            key={`${participant.childToken}-${filterState || "no-state"}`}
             data={[
               {
                 value: "new",

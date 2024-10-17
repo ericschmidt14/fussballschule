@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { json2csv } from "json-2-csv";
 import { prices } from "./values";
+import { SoccerSchoolEntry } from "./interfaces";
 
 export function exportCSV(data: string) {
   const csv = json2csv(JSON.parse(data));
@@ -81,4 +82,23 @@ export const isValidIBAN = (iban: string) => {
   }
 
   return parseInt(remainder, 10) % 97 === 1;
+};
+
+export const checkState = (participant: SoccerSchoolEntry) => {
+  if (participant.ended !== null) {
+    return "ended";
+  }
+  if (participant.started !== null) {
+    return "started";
+  }
+  if (participant.confirmed !== null) {
+    return "confirmed";
+  }
+  if (participant.mailing3 !== null || participant.mailing == "3") {
+    return "mailing3";
+  }
+  if (participant.mailing2 !== null || participant.mailing == "2") {
+    return "mailing2";
+  }
+  return "new";
 };

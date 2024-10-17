@@ -9,7 +9,7 @@ import {
   IconSearch,
   IconUsersGroup,
 } from "@tabler/icons-react";
-import { exportCSV, getPrice } from "../utils";
+import { checkState, exportCSV, getPrice } from "../utils";
 import { SoccerSchoolEntry } from "../interfaces";
 
 export default function Page() {
@@ -17,6 +17,7 @@ export default function Page() {
   const [data, setData] = useState<SoccerSchoolEntry[]>();
   const [search, setSearch] = useState<string>("");
   const [group, setGroup] = useState<string | null>("");
+  const [state, setState] = useState<string | null>("");
 
   useEffect(() => {
     fetch("/api", {
@@ -34,6 +35,7 @@ export default function Page() {
     data &&
     data
       .filter((d) => (group ? d.youth === group : true))
+      .filter((d) => (state ? checkState(d) === state : true))
       .filter((d) =>
         [
           d.parentFirstName,
@@ -44,7 +46,12 @@ export default function Page() {
       )
       .reverse()
       .map((participant, index) => (
-        <ParticipantRow key={index} index={index} participant={participant} />
+        <ParticipantRow
+          key={`${participant.childToken}-${state || "no-state"}`}
+          index={index}
+          participant={participant}
+          filterState={state}
+        />
       ));
 
   const table = (
@@ -82,7 +89,6 @@ export default function Page() {
           leftSection={<IconSearch size={16} />}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="col-span-2"
         />
         <Select
           data={["k", "f1", "f2", "f3", "m"].map((g) => {
@@ -93,6 +99,26 @@ export default function Page() {
           checkIconPosition="right"
           value={group}
           onChange={setGroup}
+        />
+        <Select
+          data={[
+            {
+              value: "new",
+              label: "Neu",
+            },
+            {
+              value: "mailing2",
+              label: "Einladung zum Probetraining",
+            },
+            { value: "mailing3", label: "Einladung zur Fußballschule" },
+            { value: "confirmed", label: "Zahlungsdaten eingegangen" },
+            { value: "started", label: "Gestartet" },
+            { value: "ended", label: "Beendet" },
+          ]}
+          placeholder="Status wählen"
+          value={state}
+          onChange={setState}
+          checkIconPosition="right"
         />
         <Button
           leftSection={<IconFileTypeCsv size={20} />}

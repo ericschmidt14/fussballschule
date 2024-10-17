@@ -101,7 +101,10 @@ export default function Step1({
           </Table>
         </Fieldset>
       ) : (
-        <p>Kein Datensatz verfügbar. Bitte kontaktieren Sie uns.</p>
+        <p>
+          Kein Datensatz verfügbar.{" "}
+          <a href="mailto:fussballschule@fcn.de">Bitte kontaktiere uns.</a>
+        </p>
       )}
     </FormWrapper>
   );
