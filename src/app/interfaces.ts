@@ -19,7 +19,6 @@ export interface SoccerSchoolEntry {
   recordings: boolean;
   processing: boolean;
   parentCreated: string;
-  mailing: string | null;
   confirmed: string | null;
   started: string | null;
   ended: string | null;
@@ -34,6 +33,10 @@ export interface SoccerSchoolEntry {
   position: string;
   size: string;
   misc: string;
+  mailing: string;
+  mailing1: string | null;
+  mailing2: string | null;
+  mailing3: string | null;
   childCreated: string;
   childToken: string;
 }

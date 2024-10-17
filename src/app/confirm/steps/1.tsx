@@ -6,8 +6,7 @@ import { FormValues } from "../form/form";
 import { FormWrapper } from "../../components/form";
 import { SoccerSchoolEntry } from "@/app/interfaces";
 import { genders, youths } from "@/app/values";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { convertDOB } from "@/app/utils";
 
 export default function Step1({
@@ -42,7 +41,7 @@ export default function Step1({
         },
         {
           description: "Termin",
-          value: `${youths[entry.youth]} – ${entry.time}, 15:00 – 16:30 Uhr`,
+          value: `${youths[entry.youth]} – ${entry.time}`,
         },
         {
           description: "Verein",
@@ -82,25 +81,27 @@ export default function Step1({
   return (
     <FormWrapper>
       <Title text="Anmeldung vervollständigen" />
-      {entry && (
+      {entry ? (
         <Fieldset legend="Zusammenfassung">
-          <Table>
+          <Table className="responsive-table">
             <Table.Tbody>
               {data.map((entry, index) => {
-                return entry.value !== "" ? (
-                  <Table.Tr key={index}>
-                    <Table.Td>
-                      <b>{entry.description}</b>
-                    </Table.Td>
-                    <Table.Td>{entry.value}</Table.Td>
-                  </Table.Tr>
-                ) : (
-                  <></>
+                return (
+                  entry.value !== "" && (
+                    <Table.Tr key={index}>
+                      <Table.Td>
+                        <b>{entry.description}</b>
+                      </Table.Td>
+                      <Table.Td>{entry.value}</Table.Td>
+                    </Table.Tr>
+                  )
                 );
               })}
             </Table.Tbody>
           </Table>
         </Fieldset>
+      ) : (
+        <p>Kein Datensatz verfügbar. Bitte kontaktieren Sie uns.</p>
       )}
     </FormWrapper>
   );

@@ -11,7 +11,6 @@ import {
 } from "@tabler/icons-react";
 import { exportCSV, getPrice } from "../utils";
 import { SoccerSchoolEntry } from "../interfaces";
-import { SOCCER_SCHOOL_API } from "../constants";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -21,7 +20,6 @@ export default function Page() {
 
   useEffect(() => {
     fetch("/api", {
-      //fetch(SOCCER_SCHOOL_API, {
       method: "GET",
       cache: "no-store",
     })
@@ -54,11 +52,11 @@ export default function Page() {
       <Table.Thead>
         <Table.Tr>
           <Table.Th />
-          <Table.Th>Vorname</Table.Th>
-          <Table.Th>Nachname</Table.Th>
-          <Table.Th>Angemeldet seit</Table.Th>
+          <Table.Th>Name</Table.Th>
+          <Table.Th>Datum</Table.Th>
           <Table.Th>Alter</Table.Th>
           <Table.Th>Gruppe</Table.Th>
+          <Table.Th>Zeit</Table.Th>
           <Table.Th>Größe</Table.Th>
           <Table.Th>Status</Table.Th>
           <Table.Th />

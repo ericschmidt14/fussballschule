@@ -98,3 +98,25 @@ article.small li {
     font-size: 14px;
   }
 }
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.responsive-table td {
+  text-align: left;
+}
+
+@media screen and (max-width: 600px) {
+  .responsive-table tr {
+    display: block;
+    padding: 0.6rem 0rem;
+  }
+
+  .responsive-table td {
+    display: block;
+    position: relative;
+    padding: 0rem 0.4rem;
+  }
+}

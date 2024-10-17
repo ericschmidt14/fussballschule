@@ -6,6 +6,7 @@ import { differenceInYears, format } from "date-fns";
 import { useState } from "react";
 import { DrawerContent } from "./drawer";
 import { useDisclosure } from "@mantine/hooks";
+import { IconId } from "@tabler/icons-react";
 
 export function ParticipantRow({
   index,
@@ -24,8 +25,11 @@ export function ParticipantRow({
     if (participant.confirmed !== null) {
       return "confirmed";
     }
-    if (participant.mailing !== null) {
-      return "mailing";
+    if (participant.mailing3 !== null || participant.mailing == "3") {
+      return "mailing3";
+    }
+    if (participant.mailing2 !== null || participant.mailing == "2") {
+      return "mailing2";
     }
     return "new";
   };
@@ -42,13 +46,6 @@ export function ParticipantRow({
   };
 
   const setConfirm = () => {
-    fetch("/api/confirm", {
-      method: "POST",
-      headers: { Accept: "*/*" },
-      body: JSON.stringify({
-        token: participant.childToken,
-      }),
-    }).catch((error) => console.error(error));
     fetch("/api/started", {
       method: "POST",
       headers: { Accept: "*/*" },
@@ -104,8 +101,9 @@ export function ParticipantRow({
     <>
       <Table.Tr>
         <Table.Td>{index + 1}</Table.Td>
-        <Table.Td>{participant.childFirstName}</Table.Td>
-        <Table.Td>{participant.childLastName}</Table.Td>
+        <Table.Td>
+          {participant.childFirstName} {participant.childLastName}
+        </Table.Td>
         <Table.Td>
           {participant.childCreated &&
             format(new Date(participant.childCreated), "dd.MM.yyyy")}
@@ -119,11 +117,8 @@ export function ParticipantRow({
             <p>{differenceInYears(new Date(), new Date(participant.dob))}</p>
           </Tooltip>
         </Table.Td>
-        <Table.Td>
-          <Tooltip label={participant.time} position="left" withArrow>
-            <p>{youths[participant.youth]}</p>
-          </Tooltip>
-        </Table.Td>
+        <Table.Td>{youths[participant.youth]}</Table.Td>
+        <Table.Td>{participant.time}</Table.Td>
         <Table.Td>{participant.size}</Table.Td>
         <Table.Td>
           <Select
@@ -133,18 +128,24 @@ export function ParticipantRow({
                 label: "Neu",
               },
               {
-                value: "mailing",
-                label: "Im Probetraining",
+                value: "mailing2",
+                label: "Einladung zum Probetraining",
               },
-              { value: "confirmed", label: "Eingeladen" },
+              { value: "mailing3", label: "Einladung zur Fußballschule" },
+              { value: "confirmed", label: "Zahlungsdaten eingegangen" },
               { value: "started", label: "Gestartet" },
               { value: "ended", label: "Beendet" },
             ]}
             value={state}
             onChange={(value) => {
               setState(value);
+              if (value === "mailing2") {
+                sendMail("2");
+              }
+              if (value === "mailing3") {
+                sendMail("3");
+              }
               if (value === "confirmed") {
-                console.log("confirm");
                 setConfirm();
               }
               if (value === "started") {
@@ -160,13 +161,14 @@ export function ParticipantRow({
         </Table.Td>
         <Table.Td align="right">
           <Button
-            variant="transparent"
+            variant="light"
             size="xs"
+            leftSection={<IconId size={16} />}
             onClick={() => {
               open();
             }}
           >
-            Details anzeigen
+            Details
           </Button>
         </Table.Td>
       </Table.Tr>

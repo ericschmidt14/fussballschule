@@ -24,7 +24,7 @@ export default function Home() {
     })
       .then((res) => res.json())
       .then((res) => {
-        setEntry(res[0]);
+        res !== "No data found" && setEntry(res[0]);
       })
       .catch((error) => console.error(error));
   }, [token]);
@@ -69,7 +69,13 @@ export default function Home() {
           })
             .then((res) => res.text())
             .then((data) => {
-              console.log(data);
+              fetch("/api/confirm", {
+                method: "POST",
+                headers: { Accept: "*/*" },
+                body: JSON.stringify({
+                  token: entry && entry.childToken,
+                }),
+              }).catch((error) => console.error(error));
               nextStep();
             })
             .catch((error) => console.error(error));
@@ -129,7 +135,7 @@ export default function Home() {
             <div />
           )}
           {active < 2 && (
-            <Button onClick={nextStep} disabled={!form.isValid()}>
+            <Button onClick={nextStep} disabled={!form.isValid() || !entry}>
               Weiter
             </Button>
           )}
