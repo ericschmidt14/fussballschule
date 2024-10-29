@@ -9,7 +9,6 @@ export const getInitialValues = () => {
     club: "",
     position: "",
     misc: "",
-    size: "YS",
     parentLastName: "",
     parentFirstName: "",
     street: "",
@@ -32,7 +31,6 @@ export interface FormValues {
   club?: string;
   position?: string;
   misc?: string;
-  size: string;
   parentLastName: string;
   parentFirstName: string;
   street: string;

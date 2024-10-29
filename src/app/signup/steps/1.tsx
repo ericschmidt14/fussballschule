@@ -1,9 +1,5 @@
 "use client";
-import "dayjs/locale/de";
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import { UseFormReturnType } from "@mantine/form";
-import Title from "../../components/title";
+import { getPrice } from "@/app/utils";
 import {
   Fieldset,
   SegmentedControl,
@@ -11,13 +7,17 @@ import {
   TextInput,
   Textarea,
 } from "@mantine/core";
-import Label from "../../components/label";
 import { DatePickerInput, DatesProvider } from "@mantine/dates";
-import { FormValues } from "../form/form";
-import { FormRow, FormWrapper } from "../../components/form";
-import { ageGroups, sizes, times } from "../../values";
+import { UseFormReturnType } from "@mantine/form";
 import { differenceInYears } from "date-fns";
-import { getPrice } from "@/app/utils";
+import dayjs from "dayjs";
+import "dayjs/locale/de";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import { FormRow, FormWrapper } from "../../components/form";
+import Label from "../../components/label";
+import Title from "../../components/title";
+import { ageGroups, times, youths } from "../../values";
+import { FormValues } from "../form/form";
 
 export default function Step1({
   form,
@@ -91,61 +91,35 @@ export default function Step1({
             />
           </div>
         </FormRow>
-        <FormRow>
-          <div>
+        <div>
+          <FormRow>
             <Select
               label="Gruppe"
               key={form.key("youth")}
               {...form.getInputProps("youth")}
-              data={[
-                { label: "Kindergarten (4 – 6 Jahre)", value: "k" },
-                { label: "Fußballschule (7 – 9 Jahre)", value: "f1" },
-                { label: "Fußballschule (8 – 10 Jahre)", value: "f2" },
-                { label: "Fußballschule (10 – 13 Jahre)", value: "f3" },
-                { label: "Mädels-Fußballschule (4 – 14 Jahre)", value: "m" },
-              ]}
+              data={["k", "f1", "f2", "f3", "m"].map((g) => {
+                return { value: g, label: youths[g] };
+              })}
               allowDeselect={false}
               checkIconPosition="right"
             />
-            <p
-              className="small muted"
-              style={{ marginTop: "calc(var(--mantine-spacing-xs) / 2)" }}
-            >
-              Preis: 6 Monate à {getPrice(form.getValues().youth, "6")}€ / 3
-              Monate à {getPrice(form.getValues().youth, "3")}€
-            </p>
-          </div>
-
-          <Select
-            label="Zeit"
-            key={form.key("time")}
-            {...form.getInputProps("time")}
-            data={times[form.getValues().youth]}
-            allowDeselect={false}
-            checkIconPosition="right"
-          />
-        </FormRow>
-        <div>
-          <Label text="Konfektionsgröße" />
-          <SegmentedControl
-            key={form.key("size")}
-            {...form.getInputProps("size")}
-            fullWidth
-            data={["YXS", "YS", "YM", "YL", "S", "M"]}
-            transitionTimingFunction="linear"
-          />
-          <p
-            className="small muted"
-            style={{ marginTop: "calc(var(--mantine-spacing-xs) / 2)" }}
-          >
-            Konfektionsgröße {sizes[form.getValues().size]}
-          </p>
-          <p className="mt-2 col-span-2 muted small">
-            Mit der Anmeldung erhält jeder Teilnehmer ein exklusives
-            Trainings-Outfit. Dieses besteht aus einem Trikot, Hose und Stutzen
-            sowie einer 1. FC Nürnberg Trinkflasche und wird gegen eine Gebühr
-            von 39,00€ vor Ort an den Teilnehmer vergeben. Ein Umtausch ist für
-            14 Tage und nur in einem angemessenen Zustand möglich.
+            <Select
+              label="Zeit"
+              key={form.key("time")}
+              {...form.getInputProps("time")}
+              data={times[form.getValues().youth]}
+              allowDeselect={false}
+              checkIconPosition="right"
+            />
+          </FormRow>
+          <p className="small muted mt-2">
+            <b>
+              6 Monate à {getPrice(form.getValues().youth, "6")}€ bzw. 3 Monate
+              à {getPrice(form.getValues().youth, "3")}€.
+            </b>{" "}
+            Das Training findet grundsätzlich in gemischten Gruppen statt –
+            unabhängig vom Geschlecht. Für Mädchen bieten wir außerdem die
+            Option für unsere Mädels-Fußballschule an.
           </p>
         </div>
         <Fieldset legend="Optionale Angaben">

@@ -1,6 +1,7 @@
 export const getInitialValues = () => {
   return {
-    period: "3",
+    period: "6",
+    size: "128",
     memberno: "",
     agree: false,
     name: "",
@@ -15,6 +16,7 @@ export const getInitialValues = () => {
 
 export interface FormValues {
   period: string;
+  size: string;
   memberno: string;
   agree: boolean;
   name: string;

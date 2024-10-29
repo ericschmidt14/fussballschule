@@ -1,5 +1,7 @@
-import { UseFormReturnType } from "@mantine/form";
-import Title from "../../components/title";
+import Label from "@/app/components/label";
+import { SoccerSchoolEntry } from "@/app/interfaces";
+import { formatIBAN, getPrice } from "@/app/utils";
+import { sizes } from "@/app/values";
 import {
   Checkbox,
   Divider,
@@ -7,10 +9,10 @@ import {
   SegmentedControl,
   TextInput,
 } from "@mantine/core";
-import { FormValues } from "../form/form";
+import { UseFormReturnType } from "@mantine/form";
 import { FormRow, FormWrapper } from "../../components/form";
-import { formatIBAN, getPrice } from "@/app/utils";
-import { SoccerSchoolEntry } from "@/app/interfaces";
+import Title from "../../components/title";
+import { FormValues } from "../form/form";
 
 export default function Step2({
   form,
@@ -61,34 +63,56 @@ export default function Step2({
         weitergehende Datenverarbeitung ist nur aufgrund einer ausdrücklichen
         Ermächtigung möglich.
       </p>
-      <Divider label="Laufzeit & Abrechnungszeitraum" />
-      <SegmentedControl
-        key={form.key("period")}
-        {...form.getInputProps("period")}
-        fullWidth
-        data={[
-          {
-            label: (
-              <>
-                <h3>3 Monate à {getPrice(entry?.youth || "", "3")}€</h3>
-                <p className="muted">12 Einheiten</p>
-              </>
-            ),
-            value: "3",
-          },
-          {
-            label: (
-              <>
-                <h3>6 Monate à {getPrice(entry?.youth || "", "6")}€</h3>
-                <p className="muted">24 Einheiten</p>
-              </>
-            ),
-            value: "6",
-          },
-        ]}
-        transitionDuration={500}
-        transitionTimingFunction="linear"
-      />
+      <Divider label="Weitere Angaben" />
+      <div>
+        <Label text="Laufzeit & Abrechnungszeitraum" />
+        <SegmentedControl
+          key={form.key("period")}
+          {...form.getInputProps("period")}
+          fullWidth
+          data={[
+            {
+              label: `6 Monate à ${getPrice(entry?.youth || "", "6")}€`,
+              value: "6",
+            },
+            {
+              label: `3 Monate à ${getPrice(entry?.youth || "", "3")}€`,
+              value: "3",
+            },
+          ]}
+          transitionDuration={500}
+          transitionTimingFunction="linear"
+        />
+        <p className="mt-2 muted small">
+          Die Abbuchung erfolgt monatlich. Gesamtpreis:{" "}
+          {getPrice(entry?.youth || "", form.getValues().period) *
+            +form.getValues().period}
+          €
+        </p>
+      </div>
+      <div>
+        <Label text="Konfektionsgröße" />
+        <SegmentedControl
+          key={form.key("size")}
+          {...form.getInputProps("size")}
+          fullWidth
+          data={["128", "140", "152", "164", "S", "M"]}
+          transitionTimingFunction="linear"
+        />
+        <p
+          className="small muted"
+          style={{ marginTop: "calc(var(--mantine-spacing-xs) / 2)" }}
+        >
+          Entspricht der Größe {sizes[form.getValues().size]}
+        </p>
+        <p className="mt-2 muted small">
+          Mit der Anmeldung erhält jeder Teilnehmer ein exklusives
+          Trainings-Outfit. Dieses besteht aus einem Trikot, Hose und Stutzen
+          sowie einer 1. FC Nürnberg Trinkflasche und wird gegen eine Gebühr von
+          45,00€ vor Ort an den Teilnehmer vergeben. Ein Umtausch ist für 14
+          Tage und nur in einem angemessenen Zustand möglich.
+        </p>
+      </div>
       <Fieldset legend="Mitgliederbereich">
         <FormRow>
           <div>

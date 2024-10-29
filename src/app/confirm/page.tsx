@@ -54,6 +54,7 @@ export default function Home() {
                 ...entry,
                 // new values:
                 period: values.period,
+                size: values.size,
                 memberno: values.memberno,
                 agree: values.agree,
                 name: values.name,

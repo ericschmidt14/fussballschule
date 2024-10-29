@@ -41,7 +41,6 @@ export default function Home() {
                 club: values.club,
                 position: values.position,
                 misc: values.misc,
-                size: values.size,
                 parentLastName: values.parentLastName,
                 parentFirstName: values.parentFirstName,
                 street: values.street,
@@ -53,6 +52,7 @@ export default function Home() {
                 conditions: values.conditions,
                 // values added during confirmation:
                 period: "",
+                size: "",
                 memberno: "",
                 agree: false,
                 name: "",

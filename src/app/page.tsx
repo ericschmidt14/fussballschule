@@ -1,9 +1,9 @@
 "use client";
 import { Button, Paper } from "@mantine/core";
-import Title from "./components/title";
 import Link from "next/link";
 import Footer from "./components/footer";
 import Header from "./components/header";
+import Title from "./components/title";
 
 export default function Home() {
   return (
@@ -25,7 +25,7 @@ export default function Home() {
             In unserer Fußballschule trainieren junge Fußballspieler/-innen
             zwischen 7 und 13 Jahren unter professionellen Trainingsbedingungen.
             Zusätzlich bieten wir unseren Fußball-Kindergarten für Kinder
-            zwischen 4 und & Jahren an. Die Einheiten gelten als ergänzendes
+            zwischen 4 und 6 Jahren an. Die Einheiten gelten als ergänzendes
             Fördertraining neben dem Vereinstraining. Dabei steht der Spaß und
             die Leidenschaft für den Fußball im Vordergrund!
           </p>

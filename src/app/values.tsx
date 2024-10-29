@@ -8,7 +8,7 @@ export const youths: { [key: string]: string } = {
   f1: "Fußballschule (7 – 9 Jahre)",
   f2: "Fußballschule (8 – 10 Jahre)",
   f3: "Fußballschule (10 – 13 Jahre)",
-  m: "Mädels-Fußballschule (4 – 14 Jahre)",
+  m: "Mädels-Fußballschule (7 – 14 Jahre)",
 };
 
 export const ageGroups = [
@@ -22,12 +22,12 @@ export const ageGroups = [
     label: "Fußballschule (7 – 9 Jahre)",
     value: "f1",
     min: 7,
-    max: 9,
+    max: 8,
   },
   {
     label: "Fußballschule (8 – 10 Jahre)",
     value: "f2",
-    min: 8,
+    min: 9,
     max: 10,
   },
   {
@@ -35,12 +35,6 @@ export const ageGroups = [
     value: "f3",
     min: 10,
     max: 13,
-  },
-  {
-    label: "Mädels-Fußballschule (4 – 14 Jahre)",
-    value: "m",
-    min: 4,
-    max: 14,
   },
 ];
 
@@ -64,10 +58,10 @@ export const genders: { [key: string]: string } = {
 };
 
 export const sizes: { [key: string]: string } = {
-  YXS: "128",
-  YS: "140",
-  YM: "152",
-  YL: "164",
+  "128": "YXS",
+  "140": "YS",
+  "152": "YM",
+  "164": "YL",
   S: "S",
   M: "M",
 };
