@@ -80,8 +80,6 @@ export default function Step2({
               value: "3",
             },
           ]}
-          transitionDuration={500}
-          transitionTimingFunction="linear"
         />
         <p className="mt-2 muted small">
           Die Abbuchung erfolgt monatlich. Gesamtpreis:{" "}
