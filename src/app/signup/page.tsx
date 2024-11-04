@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
-import { Stepper, Button, rem } from "@mantine/core";
+import { Button, rem, Stepper } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import dayjs from "dayjs";
+import { useState } from "react";
 import { FormValues, getInitialValues } from "./form/form";
 import { validateForm } from "./form/validation";
 import Step1 from "./steps/1";
@@ -36,7 +37,7 @@ export default function Home() {
                 time: values.time,
                 childLastName: values.childLastName,
                 childFirstName: values.childFirstName,
-                dob: values.dob,
+                dob: dayjs(values.dob).format("YYYY-MM-DD"),
                 gender: values.gender,
                 club: values.club,
                 position: values.position,
