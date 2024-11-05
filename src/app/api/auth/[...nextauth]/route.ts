@@ -7,13 +7,25 @@ const handler = NextAuth({
       clientId: process.env.AZURE_AD_CLIENT_ID || "",
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET || "",
       tenantId: process.env.AZURE_AD_TENANT_ID || "",
+
       authorization: {
         params: {
+          useState: true,
           scope: "openid profile email",
         },
       },
     }),
   ],
+  cookies: {
+    sessionToken: {
+      name: `__Host-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax", // Adjust based on your domain/subdomain setup
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       return true;
