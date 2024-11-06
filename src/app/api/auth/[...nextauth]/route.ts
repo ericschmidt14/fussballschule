@@ -7,7 +7,6 @@ const handler = NextAuth({
       clientId: process.env.AZURE_AD_CLIENT_ID || "",
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET || "",
       tenantId: process.env.AZURE_AD_TENANT_ID || "",
-
       authorization: {
         params: {
           useState: true,
@@ -21,7 +20,7 @@ const handler = NextAuth({
       return true;
     },
     async redirect({ url, baseUrl }) {
-      return `${baseUrl}/admin`;
+      return url;
     },
     async session({ session, token }) {
       session.user!.email = token.email;
