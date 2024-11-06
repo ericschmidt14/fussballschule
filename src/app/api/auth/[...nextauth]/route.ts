@@ -9,7 +9,6 @@ const handler = NextAuth({
       tenantId: process.env.AZURE_AD_TENANT_ID || "",
       authorization: {
         params: {
-          useState: true,
           scope: "openid profile email",
         },
       },
@@ -18,9 +17,6 @@ const handler = NextAuth({
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       return true;
-    },
-    async redirect({ url, baseUrl }) {
-      return url;
     },
     async session({ session, token }) {
       session.user!.email = token.email;
