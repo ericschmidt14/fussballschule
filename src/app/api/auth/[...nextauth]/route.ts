@@ -16,16 +16,6 @@ const handler = NextAuth({
       },
     }),
   ],
-  cookies: {
-    sessionToken: {
-      name: `__Host-next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax", // Adjust based on your domain/subdomain setup
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-  },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       return true;
