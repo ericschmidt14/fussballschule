@@ -1,6 +1,15 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
 import { SOCCER_SCHOOL_API } from "../constants";
 
 export async function GET() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return new NextResponse(null, { status: 401 });
+  }
+
   const res = await fetch(SOCCER_SCHOOL_API, {
     method: "GET",
     headers: {
@@ -10,12 +19,5 @@ export async function GET() {
   });
   const participants = await res.json();
 
-  return new Response(JSON.stringify(participants), {
-    headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-      Pragma: "no-cache",
-      Expires: "0",
-    },
-  });
+  return NextResponse.json(participants);
 }
