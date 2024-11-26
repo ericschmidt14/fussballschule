@@ -23,7 +23,7 @@ export default function Home() {
           <Title text="Anmeldung zur Fußballschule" />
           <p>
             In unserer Fußballschule trainieren junge Fußballspieler/-innen
-            zwischen 7 und 13 Jahren unter professionellen Trainingsbedingungen.
+            zwischen 7 und 14 Jahren unter professionellen Trainingsbedingungen.
             Zusätzlich bieten wir unseren Fußball-Kindergarten für Kinder
             zwischen 4 und 6 Jahren an. Die Einheiten gelten als ergänzendes
             Fördertraining neben dem Vereinstraining. Dabei steht der Spaß und

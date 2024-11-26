@@ -1,8 +1,8 @@
 import { Button, Menu, rem } from "@mantine/core";
+import { IconLogin2, IconLogout } from "@tabler/icons-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { IconLogin2, IconLogout } from "@tabler/icons-react";
 import { usePathname } from "next/navigation";
 
 export default function Header() {
@@ -13,8 +13,9 @@ export default function Header() {
       <Link href="/admin" className="logo">
         <div className="flex items-center gap-1">
           <Image src="/logo.svg" alt="1. FCN Logo" width={48} height={48} />
-          <p className="text-2xl uppercase">
-            Fussball<b>schule</b>
+          <p className="text-2xl">
+            <b>Fußball</b>
+            <i>Schule</i>
           </p>
         </div>
       </Link>

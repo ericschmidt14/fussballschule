@@ -42,15 +42,18 @@ export default function Conditions() {
         </b>
       </p>
       <p>
-        Alle Teilnehmer haben Anspruch auf vier Trainingseinheiten pro Monat.
-        Trainingseinheiten, welche aufgrund von Feiertagen oder entschuldigtem
-        Fehlen nicht wahrgenommen werden, können in der Trainingswoche an einem
-        anderen Tag absolviert bzw. zu einem späteren Zeitpunkt nachgeholt
-        werden (gegebenenfalls auch nach Ablauf des Beitrittzeitraums). Selbiges
-        gilt für entfallene Trainingseinheiten während der schulfreien Zeit. Bei
-        unentschuldigtem Fehlen verfällt der Anspruch auf diese
-        Trainingseinheit. Der gebuchte Beitrittszeitraum und die da- mit
-        verbundene Kündigungsfrist bleiben von obiger Regelung unberührt.
+        Alle Teilnehmer haben den Anspruch auf eine Trainingseinheit am
+        gebuchten Trainingstag, sofern die Trainingseinheit tatsächlich
+        stattfindet. An Feiertagen und in den bayerischen Schulferien entfallen
+        die jeweiligen Trainingseinheiten. Die Leitung der Fußballschule kann
+        Trainingseinheiten nach vorheriger, begründeter Ankündigung absagen.
+        Wird ein Teilnehmer bis drei Stunden vor dem Training bei der Leitung
+        der Fußballschule entschuldigt, kann die Trainingseinheit zu einem
+        späteren Zeitpunkt nachgeholt werden (gegebenenfalls auch nach Ablauf
+        des Beitrittzeitraums). Bei unentschuldigtem Fehlen verfällt der
+        Anspruch auf diese Trainingseinheit. Der gebuchte Beitrittszeitraum und
+        die damit verbundene Kündigungsfrist bleiben von obiger Regelung
+        unberührt.
       </p>
       <p>
         Der Veranstalter kann bei unvorhergesehenen, außergewöhnlichen

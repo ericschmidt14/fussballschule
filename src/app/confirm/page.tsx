@@ -1,14 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Stepper, Button, rem } from "@mantine/core";
+import { Button, Stepper } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import StepperIndicator from "../components/stepper";
+import { SoccerSchoolEntry } from "../interfaces";
 import { FormValues, getInitialValues } from "./form/form";
 import { validateForm } from "./form/validation";
 import Step1 from "./steps/1";
 import Step2 from "./steps/2";
 import Step3 from "./steps/3";
-import { useSearchParams } from "next/navigation";
-import { SoccerSchoolEntry } from "../interfaces";
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -43,6 +44,7 @@ export default function Home() {
 
   return (
     <section className="flex flex-col justify-center items-center">
+      <StepperIndicator steps={3} active={active} />
       <form
         className="w-full md:w-[768px] p-4 flex flex-col"
         onSubmit={form.onSubmit((values) => {
@@ -89,27 +91,11 @@ export default function Home() {
           size="sm"
           styles={{
             content: {
-              position: "relative",
               margin: "16px auto",
               padding: "48px 32px",
-              border:
-                "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-6)",
-              borderRadius: "var(--mantine-radius-md)",
-              background: "rgba(255, 255, 255, 0.0925)",
-              boxShadow: "var(--mantine-shadow-xl)",
             },
-            steps: {
-              width: "240px",
-              margin: "0 auto",
-            },
-            stepBody: {
-              display: "none",
-            },
-            stepIcon: { boxShadow: "var(--mantine-shadow-xl)" },
-            separator: {
-              marginLeft: rem(-2),
-              marginRight: rem(-2),
-            },
+            step: { display: "none" },
+            steps: { display: "none" },
           }}
         >
           <Stepper.Step>
