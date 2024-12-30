@@ -1,147 +1,330 @@
 "use client";
+import { FormRow } from "@/app/components/form";
+import Label from "@/app/components/label";
 import { SoccerSchoolEntry } from "@/app/interfaces";
-import { copy, getPrice } from "@/app/utils";
-import { Button, Divider, Table } from "@mantine/core";
-import { IconCopy, IconMail, IconPhone } from "@tabler/icons-react";
+import { copy, formatIBAN } from "@/app/utils";
+import { times, youths } from "@/app/values";
+import {
+  ActionIcon,
+  Button,
+  Fieldset,
+  SegmentedControl,
+  Select,
+  Textarea,
+  TextInput,
+} from "@mantine/core";
+import { DatePickerInput, DatesProvider } from "@mantine/dates";
+import { useForm } from "@mantine/form";
+import { IconCopy, IconDeviceFloppy } from "@tabler/icons-react";
+import "dayjs/locale/de";
+import { useState } from "react";
+import { FormValues, getInitialValues } from "../form/form";
+import { validateForm } from "../form/validation";
 
 export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
+  const [opened, setOpened] = useState(false);
+
+  const form = useForm<FormValues>({
+    validateInputOnChange: true,
+    initialValues: getInitialValues(data),
+    validate: (values: FormValues) => validateForm(values),
+  });
+
+  form.watch("youth", ({ value }) => {
+    form.setFieldValue("time", times[value][0]);
+  });
+
   return (
-    <>
-      <Divider label="Weitere Angaben" labelPosition="left" />
-      <Table>
-        <Table.Tbody>
-          <Table.Tr>
-            <Table.Td>
-              <b>Mitgliedsnummer</b>
-            </Table.Td>
-            <Table.Td>{data.memberno}</Table.Td>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <b>Verein</b>
-            </Table.Td>
-            <Table.Td>{data.club}</Table.Td>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <b>Position</b>
-            </Table.Td>
-            <Table.Td>{data.position}</Table.Td>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <b>Besonderheiten</b>
-            </Table.Td>
-            <Table.Td>{data.misc}</Table.Td>
-          </Table.Tr>
-        </Table.Tbody>
-      </Table>
-      <Divider
-        label="Angaben zum Erziehungsberechtigten"
-        labelPosition="left"
-        className="mt-8"
-      />
-      <Table>
-        <Table.Tbody>
-          <Table.Tr>
-            <Table.Td>
-              <b>Name</b>
-            </Table.Td>
-            <Table.Td>
-              {data.parentFirstName} {data.parentLastName}
-            </Table.Td>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <b>Adresse</b>
-            </Table.Td>
-            <Table.Td>
-              {data.street} {data.number}, {data.postalCode} {data.city}
-            </Table.Td>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td colSpan={2}>
-              <Button variant="transparent" size="xs">
-                <IconMail size={16} className="mr-2" /> {data.email}
-              </Button>
-              <Button variant="transparent" size="xs">
-                <IconPhone size={16} className="mr-2" /> {data.phone}
-              </Button>
-            </Table.Td>
-          </Table.Tr>
-        </Table.Tbody>
-      </Table>
-      <Divider
-        label="Zahlungsinformationen"
-        labelPosition="left"
-        className="mt-8"
-      />
-      <Table>
-        <Table.Tbody>
-          <Table.Tr>
-            <Table.Td>
-              <b>Kontoinhaber</b>
-            </Table.Td>
-            <Table.Td>{data.name}</Table.Td>
-            <Table.Td />
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <b>IBAN</b>
-            </Table.Td>
-            <Table.Td>{data.iban}</Table.Td>
-            <Table.Td>
-              <Button
-                variant="transparent"
-                size="xs"
-                onClick={() => copy(data.iban)}
-              >
-                <IconCopy size={14} />
-              </Button>
-            </Table.Td>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <b>BIC</b>
-            </Table.Td>
-            <Table.Td>{data.bic}</Table.Td>
-            <Table.Td>
-              <Button
-                variant="transparent"
-                size="xs"
-                onClick={() => copy(data.bic)}
-              >
-                <IconCopy size={14} />
-              </Button>
-            </Table.Td>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <b>Zeitraum</b>
-            </Table.Td>
-            <Table.Td>
-              {data.period} Monate à {getPrice(data.youth, data.period)}€
-            </Table.Td>
-            <Table.Td />
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td colSpan={3}>
-              <Button
-                variant="transparent"
-                size="xs"
-                onClick={() =>
-                  copy(
-                    `${window.location.origin}/confirm?token=${data.childToken}`
-                  )
+    <DatesProvider settings={{ locale: "de" }}>
+      <form
+        className="flex flex-col gap-8"
+        onSubmit={form.onSubmit((values) => {
+          console.log(JSON.stringify({ ...data, ...values }, null, 2));
+          // fetch("/api/save", {
+          //   method: "POST",
+          //   body: JSON.stringify({ ...data, ...values }, null, 2),
+          // })
+          //   .then((res) => res.text())
+          //   .then(() => {})
+          //   .catch((error) => console.error(error));
+        })}
+      >
+        <Fieldset legend="Angaben zum teilnehmenden Kind">
+          <div className="flex flex-col gap-2">
+            <FormRow>
+              <TextInput
+                label="Vorname"
+                key={form.key("childFirstName")}
+                {...form.getInputProps("childFirstName")}
+              />
+              <TextInput
+                label="Nachname"
+                key={form.key("childLastName")}
+                {...form.getInputProps("childLastName")}
+              />
+            </FormRow>
+            <FormRow>
+              <DatePickerInput
+                defaultDate={new Date(2010, 1)}
+                defaultLevel="decade"
+                valueFormat="DD.MM.YYYY"
+                label="Geburtstag"
+                placeholder="TT.MM.JJJJ"
+                key={form.key("dob")}
+                {...form.getInputProps("dob")}
+              />
+              <div>
+                <Label text="Geschlecht" />
+                <SegmentedControl
+                  key={form.key("gender")}
+                  {...form.getInputProps("gender")}
+                  fullWidth
+                  data={[
+                    { label: "Junge", value: "male" },
+                    { label: "Mädchen", value: "female" },
+                  ]}
+                  transitionDuration={500}
+                  transitionTimingFunction="linear"
+                />
+              </div>
+            </FormRow>
+            <FormRow>
+              <Select
+                label="Gruppe"
+                key={form.key("youth")}
+                {...form.getInputProps("youth")}
+                data={["k", "f1", "f2", "f3", "m"].map((g) => {
+                  return { value: g, label: youths[g] };
+                })}
+                allowDeselect={false}
+                checkIconPosition="right"
+              />
+              <Select
+                label="Zeit"
+                key={form.key("time")}
+                {...form.getInputProps("time")}
+                data={times[form.getValues().youth]}
+                allowDeselect={false}
+                checkIconPosition="right"
+              />
+            </FormRow>
+            <FormRow>
+              <TextInput
+                label="Verein"
+                key={form.key("club")}
+                {...form.getInputProps("club")}
+              />
+              <TextInput
+                label="Ich spiele gerne als"
+                key={form.key("position")}
+                {...form.getInputProps("position")}
+              />
+            </FormRow>
+            <Textarea
+              label="Besonderheiten"
+              key={form.key("misc")}
+              {...form.getInputProps("misc")}
+            />
+          </div>
+        </Fieldset>
+        <Fieldset legend="Angaben zum Erziehungsberechtigten">
+          <div className="flex flex-col gap-2">
+            <FormRow>
+              <TextInput
+                label="Vorname"
+                key={form.key("parentFirstName")}
+                {...form.getInputProps("parentFirstName")}
+              />
+              <TextInput
+                label="Nachname"
+                key={form.key("parentLastName")}
+                {...form.getInputProps("parentLastName")}
+              />
+            </FormRow>
+            <FormRow asymmetric>
+              <TextInput
+                className="col-span-3"
+                label="Straße"
+                key={form.key("street")}
+                {...form.getInputProps("street")}
+              />
+              <TextInput
+                label="Nr"
+                key={form.key("number")}
+                {...form.getInputProps("number")}
+              />
+            </FormRow>
+            <FormRow asymmetric>
+              <TextInput
+                label="PLZ"
+                key={form.key("postalCode")}
+                {...form.getInputProps("postalCode")}
+              />
+              <TextInput
+                className="col-span-3"
+                label="Ort"
+                key={form.key("city")}
+                {...form.getInputProps("city")}
+              />
+            </FormRow>
+            <FormRow>
+              <TextInput
+                label="E-Mail"
+                key={form.key("email")}
+                {...form.getInputProps("email")}
+                rightSection={
+                  <ActionIcon
+                    color="dark"
+                    variant="transparent"
+                    onClick={() => copy(form.values.email)}
+                    title="Mailadresse kopieren"
+                  >
+                    <IconCopy size={16} />
+                  </ActionIcon>
                 }
+              />
+              <TextInput
+                label="Handy / Telefon"
+                key={form.key("phone")}
+                {...form.getInputProps("phone")}
+              />
+            </FormRow>
+          </div>
+        </Fieldset>
+        <Fieldset legend="Kontodaten">
+          <div className="flex flex-col gap-2">
+            <TextInput
+              className="col-span-2"
+              label="Name des Kontoinhabers"
+              key={form.key("name")}
+              {...form.getInputProps("name")}
+            />
+            <FormRow>
+              <TextInput
+                label="IBAN"
+                key={form.key("iban")}
+                {...form.getInputProps("iban")}
+                onChange={(event) => {
+                  form.setFieldValue(
+                    "iban",
+                    formatIBAN(event.currentTarget.value)
+                  );
+                }}
+                rightSection={
+                  <ActionIcon
+                    color="dark"
+                    variant="transparent"
+                    onClick={() => copy(form.values.iban)}
+                    title="IBAN kopieren"
+                  >
+                    <IconCopy size={16} />
+                  </ActionIcon>
+                }
+              />
+              <TextInput
+                label="BIC"
+                key={form.key("bic")}
+                {...form.getInputProps("bic")}
+                rightSection={
+                  <ActionIcon
+                    color="dark"
+                    variant="transparent"
+                    onClick={() => copy(form.values.bic)}
+                    title="BIC kopieren"
+                  >
+                    <IconCopy size={16} />
+                  </ActionIcon>
+                }
+              />
+            </FormRow>
+            <Button
+              color="dark"
+              variant="transparent"
+              size="xs"
+              onClick={() =>
+                copy(
+                  `${window.location.origin}/confirm?token=${data.childToken}`
+                )
+              }
+              leftSection={<IconCopy size={16} />}
+            >
+              Link für Zahlungsdaten kopieren
+            </Button>
+          </div>
+        </Fieldset>
+        <Fieldset legend="Weitere Angaben">
+          <div className="flex flex-col gap-2">
+            <div>
+              <Label text="Abrechnungszeitraum" />
+              <SegmentedControl
+                key={form.key("period")}
+                {...form.getInputProps("period")}
+                fullWidth
+                data={[
+                  {
+                    label: "3 Monate",
+                    value: "3",
+                  },
+                  {
+                    label: "6 Monate",
+                    value: "6",
+                  },
+                ]}
+              />
+            </div>
+            <div>
+              <Label text="Konfektionsgröße" />
+              <SegmentedControl
+                key={form.key("size")}
+                {...form.getInputProps("size")}
+                fullWidth
+                data={["128", "140", "152", "164", "S", "M"]}
+                transitionTimingFunction="linear"
+              />
+            </div>
+            <TextInput
+              label="Mitgliedsnummer"
+              key={form.key("memberno")}
+              {...form.getInputProps("memberno")}
+            />
+          </div>
+        </Fieldset>
+        <div className="grid grid-cols-1 gap-4">
+          <Button
+            type="submit"
+            color="red"
+            leftSection={<IconDeviceFloppy size={16} />}
+            disabled={!form.isValid()}
+          >
+            Änderungen speichern
+          </Button>
+          {/* <Popover opened={opened} onChange={setOpened} withArrow>
+            <Popover.Target>
+              <Button
+                color="dark"
+                leftSection={<IconTrash size={16} />}
+                onClick={() => setOpened((o) => !o)}
               >
-                <IconCopy size={16} className="mr-2" /> Link für Zahlungsdaten
-                kopieren
+                Datensatz löschen
               </Button>
-            </Table.Td>
-          </Table.Tr>
-        </Table.Tbody>
-      </Table>
-    </>
+            </Popover.Target>
+            <Popover.Dropdown>
+              <div className="flex flex-col gap-2">
+                <p>Datensatz endgültig löschen?</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <Button onClick={() => console.log("Gelöscht")}>Ja</Button>
+                  <Button
+                    variant="transparent"
+                    onClick={() => setOpened(false)}
+                  >
+                    Nein
+                  </Button>
+                </div>
+              </div>
+            </Popover.Dropdown>
+          </Popover> */}
+        </div>
+      </form>
+    </DatesProvider>
   );
 }

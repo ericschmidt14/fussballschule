@@ -7,18 +7,15 @@ import Title from "./components/title";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col justify-between">
+    <main className="min-h-screen flex flex-col justify-between bg-[length:300%_300%] bg-gradient-to-r from-[#b3193e] via-[#aa1124] via-30% to-[#220407] bg-right">
       <Header />
       <section className="flex flex-col justify-center items-center">
         <Paper
           shadow="xl"
           radius="md"
           p="xl"
+          bg="rgba(0, 0, 0, 0.5)"
           className="relative max-w-[520px] m-auto my-16 flex flex-col gap-4"
-          style={{
-            border:
-              "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-6)",
-          }}
         >
           <Title text="Anmeldung zur Fußballschule" />
           <p>

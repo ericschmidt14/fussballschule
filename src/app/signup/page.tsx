@@ -85,6 +85,8 @@ export default function Home() {
             content: {
               margin: "16px auto",
               padding: "48px 32px",
+              background: "rgba(0, 0, 0, 0.5)",
+              borderRadius: "8px",
             },
             step: { display: "none" },
             steps: { display: "none" },

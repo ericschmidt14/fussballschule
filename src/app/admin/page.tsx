@@ -1,17 +1,17 @@
 "use client";
 import { Button, Paper, Select, Table, TextInput } from "@mantine/core";
-import { useEffect, useState } from "react";
-import { ParticipantRow } from "./components/row";
-import { states, youths } from "../values";
-import { useSession } from "next-auth/react";
 import {
   IconFileTypeCsv,
   IconFilter,
   IconSearch,
   IconUsersGroup,
 } from "@tabler/icons-react";
-import { checkState, exportCSV, getPrice } from "../utils";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { SoccerSchoolEntry } from "../interfaces";
+import { checkState, exportCSV, getPrice } from "../utils";
+import { states, youths } from "../values";
+import { ParticipantRow } from "./components/row";
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -56,15 +56,14 @@ export default function Page() {
       ));
 
   const table = (
-    <Table highlightOnHover className="mt-8">
+    <Table className="mt-8">
       <Table.Thead>
         <Table.Tr>
           <Table.Th />
           <Table.Th>Name</Table.Th>
-          <Table.Th>Datum</Table.Th>
+          <Table.Th>Anmeldung</Table.Th>
           <Table.Th>Alter</Table.Th>
           <Table.Th>Gruppe</Table.Th>
-          <Table.Th>Zeit</Table.Th>
           <Table.Th>Größe</Table.Th>
           <Table.Th>Status</Table.Th>
           <Table.Th />
@@ -83,7 +82,7 @@ export default function Page() {
   }
 
   return data ? (
-    <Paper className="relative m-8 p-4" radius="md">
+    <Paper className="relative m-8 p-4" radius="md" bg="rgba(0, 0, 0, 0.5)">
       <div className="grid grid-cols-4 gap-2 items-center">
         <TextInput
           placeholder="Suchen ..."

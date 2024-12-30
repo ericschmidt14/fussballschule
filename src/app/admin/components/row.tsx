@@ -2,11 +2,11 @@ import { SoccerSchoolEntry } from "@/app/interfaces";
 import { checkState, convertDOB } from "@/app/utils";
 import { states, youths } from "@/app/values";
 import { Button, Drawer, Select, Table, Tooltip } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { IconId } from "@tabler/icons-react";
 import { differenceInYears, format } from "date-fns";
 import { useState } from "react";
 import { DrawerContent } from "./drawer";
-import { useDisclosure } from "@mantine/hooks";
-import { IconId } from "@tabler/icons-react";
 
 export function ParticipantRow({
   index,
@@ -100,8 +100,10 @@ export function ParticipantRow({
             <p>{differenceInYears(new Date(), new Date(participant.dob))}</p>
           </Tooltip>
         </Table.Td>
-        <Table.Td>{youths[participant.youth]}</Table.Td>
-        <Table.Td>{participant.time}</Table.Td>
+        <Table.Td>
+          <p className="text-xs">{youths[participant.youth]}</p>
+          <p className="text-xs muted">{participant.time}</p>
+        </Table.Td>
         <Table.Td>{participant.size}</Table.Td>
         <Table.Td>
           <Select
@@ -127,6 +129,7 @@ export function ParticipantRow({
               }
             }}
             allowDeselect={false}
+            size="xs"
             checkIconPosition="right"
           />
         </Table.Td>
@@ -148,6 +151,7 @@ export function ParticipantRow({
         onClose={close}
         title="Details"
         position="right"
+        size="lg"
         overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
       >
         <DrawerContent data={participant} />
