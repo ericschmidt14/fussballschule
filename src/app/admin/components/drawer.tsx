@@ -7,7 +7,9 @@ import { times, youths } from "@/app/values";
 import {
   ActionIcon,
   Button,
+  Divider,
   Fieldset,
+  Popover,
   SegmentedControl,
   Select,
   Textarea,
@@ -15,12 +17,21 @@ import {
 } from "@mantine/core";
 import { DatePickerInput, DatesProvider } from "@mantine/dates";
 import { useForm } from "@mantine/form";
-import { IconCopy, IconDeviceFloppy } from "@tabler/icons-react";
+import { IconCopy, IconDeviceFloppy, IconTrash } from "@tabler/icons-react";
 import "dayjs/locale/de";
+import { useState } from "react";
 import { FormValues, getInitialValues } from "../form/form";
 import { validateForm } from "../form/validation";
 
-export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
+export function DrawerContent({
+  data,
+  close,
+}: {
+  data: SoccerSchoolEntry;
+  close: () => void;
+}) {
+  const [opened, setOpened] = useState(false);
+
   const form = useForm<FormValues>({
     validateInputOnChange: true,
     initialValues: getInitialValues(data),
@@ -36,12 +47,13 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
       <form
         className="flex flex-col gap-8"
         onSubmit={form.onSubmit((values) => {
+          console.log(JSON.stringify({ ...data, ...values }, null, 2));
           fetch("/api/save", {
             method: "POST",
             body: JSON.stringify({ ...data, ...values }, null, 2),
           })
             .then((res) => res.text())
-            .then(() => {})
+            .then(() => close())
             .catch((error) => console.error(error));
         })}
       >
@@ -52,11 +64,13 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
                 label="Vorname"
                 key={form.key("childFirstName")}
                 {...form.getInputProps("childFirstName")}
+                disabled
               />
               <TextInput
                 label="Nachname"
                 key={form.key("childLastName")}
                 {...form.getInputProps("childLastName")}
+                disabled
               />
             </FormRow>
             <FormRow>
@@ -130,11 +144,13 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
                 label="Vorname"
                 key={form.key("parentFirstName")}
                 {...form.getInputProps("parentFirstName")}
+                disabled
               />
               <TextInput
                 label="Nachname"
                 key={form.key("parentLastName")}
                 {...form.getInputProps("parentLastName")}
+                disabled
               />
             </FormRow>
             <FormRow asymmetric>
@@ -178,6 +194,7 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
                     <IconCopy size={16} />
                   </ActionIcon>
                 }
+                disabled
               />
               <TextInput
                 label="Handy / Telefon"
@@ -294,7 +311,8 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
           >
             Änderungen speichern
           </Button>
-          {/* <Popover opened={opened} onChange={setOpened} withArrow>
+          <Divider label="Gefahrenzone" />
+          <Popover opened={opened} onChange={setOpened} withArrow>
             <Popover.Target>
               <Button
                 color="dark"
@@ -308,7 +326,18 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
               <div className="flex flex-col gap-2">
                 <p>Datensatz endgültig löschen?</p>
                 <div className="grid grid-cols-2 gap-4">
-                  <Button onClick={() => console.log("Gelöscht")}>Ja</Button>
+                  <Button
+                    onClick={() =>
+                      fetch(`/api/token/${data.childToken}`, {
+                        method: "DELETE",
+                      })
+                        .then((res) => res.text())
+                        .then(() => close())
+                        .catch((error) => console.error(error))
+                    }
+                  >
+                    Ja
+                  </Button>
                   <Button
                     variant="transparent"
                     onClick={() => setOpened(false)}
@@ -318,7 +347,7 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
                 </div>
               </div>
             </Popover.Dropdown>
-          </Popover> */}
+          </Popover>
         </div>
       </form>
     </DatesProvider>

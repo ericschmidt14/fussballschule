@@ -154,7 +154,7 @@ export function ParticipantRow({
         size="lg"
         overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
       >
-        <DrawerContent data={participant} />
+        <DrawerContent data={participant} close={close} />
       </Drawer>
     </>
   );

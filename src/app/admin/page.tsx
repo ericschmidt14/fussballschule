@@ -3,6 +3,7 @@ import { Button, Paper, Select, Table, TextInput } from "@mantine/core";
 import {
   IconFileTypeCsv,
   IconFilter,
+  IconRefresh,
   IconSearch,
   IconUsersGroup,
 } from "@tabler/icons-react";
@@ -20,7 +21,7 @@ export default function Page() {
   const [group, setGroup] = useState<string | null>("");
   const [state, setState] = useState<string | null>("");
 
-  useEffect(() => {
+  const fetchData = () => {
     fetch("/api", {
       method: "GET",
       cache: "no-store",
@@ -30,6 +31,10 @@ export default function Page() {
         setData(res);
       })
       .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const rows =
@@ -108,96 +113,105 @@ export default function Page() {
           onChange={setState}
           checkIconPosition="right"
         />
-        <Button
-          leftSection={<IconFileTypeCsv size={20} />}
-          onClick={() =>
-            exportCSV(
-              JSON.stringify(
-                data
-                  .filter(
-                    (d) =>
-                      d.iban !== "" && d.started !== null && d.ended === null
-                  )
-                  .map((d) => {
-                    return {
-                      Nummer: "",
-                      Title: "",
-                      "Academic Title": "",
-                      Vorname: d.parentFirstName,
-                      Nachname: d.parentLastName,
-                      Spielername: `${d.childFirstName} ${d.childLastName}`,
-                      Status: "Aktiv",
-                      Sprache: "DE - Deutsch",
-                      Kontaktaufnahme: "1 - erlaubt",
-                      Interessent: "",
-                      Land: "DE - Deutschland",
-                      Hausnummer: d.number,
-                      Kündigung: "",
-                      Vertragsabschlussdatum: d.started,
-                      Vertragslaufzeit: `${d.period} Monate`,
-                      Rabatt: "",
-                      Straße: d.street,
-                      "Adresszeile 4": "",
-                      "Adresszeile 5": "",
-                      Ort: d.city,
-                      Bundesland: "",
-                      Postleitzahl: d.postalCode,
-                      Steuerstandortcode: "",
-                      Postfach: "",
-                      "Postleitzahl des Postfachs": "",
-                      Telefon: "",
-                      Fax: "",
-                      Mobiltelefon: d.phone,
-                      "E-Mail": d.email,
-                      "Bevorzugte Kontaktart": "",
-                      "ABC-Klassifikation": "",
-                      Geburtsdatum: d.dob,
-                      Kundennotiz: "",
-                      Verkaufsorganisationsnummer: "EV2000",
-                      Vertriebsweg: "Z3 - Direktvertrieb",
-                      Lieferpriorität: "",
-                      Komplettlieferung: "",
-                      Incoterms: "",
-                      "Incoterms-Ort": "",
-                      Kundengruppe: "Z3 - 1. FCN Fußball-Erlebnis",
-                      Zahlungsbedingungen: "ZD01 - Nach Erhalt netto",
-                      Währung: "EUR - Euro",
-                      Banknummer: d.bic,
-                      "Konto-ID": "",
-                      IBAN: d.iban,
-                      Kontoinhaber: "EV1000",
-                      Unternehmensnummer: "4010 - Foderung LuL",
-                      Kontenfindungsgruppe: "",
-                      "Grund der Zahlungssperre": "",
-                      Column8: "04 - Lastschrift durch Einzug",
-                      Column7: "",
-                      Column6: "",
-                      "Ablaufdatum der Zahlungssperre": "",
-                      Zahlweg: "",
-                      "Instruction 1": "",
-                      "Instruction 2": "",
-                      "Instruction 3": "",
-                      "Instruction 4": "",
-                      "Bankgebühren gezahlt von": "",
-                      Kreditlimit: "Nein",
-                      Kreditlimitwährungstyp: "",
-                      Beteiligtenrolle: "",
-                      "Direkt zuständiger Mitarbeiter": "",
-                      Dublettenprüfung: "Nein",
-                      ObjectNodeSenderTechnicalID: "",
-                      "Change StateID": "",
-                      UUID: "",
-                      "Betrag abzubuchen": getPrice(d.youth, d.period),
-                    };
-                  }),
-                null,
-                2
+        <div className="grid grid-cols-2 gap-2">
+          <Button
+            leftSection={<IconFileTypeCsv size={20} />}
+            onClick={() =>
+              exportCSV(
+                JSON.stringify(
+                  data
+                    .filter(
+                      (d) =>
+                        d.iban !== "" && d.started !== null && d.ended === null
+                    )
+                    .map((d) => {
+                      return {
+                        Nummer: "",
+                        Title: "",
+                        "Academic Title": "",
+                        Vorname: d.parentFirstName,
+                        Nachname: d.parentLastName,
+                        Spielername: `${d.childFirstName} ${d.childLastName}`,
+                        Status: "Aktiv",
+                        Sprache: "DE - Deutsch",
+                        Kontaktaufnahme: "1 - erlaubt",
+                        Interessent: "",
+                        Land: "DE - Deutschland",
+                        Hausnummer: d.number,
+                        Kündigung: "",
+                        Vertragsabschlussdatum: d.started,
+                        Vertragslaufzeit: `${d.period} Monate`,
+                        Rabatt: "",
+                        Straße: d.street,
+                        "Adresszeile 4": "",
+                        "Adresszeile 5": "",
+                        Ort: d.city,
+                        Bundesland: "",
+                        Postleitzahl: d.postalCode,
+                        Steuerstandortcode: "",
+                        Postfach: "",
+                        "Postleitzahl des Postfachs": "",
+                        Telefon: "",
+                        Fax: "",
+                        Mobiltelefon: d.phone,
+                        "E-Mail": d.email,
+                        "Bevorzugte Kontaktart": "",
+                        "ABC-Klassifikation": "",
+                        Geburtsdatum: d.dob,
+                        Kundennotiz: "",
+                        Verkaufsorganisationsnummer: "EV2000",
+                        Vertriebsweg: "Z3 - Direktvertrieb",
+                        Lieferpriorität: "",
+                        Komplettlieferung: "",
+                        Incoterms: "",
+                        "Incoterms-Ort": "",
+                        Kundengruppe: "Z3 - 1. FCN Fußball-Erlebnis",
+                        Zahlungsbedingungen: "ZD01 - Nach Erhalt netto",
+                        Währung: "EUR - Euro",
+                        Banknummer: d.bic,
+                        "Konto-ID": "",
+                        IBAN: d.iban,
+                        Kontoinhaber: "EV1000",
+                        Unternehmensnummer: "4010 - Foderung LuL",
+                        Kontenfindungsgruppe: "",
+                        "Grund der Zahlungssperre": "",
+                        Column8: "04 - Lastschrift durch Einzug",
+                        Column7: "",
+                        Column6: "",
+                        "Ablaufdatum der Zahlungssperre": "",
+                        Zahlweg: "",
+                        "Instruction 1": "",
+                        "Instruction 2": "",
+                        "Instruction 3": "",
+                        "Instruction 4": "",
+                        "Bankgebühren gezahlt von": "",
+                        Kreditlimit: "Nein",
+                        Kreditlimitwährungstyp: "",
+                        Beteiligtenrolle: "",
+                        "Direkt zuständiger Mitarbeiter": "",
+                        Dublettenprüfung: "Nein",
+                        ObjectNodeSenderTechnicalID: "",
+                        "Change StateID": "",
+                        UUID: "",
+                        "Betrag abzubuchen": getPrice(d.youth, d.period),
+                      };
+                    }),
+                  null,
+                  2
+                )
               )
-            )
-          }
-        >
-          Exportieren
-        </Button>
+            }
+          >
+            Exportieren
+          </Button>
+          <Button
+            variant="light"
+            leftSection={<IconRefresh size={16} />}
+            onClick={() => fetchData()}
+          >
+            Aktualisieren
+          </Button>
+        </div>
       </div>
       {table}
     </Paper>
