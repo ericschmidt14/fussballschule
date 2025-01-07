@@ -17,13 +17,10 @@ import { DatePickerInput, DatesProvider } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { IconCopy, IconDeviceFloppy } from "@tabler/icons-react";
 import "dayjs/locale/de";
-import { useState } from "react";
 import { FormValues, getInitialValues } from "../form/form";
 import { validateForm } from "../form/validation";
 
 export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
-  const [opened, setOpened] = useState(false);
-
   const form = useForm<FormValues>({
     validateInputOnChange: true,
     initialValues: getInitialValues(data),
@@ -39,14 +36,13 @@ export function DrawerContent({ data }: { data: SoccerSchoolEntry }) {
       <form
         className="flex flex-col gap-8"
         onSubmit={form.onSubmit((values) => {
-          console.log(JSON.stringify({ ...data, ...values }, null, 2));
-          // fetch("/api/save", {
-          //   method: "POST",
-          //   body: JSON.stringify({ ...data, ...values }, null, 2),
-          // })
-          //   .then((res) => res.text())
-          //   .then(() => {})
-          //   .catch((error) => console.error(error));
+          fetch("/api/save", {
+            method: "POST",
+            body: JSON.stringify({ ...data, ...values }, null, 2),
+          })
+            .then((res) => res.text())
+            .then(() => {})
+            .catch((error) => console.error(error));
         })}
       >
         <Fieldset legend="Angaben zum teilnehmenden Kind">
