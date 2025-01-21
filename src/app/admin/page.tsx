@@ -1,5 +1,12 @@
 "use client";
-import { Button, Paper, Select, Table, TextInput } from "@mantine/core";
+import {
+  Button,
+  Pagination,
+  Paper,
+  Select,
+  Table,
+  TextInput,
+} from "@mantine/core";
 import {
   IconFileTypeCsv,
   IconFilter,
@@ -17,9 +24,12 @@ import { ParticipantRow } from "./components/row";
 export default function Page() {
   const { data: session, status } = useSession();
   const [data, setData] = useState<SoccerSchoolEntry[]>();
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState<string>("");
   const [group, setGroup] = useState<string | null>("");
   const [state, setState] = useState<string | null>("");
+
+  const pageLimit = 25;
 
   const fetchData = () => {
     fetch("/api", {
@@ -37,7 +47,7 @@ export default function Page() {
     fetchData();
   }, []);
 
-  const rows =
+  const filteredResults =
     data &&
     data
       .filter((d) => (group ? d.youth === group : true))
@@ -50,15 +60,24 @@ export default function Page() {
           d.childLastName,
         ].some((value) => value.toLowerCase().includes(search.toLowerCase()))
       )
-      .reverse()
-      .map((participant, index) => (
-        <ParticipantRow
-          key={`${participant.childToken}-${state || "no-state"}`}
-          index={index}
-          participant={participant}
-          filterState={state}
-        />
-      ));
+      .reverse();
+
+  const pageSize = pageLimit ? +pageLimit : 25;
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const currentPageData =
+    filteredResults && filteredResults.slice(startIndex, endIndex);
+  const totalPages =
+    filteredResults && Math.ceil(filteredResults.length / pageSize);
+
+  const rows = currentPageData?.map((participant, index) => (
+    <ParticipantRow
+      key={`${participant.childToken}-${state || "no-state"}`}
+      index={index}
+      participant={participant}
+      filterState={state}
+    />
+  ));
 
   const table = (
     <Table className="mt-8">
@@ -87,7 +106,11 @@ export default function Page() {
   }
 
   return data ? (
-    <Paper className="relative m-8 p-4" radius="md" bg="rgba(0, 0, 0, 0.5)">
+    <Paper
+      className="relative m-8 p-4 flex flex-col gap-4"
+      radius="md"
+      bg="rgba(0, 0, 0, 0.5)"
+    >
       <div className="grid grid-cols-4 gap-2 items-center">
         <TextInput
           placeholder="Suchen ..."
@@ -214,6 +237,12 @@ export default function Page() {
         </div>
       </div>
       {table}
+      <Pagination
+        value={page}
+        onChange={setPage}
+        total={totalPages || 0}
+        className="flex justify-center pt-4"
+      />
     </Paper>
   ) : (
     <></>
