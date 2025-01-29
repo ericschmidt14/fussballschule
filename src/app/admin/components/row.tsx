@@ -9,11 +9,9 @@ import { useState } from "react";
 import { DrawerContent } from "./drawer";
 
 export function ParticipantRow({
-  index,
   participant,
   filterState,
 }: {
-  index: number;
   participant: SoccerSchoolEntry;
   filterState: string | null;
 }) {
@@ -83,7 +81,6 @@ export function ParticipantRow({
   return (
     <>
       <Table.Tr>
-        <Table.Td>{index + 1}</Table.Td>
         <Table.Td>
           {participant.childFirstName} {participant.childLastName}
         </Table.Td>
