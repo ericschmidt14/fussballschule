@@ -8,7 +8,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import {
-  IconFileTypeCsv,
+  IconFileTypeXls,
   IconFilter,
   IconRefresh,
   IconSearch,
@@ -136,7 +136,7 @@ export default function Page() {
         />
         <div className="grid grid-cols-2 gap-2">
           <Button
-            leftSection={<IconFileTypeCsv size={20} />}
+            leftSection={<IconFileTypeXls size={20} />}
             onClick={() =>
               exportXLSX(
                 JSON.stringify(
@@ -147,26 +147,24 @@ export default function Page() {
                     )
                     .map((d) => {
                       return {
-                        Nummer: "",
-                        Title: "",
-                        "Academic Title": "",
+                        Kundennummer: "",
+                        Anrede: "",
+                        Titel: "",
                         Vorname: d.parentFirstName,
                         Nachname: d.parentLastName,
-                        Spielername: `${d.childFirstName} ${d.childLastName}`,
-                        Kündigung: "",
-                        Vertragsabschlussdatum: d.started,
-                        Vertragslaufzeit: `${d.period} Monate`,
                         Straße: d.street,
                         Hausnummer: d.number,
-                        Ort: d.city,
                         Postleitzahl: d.postalCode,
+                        Ort: d.city,
                         Telefon: d.phone,
-                        Mobiltelefon: d.phone,
+                        Mobil: d.phone,
                         "E-Mail": d.email,
                         "Konto-ID": d.iban,
-                        IBAN: "",
-                        Kontoinhaber: "",
                         "Betrag abzubuchen": getPrice(d.youth, d.period),
+                        Vertragsabschlussdatum: d.started,
+                        Vertragslaufzeit: `${d.period} Monate`,
+                        Kündigung: "",
+                        Spielername: `${d.childFirstName} ${d.childLastName}`,
                         Hinweis: "",
                         Wochentag: `${d.time} ${youths[d.youth]}`,
                       };
