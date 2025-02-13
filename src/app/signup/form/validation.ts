@@ -1,3 +1,4 @@
+import { NO_GROUP_AVAILABLE } from "@/app/constants";
 import {
   emailValidation,
   notEmptyValidation,
@@ -18,7 +19,11 @@ export function validateForm(active: number, values: FormValues) {
       ),
       dob: values.dob ? null : "Bitte Geburtsdatum angeben",
       youth: values.youth ? null : "Bitte Gruppe auswählen",
-      time: values.time ? null : "Bitte Zeitraum auswählen",
+      time: values.time
+        ? values.time !== NO_GROUP_AVAILABLE
+          ? null
+          : "Aktuell leider keine Gruppe verfügbar"
+        : "Bitte Zeitraum auswählen",
     };
   }
 

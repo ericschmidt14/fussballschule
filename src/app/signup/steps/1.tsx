@@ -1,6 +1,8 @@
 "use client";
+import { NO_GROUP_AVAILABLE } from "@/app/constants";
 import { getPrice } from "@/app/utils";
 import {
+  Alert,
   Fieldset,
   SegmentedControl,
   Select,
@@ -9,6 +11,7 @@ import {
 } from "@mantine/core";
 import { DatePickerInput, DatesProvider } from "@mantine/dates";
 import { UseFormReturnType } from "@mantine/form";
+import { IconInfoCircle } from "@tabler/icons-react";
 import { differenceInYears } from "date-fns";
 import dayjs from "dayjs";
 import "dayjs/locale/de";
@@ -16,7 +19,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { FormRow, FormWrapper } from "../../components/form";
 import Label from "../../components/label";
 import Title from "../../components/title";
-import { ageGroups, times, youths } from "../../values";
+import { ageGroups } from "../../values";
 import { FormValues } from "../form/form";
 
 export default function Step1({
@@ -25,6 +28,28 @@ export default function Step1({
   form: UseFormReturnType<FormValues>;
 }) {
   dayjs.extend(customParseFormat);
+
+  const youths: { [key: string]: string } = {
+    k: "Kindergarten (4 – 6 Jahre)",
+    f1: "Fußballschule (7 – 9 Jahre)",
+    f2: "Fußballschule (8 – 10 Jahre)",
+    f3: "Fußballschule (10 – 13 Jahre)",
+    m: "Mädels-Fußballschule (7 – 14 Jahre)",
+  };
+
+  const times: {
+    [key: string]: string[];
+  } = {
+    k: [
+      "Montag, 14:00 – 15:00 Uhr",
+      "Donnerstag, 15:00 – 16:00 Uhr",
+      "Freitag, 14:00 – 15:00 Uhr",
+    ],
+    f1: [NO_GROUP_AVAILABLE],
+    f2: [NO_GROUP_AVAILABLE],
+    f3: [NO_GROUP_AVAILABLE],
+    m: ["Freitag, 15:00 – 16:30 Uhr"],
+  };
 
   const setYouth = (value: Date | undefined) => {
     const age = differenceInYears(new Date(), new Date(value || ""));
@@ -91,7 +116,7 @@ export default function Step1({
             />
           </div>
         </FormRow>
-        <div>
+        <div className="flex flex-col gap-4">
           <FormRow>
             <Select
               label="Gruppe"
@@ -108,11 +133,10 @@ export default function Step1({
               key={form.key("time")}
               {...form.getInputProps("time")}
               data={times[form.getValues().youth]}
-              allowDeselect={false}
               checkIconPosition="right"
             />
           </FormRow>
-          <p className="small muted mt-2">
+          <p className="small muted">
             <b>
               6 Monate à {getPrice(form.getValues().youth, "6")}€ bzw. 3 Monate
               à {getPrice(form.getValues().youth, "3")}€.
@@ -121,6 +145,12 @@ export default function Step1({
             unabhängig vom Geschlecht. Für Mädchen bieten wir außerdem die
             Option für unsere Mädels-Fußballschule an.
           </p>
+          <Alert variant="light" title="Hinweis" icon={<IconInfoCircle />}>
+            Wegen der hohen Nachfrage können wir aktuell leider nur eine
+            begrenzte Auswahl an Trainingsgruppen für Neuanmeldungen anbieten.
+            Schau gerne später wieder vorbei, falls aktuell keine passende
+            Gruppe zur Auswahl steht.
+          </Alert>
         </div>
         <Fieldset legend="Optionale Angaben">
           <FormWrapper>

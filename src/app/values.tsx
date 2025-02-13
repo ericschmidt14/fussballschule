@@ -31,10 +31,10 @@ export const ageGroups = [
     max: 10,
   },
   {
-    label: "Fußballschule (10 – 13 Jahre)",
+    label: "Fußballschule (11 – 14 Jahre)",
     value: "f3",
-    min: 10,
-    max: 13,
+    min: 11,
+    max: 14,
   },
 ];
 
