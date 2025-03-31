@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import { ColorSchemeScript, MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
-import "./globals.css";
-import { ColorSchemeScript, MantineProvider, createTheme } from "@mantine/core";
+import type { Metadata } from "next";
 import { Suspense } from "react";
+import { SoccerSchoolProvider } from "./context/soccerSchoolContext";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "1. FCN Fußballschule | Anmeldung",
@@ -42,7 +43,9 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="dark">
-          <Suspense>{children}</Suspense>
+          <Suspense>
+            <SoccerSchoolProvider>{children}</SoccerSchoolProvider>
+          </Suspense>
         </MantineProvider>
       </body>
     </html>

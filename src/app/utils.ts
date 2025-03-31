@@ -86,6 +86,19 @@ export const isValidIBAN = (iban: string) => {
   return parseInt(remainder, 10) % 97 === 1;
 };
 
+export const isValidTimeSlotFormat = (input: string) => {
+  if (input.trim() === "") return true;
+
+  const dayPattern =
+    "Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag";
+  const timePattern = "\\d{2}:\\d{2}";
+  const slotPattern = new RegExp(
+    `^(${dayPattern}), ${timePattern} [-–] ${timePattern} Uhr$`
+  );
+
+  return input.split(" / ").every((slot) => slotPattern.test(slot));
+};
+
 export const checkState = (participant: SoccerSchoolEntry) => {
   if (participant.ended !== null) {
     return "ended";

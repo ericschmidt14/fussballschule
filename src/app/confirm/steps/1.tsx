@@ -1,13 +1,14 @@
 "use client";
-import { UseFormReturnType } from "@mantine/form";
-import Title from "../../components/title";
-import { Fieldset, Table } from "@mantine/core";
-import { FormValues } from "../form/form";
-import { FormWrapper } from "../../components/form";
+import { useSoccerSchoolContext } from "@/app/context/soccerSchoolContext";
 import { SoccerSchoolEntry } from "@/app/interfaces";
-import { genders, youths } from "@/app/values";
-import { useEffect } from "react";
 import { convertDOB } from "@/app/utils";
+import { genders } from "@/app/values";
+import { Fieldset, Table } from "@mantine/core";
+import { UseFormReturnType } from "@mantine/form";
+import { useEffect } from "react";
+import { FormWrapper } from "../../components/form";
+import Title from "../../components/title";
+import { FormValues } from "../form/form";
 
 export default function Step1({
   form,
@@ -16,6 +17,8 @@ export default function Step1({
   form: UseFormReturnType<FormValues>;
   entry: SoccerSchoolEntry | undefined;
 }) {
+  const { groups } = useSoccerSchoolContext();
+
   useEffect(() => {
     entry &&
       form.setFieldValue(
@@ -41,7 +44,9 @@ export default function Step1({
         },
         {
           description: "Termin",
-          value: `${youths[entry.youth]} – ${entry.time}`,
+          value: `${groups.filter((g) => g.value === entry.youth)[0]} – ${
+            entry.time
+          }`,
         },
         {
           description: "Verein",

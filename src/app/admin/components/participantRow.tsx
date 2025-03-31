@@ -1,6 +1,7 @@
+import { useSoccerSchoolContext } from "@/app/context/soccerSchoolContext";
 import { SoccerSchoolEntry } from "@/app/interfaces";
 import { checkState, convertDOB } from "@/app/utils";
-import { states, youths } from "@/app/values";
+import { states } from "@/app/values";
 import { Button, Drawer, Select, Table, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconId } from "@tabler/icons-react";
@@ -15,6 +16,8 @@ export function ParticipantRow({
   participant: SoccerSchoolEntry;
   filterState: string | null;
 }) {
+  const { groups } = useSoccerSchoolContext();
+
   const sendMail = (type: "2" | "3") => {
     fetch("/api/mailing", {
       method: "POST",
@@ -98,7 +101,9 @@ export function ParticipantRow({
           </Tooltip>
         </Table.Td>
         <Table.Td>
-          <p className="text-xs">{youths[participant.youth]}</p>
+          <p className="text-xs">
+            {groups.filter((g) => g.value === participant.youth)[0].label}
+          </p>
           <p className="text-xs muted">{participant.time}</p>
         </Table.Td>
         <Table.Td>{participant.size}</Table.Td>
@@ -135,9 +140,7 @@ export function ParticipantRow({
             variant="light"
             size="xs"
             leftSection={<IconId size={16} />}
-            onClick={() => {
-              open();
-            }}
+            onClick={open}
           >
             Details
           </Button>

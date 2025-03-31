@@ -1,9 +1,9 @@
 "use client";
 import { FormRow } from "@/app/components/form";
 import Label from "@/app/components/label";
+import { useSoccerSchoolContext } from "@/app/context/soccerSchoolContext";
 import { SoccerSchoolEntry } from "@/app/interfaces";
 import { copy, formatIBAN } from "@/app/utils";
-import { times, youths } from "@/app/values";
 import {
   ActionIcon,
   Button,
@@ -30,6 +30,8 @@ export function DrawerContent({
   data: SoccerSchoolEntry;
   close: () => void;
 }) {
+  const { groups } = useSoccerSchoolContext();
+
   const [opened, setOpened] = useState(false);
 
   const form = useForm<FormValues>({
@@ -39,7 +41,7 @@ export function DrawerContent({
   });
 
   form.watch("youth", ({ value }) => {
-    form.setFieldValue("time", times[value][0]);
+    form.setFieldValue("time", "");
   });
 
   return (
@@ -47,7 +49,6 @@ export function DrawerContent({
       <form
         className="flex flex-col gap-8"
         onSubmit={form.onSubmit((values) => {
-          console.log(JSON.stringify({ ...data, ...values }, null, 2));
           fetch("/api/save", {
             method: "POST",
             body: JSON.stringify({ ...data, ...values }, null, 2),
@@ -103,8 +104,11 @@ export function DrawerContent({
                 label="Gruppe"
                 key={form.key("youth")}
                 {...form.getInputProps("youth")}
-                data={["k", "f1", "f2", "f3", "m"].map((g) => {
-                  return { value: g, label: youths[g] };
+                data={groups.map((g) => {
+                  return {
+                    value: g.value,
+                    label: g.label,
+                  };
                 })}
                 allowDeselect={false}
                 checkIconPosition="right"
@@ -113,7 +117,9 @@ export function DrawerContent({
                 label="Zeit"
                 key={form.key("time")}
                 {...form.getInputProps("time")}
-                data={times[form.getValues().youth]}
+                data={groups
+                  .filter((g) => g.value === form.getValues().youth)[0]
+                  .times.split("/")}
                 allowDeselect={false}
                 checkIconPosition="right"
               />

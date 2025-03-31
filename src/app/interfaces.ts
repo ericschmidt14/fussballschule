@@ -40,3 +40,11 @@ export interface SoccerSchoolEntry {
   childCreated: string;
   childToken: string;
 }
+
+export interface Group {
+  label: string;
+  value: string;
+  min: number;
+  max: number;
+  times: string;
+}

@@ -1,5 +1,5 @@
 "use client";
-import { NO_GROUP_AVAILABLE } from "@/app/constants";
+import { useSoccerSchoolContext } from "@/app/context/soccerSchoolContext";
 import { getPrice } from "@/app/utils";
 import {
   Alert,
@@ -19,7 +19,6 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { FormRow, FormWrapper } from "../../components/form";
 import Label from "../../components/label";
 import Title from "../../components/title";
-import { ageGroups } from "../../values";
 import { FormValues } from "../form/form";
 
 export default function Step1({
@@ -28,32 +27,18 @@ export default function Step1({
   form: UseFormReturnType<FormValues>;
 }) {
   dayjs.extend(customParseFormat);
+  const { groups } = useSoccerSchoolContext();
 
-  const youths: { [key: string]: string } = {
-    k: "Kindergarten (4 – 6 Jahre)",
-    f1: "Fußballschule (7 – 9 Jahre)",
-    f2: "Fußballschule (8 – 10 Jahre)",
-    f3: "Fußballschule (10 – 13 Jahre)",
-    m: "Mädels-Fußballschule (7 – 14 Jahre)",
-  };
-
-  const times: {
-    [key: string]: string[];
-  } = {
-    k: [
-      "Montag, 14:00 – 15:00 Uhr",
-      "Donnerstag, 15:00 – 16:00 Uhr",
-      "Freitag, 14:00 – 15:00 Uhr",
-    ],
-    f1: [NO_GROUP_AVAILABLE],
-    f2: [NO_GROUP_AVAILABLE],
-    f3: [NO_GROUP_AVAILABLE],
-    m: ["Freitag, 15:00 – 16:30 Uhr"],
-  };
+  const times =
+    groups.length > 0
+      ? groups
+          .filter((g) => g.value === form.getValues().youth)[0]
+          .times.split("/")
+      : [];
 
   const setYouth = (value: Date | undefined) => {
     const age = differenceInYears(new Date(), new Date(value || ""));
-    const group = ageGroups
+    const group = groups
       .reverse()
       .find((g) => g.min <= age && g.max >= age)?.value;
     group && form.setFieldValue("youth", group);
@@ -72,7 +57,7 @@ export default function Step1({
   });
 
   form.watch("youth", ({ value }) => {
-    form.setFieldValue("time", times[value][0]);
+    form.setFieldValue("time", "");
   });
 
   return (
@@ -122,8 +107,11 @@ export default function Step1({
               label="Gruppe"
               key={form.key("youth")}
               {...form.getInputProps("youth")}
-              data={["k", "f1", "f2", "f3", "m"].map((g) => {
-                return { value: g, label: youths[g] };
+              data={groups.map((g) => {
+                return {
+                  value: g.value,
+                  label: g.label,
+                };
               })}
               allowDeselect={false}
               checkIconPosition="right"
@@ -132,7 +120,7 @@ export default function Step1({
               label="Zeit"
               key={form.key("time")}
               {...form.getInputProps("time")}
-              data={times[form.getValues().youth]}
+              data={times}
               checkIconPosition="right"
             />
           </FormRow>
@@ -146,10 +134,10 @@ export default function Step1({
             Option für unsere Mädels-Fußballschule an.
           </p>
           <Alert variant="light" title="Hinweis" icon={<IconInfoCircle />}>
-            Wegen der hohen Nachfrage können wir aktuell leider nur eine
+            Wegen der hohen Nachfrage können wir zur Zeit leider nur eine
             begrenzte Auswahl an Trainingsgruppen für Neuanmeldungen anbieten.
             Schau gerne später wieder vorbei, falls aktuell keine passende
-            Gruppe zur Auswahl steht.
+            Gruppe zur Auswahl stehen sollte.
           </Alert>
         </div>
         <Fieldset legend="Optionale Angaben">

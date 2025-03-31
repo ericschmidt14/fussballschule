@@ -1,4 +1,5 @@
 "use client";
+import { useSoccerSchoolContext } from "@/app/context/soccerSchoolContext";
 import {
   Button,
   Pagination,
@@ -16,13 +17,15 @@ import {
 } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { SoccerSchoolEntry } from "../interfaces";
-import { checkState, exportXLSX, getPrice } from "../utils";
-import { states, youths } from "../values";
-import { ParticipantRow } from "./components/row";
+import { SoccerSchoolEntry } from "../../interfaces";
+import { checkState, exportXLSX, getPrice } from "../../utils";
+import { states } from "../../values";
+import { ParticipantRow } from "../components/participantRow";
 
 export default function Page() {
   const { data: session, status } = useSession();
+  const { groups } = useSoccerSchoolContext();
+
   const [data, setData] = useState<SoccerSchoolEntry[]>();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState<string>("");
@@ -117,8 +120,11 @@ export default function Page() {
           onChange={(e) => setSearch(e.target.value)}
         />
         <Select
-          data={["k", "f1", "f2", "f3", "m"].map((g) => {
-            return { value: g, label: youths[g] };
+          data={groups.map((g) => {
+            return {
+              value: g.value,
+              label: g.label,
+            };
           })}
           placeholder="Gruppe wählen"
           leftSection={<IconUsersGroup size={16} />}
@@ -166,7 +172,9 @@ export default function Page() {
                         Kündigung: "",
                         Spielername: `${d.childFirstName} ${d.childLastName}`,
                         Hinweis: "",
-                        Wochentag: `${d.time} ${youths[d.youth]}`,
+                        Wochentag: `${
+                          groups.filter((g) => g.value === d.youth)[0].label
+                        } ${d.time}`,
                       };
                     }),
                   null,

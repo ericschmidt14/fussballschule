@@ -8,6 +8,11 @@ import { usePathname } from "next/navigation";
 export default function Header() {
   const { data: session } = useSession();
 
+  const nav = [
+    { label: "Anmeldungen", href: "/admin/registrations" },
+    { label: "Trainingsgruppen", href: "/admin/groups" },
+  ];
+
   return (
     <header className="sticky top-0 z-50 flex justify-between items-center gap-2 px-16 py-2 bg-black/50 backdrop-blur-lg text-white shadow-md">
       <Link href="/admin" className="logo">
@@ -19,12 +24,20 @@ export default function Header() {
           </p>
         </div>
       </Link>
+
       {!session ? (
         <Button onClick={() => signIn("azure-ad")} leftSection={<IconLogin2 />}>
           Einloggen
         </Button>
       ) : (
         <>
+          <div className="flex gap-8">
+            {nav.map((n, index) => (
+              <NavItem key={index} href={n.href}>
+                {n.label}
+              </NavItem>
+            ))}
+          </div>
           <Menu trigger="click-hover">
             <Menu.Target>
               <div className="flex items-center gap-2 cursor-pointer">
