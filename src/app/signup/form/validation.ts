@@ -18,7 +18,11 @@ export function validateForm(active: number, values: FormValues) {
       ),
       dob: values.dob ? null : "Bitte Geburtsdatum angeben",
       youth: values.youth ? null : "Bitte Gruppe auswählen",
-      time: values.time ? null : "Bitte Zeitraum auswählen",
+      time: values.time
+        ? values.time === "---"
+          ? "Aktuell ist keine Gruppe frei. Bitte versuche es später wieder."
+          : null
+        : "Bitte Zeitraum auswählen",
     };
   }
 

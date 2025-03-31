@@ -9,8 +9,10 @@ import {
   TextInput,
 } from "@mantine/core";
 import {
-  IconFileTypeXls,
+  IconCalendarWeek,
+  IconFileExport,
   IconFilter,
+  IconReceiptEuro,
   IconRefresh,
   IconSearch,
   IconUsersGroup,
@@ -30,6 +32,7 @@ export default function Page() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState<string>("");
   const [group, setGroup] = useState<string | null>("");
+  const [time, setTime] = useState<string | null>("");
   const [state, setState] = useState<string | null>("");
 
   const pageLimit = 25;
@@ -54,6 +57,7 @@ export default function Page() {
     data &&
     data
       .filter((d) => (group ? d.youth === group : true))
+      .filter((d) => (time ? d.time.includes(time) : true))
       .filter((d) => (state ? checkState(d) === state : true))
       .filter((d) =>
         [
@@ -98,6 +102,39 @@ export default function Page() {
     </Table>
   );
 
+  const handleExport = (data: SoccerSchoolEntry[]) => {
+    exportXLSX(
+      JSON.stringify(
+        data.map((d) => {
+          return {
+            Kundennummer: "",
+            Anrede: "",
+            Titel: "",
+            Vorname: d.parentFirstName,
+            Nachname: d.parentLastName,
+            Straße: d.street,
+            Hausnummer: d.number,
+            Postleitzahl: d.postalCode,
+            Ort: d.city,
+            Telefon: d.phone,
+            Mobil: d.phone,
+            "E-Mail": d.email,
+            "Konto-ID": d.iban,
+            "Betrag abzubuchen": getPrice(d.youth, d.period),
+            Vertragsabschlussdatum: d.started,
+            Vertragslaufzeit: `${d.period} Monate`,
+            Kündigung: "",
+            Spielername: `${d.childFirstName} ${d.childLastName}`,
+            Hinweis: "",
+            Wochentag: `${groups.filter((g) => g.value === d.youth)[0].label} ${
+              d.time
+            }`,
+          };
+        })
+      )
+    );
+  };
+
   if (status === "loading") {
     return <></>;
   }
@@ -133,6 +170,22 @@ export default function Page() {
           onChange={setGroup}
         />
         <Select
+          data={[
+            "Montag",
+            "Dienstag",
+            "Mittwoch",
+            "Donnerstag",
+            "Freitag",
+            "Samstag",
+            "Sonntag",
+          ]}
+          placeholder="Tag wählen"
+          leftSection={<IconCalendarWeek size={16} />}
+          checkIconPosition="right"
+          value={time}
+          onChange={setTime}
+        />
+        <Select
           data={states}
           placeholder="Status wählen"
           leftSection={<IconFilter size={16} />}
@@ -140,59 +193,34 @@ export default function Page() {
           onChange={setState}
           checkIconPosition="right"
         />
-        <div className="grid grid-cols-2 gap-2">
-          <Button
-            leftSection={<IconFileTypeXls size={20} />}
-            onClick={() =>
-              exportXLSX(
-                JSON.stringify(
-                  data
-                    .filter(
-                      (d) =>
-                        d.iban !== "" && d.started !== null && d.ended === null
-                    )
-                    .map((d) => {
-                      return {
-                        Kundennummer: "",
-                        Anrede: "",
-                        Titel: "",
-                        Vorname: d.parentFirstName,
-                        Nachname: d.parentLastName,
-                        Straße: d.street,
-                        Hausnummer: d.number,
-                        Postleitzahl: d.postalCode,
-                        Ort: d.city,
-                        Telefon: d.phone,
-                        Mobil: d.phone,
-                        "E-Mail": d.email,
-                        "Konto-ID": d.iban,
-                        "Betrag abzubuchen": getPrice(d.youth, d.period),
-                        Vertragsabschlussdatum: d.started,
-                        Vertragslaufzeit: `${d.period} Monate`,
-                        Kündigung: "",
-                        Spielername: `${d.childFirstName} ${d.childLastName}`,
-                        Hinweis: "",
-                        Wochentag: `${
-                          groups.filter((g) => g.value === d.youth)[0].label
-                        } ${d.time}`,
-                      };
-                    }),
-                  null,
-                  2
-                )
+        <Button
+          leftSection={<IconReceiptEuro size={20} />}
+          onClick={() =>
+            handleExport(
+              data.filter(
+                (d) => d.iban !== "" && d.started !== null && d.ended === null
               )
-            }
-          >
-            Exportieren
-          </Button>
-          <Button
-            variant="light"
-            leftSection={<IconRefresh size={16} />}
-            onClick={() => fetchData()}
-          >
-            Aktualisieren
-          </Button>
-        </div>
+            )
+          }
+        >
+          Zahlungsdaten exportieren
+        </Button>
+        <Button
+          variant="light"
+          leftSection={<IconFileExport size={20} />}
+          onClick={() => handleExport(filteredResults || [])}
+        >
+          Auswahl exportieren
+        </Button>
+        <div />
+        <Button
+          color="gray"
+          variant="light"
+          leftSection={<IconRefresh size={16} />}
+          onClick={() => fetchData()}
+        >
+          Aktualisieren
+        </Button>
       </div>
       {table}
       <Pagination

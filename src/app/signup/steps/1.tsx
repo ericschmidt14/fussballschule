@@ -29,12 +29,30 @@ export default function Step1({
   dayjs.extend(customParseFormat);
   const { groups } = useSoccerSchoolContext();
 
-  const times =
-    groups.length > 0
-      ? groups
-          .filter((g) => g.value === form.getValues().youth)[0]
-          .times.split("/")
-      : [];
+  const today = new Date();
+  const minAge = 4;
+  const maxAge = 14;
+  const minDate = new Date(
+    today.getFullYear() - maxAge,
+    today.getMonth(),
+    today.getDate()
+  );
+  const maxDate = new Date(
+    today.getFullYear() - minAge,
+    today.getMonth(),
+    today.getDate()
+  );
+
+  const getTimes = () => {
+    if (groups.length < 1) return [];
+
+    const selectedGroup = groups.filter(
+      (g) => g.value === form.getValues().youth
+    )[0];
+
+    const hasSlots = selectedGroup.times.trim() !== "";
+    return hasSlots ? selectedGroup.times.split(" / ") : ["---"];
+  };
 
   const setYouth = (value: Date | undefined) => {
     const age = differenceInYears(new Date(), new Date(value || ""));
@@ -56,7 +74,7 @@ export default function Step1({
     }
   });
 
-  form.watch("youth", ({ value }) => {
+  form.watch("youth", () => {
     form.setFieldValue("time", "");
   });
 
@@ -83,6 +101,8 @@ export default function Step1({
             valueFormat="DD.MM.YYYY"
             label="Geburtstag"
             placeholder="TT.MM.JJJJ"
+            minDate={minDate}
+            maxDate={maxDate}
             key={form.key("dob")}
             {...form.getInputProps("dob")}
           />
@@ -120,7 +140,7 @@ export default function Step1({
               label="Zeit"
               key={form.key("time")}
               {...form.getInputProps("time")}
-              data={times}
+              data={getTimes()}
               checkIconPosition="right"
             />
           </FormRow>

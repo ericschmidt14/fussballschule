@@ -18,15 +18,7 @@ const SoccerSchoolContext = createContext<SoccerSchoolContextType | undefined>(
 );
 
 export const SoccerSchoolProvider = ({ children }: { children: ReactNode }) => {
-  const [groups, setGroups] = useState<Group[]>([
-    {
-      label: "",
-      value: "",
-      min: 0,
-      max: 0,
-      times: "",
-    },
-  ]);
+  const [groups, setGroups] = useState<Group[]>([]);
 
   const fetchGroups = () => {
     fetch("/api/groups", {
